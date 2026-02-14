@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="CAN HAVE MULTIPLEv1" directorySegmentName="seg_0" id="E25DF135-3830-D909-FBE7-7D66145E45A5">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:11:33 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<sourcePk>0C23CF0A-D88E-D533-65AB-B83AC3797B46</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>E0F2FE72-A7FA-0A7C-7644-6A07CD30354D</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>F2A03E72-8D82-5FCF-6EAB-32348F6B0166</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

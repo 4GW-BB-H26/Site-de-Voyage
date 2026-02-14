@@ -1,0 +1,85 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B40FEDDA-B6EE-C2E0-FDB1-3BBA9A92F395" name="TRIP">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>65394B6B-85D9-6D31-E2ED-76217F5CD4DE</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_TRIP" id="D3DB2902-3EBD-C01A-CD9B-446491BCBA7B">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>5CC9416C-A0E2-EDD1-0C7D-D8732B47FB2E</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DEPART_DATE" id="D2A9A68E-1ED1-1E3D-F54A-CDE9B7ECE44A">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>F8D03208-506A-0445-BCB5-28ED2AB12978</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="RETURN_DATE" id="49A12683-060F-98DC-FAE3-1C9F7FC860BF">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>4E7DA954-7958-2C6C-3166-DEE3A8497D7D</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>91229484-D19C-D458-8647-333C7FFE7B60</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PACKAGE_ID_PACKAGE" id="1A1B8F2A-B2A3-6C7C-A4C1-6DADA7E2AF6C">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 02:37:36 UTC</createdTime>
+<generatorID>68AA24BF-2A81-28E9-B3EC-BEABB663D90A</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6D72A81B-FD74-854E-2A2A-665ED722A707" referredColumn="89FA75F3-AC34-459D-28EB-A10B18C4DA70"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F6AD56AC-8476-DC7B-2720-011EA5F18F55" name="TRIP_PK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>616B8920-1528-0C6A-95A4-D3D97AB50C2F</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D3DB2902-3EBD-C01A-CD9B-446491BCBA7B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1505A966-DD83-CE62-0042-345AC8A55056" name="TRIP_PACKAGE_FK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 02:37:36 UTC</createdTime>
+<generatorID>3B92BAEA-B690-D8EA-6466-ED7D5BD2D1F4</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1A1B8F2A-B2A3-6C7C-A4C1-6DADA7E2AF6C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,159 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="B1A1B21B-758B-C377-0F3D-F15C2CBF60E0" name="RESERVATION">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 14:50:10 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID_RESERVATION" id="63BBB946-3AB6-DDDB-A268-E73041C6D442">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 14:50:29 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="REFERENCE_NUMBER" id="76795BD2-826D-DDA2-2CE2-DF0539E99411">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 14:50:46 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="RESERVATION_DATE" id="FB51C204-CF6D-8881-3D63-628CF082FC0E">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 15:55:10 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="DATE_START" id="F3DDD922-3E67-2B23-EC97-A0716B891233">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 15:55:47 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="DATE_END" id="032C3B6F-736E-83C3-1BAB-8700CB8269B4">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 16:00:11 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="NB_TRAVELERS" id="D47C560C-B635-ADFF-F340-A24D39B41862">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 16:00:36 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PRICE" id="A329A10B-F843-5030-F0C3-B6FF8E0306C5">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 16:03:30 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="STATUS" id="D70D6110-02FD-5C42-055F-ED444F72CD6C">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 16:04:05 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_USERS" id="EC5BE8DE-5993-7B45-CDD2-F7540FF2D90B">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 18:41:17 UTC</createdTime>
+<generatorID>5204E7A5-881A-35FC-C269-D098561A6B04</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<referedAttribute>250BEAB4-4153-2745-A5F6-24126E76C163</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_TRIP" id="98E36C9F-F457-F5C0-1AA2-EA37CC58D724">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 02:29:11 UTC</createdTime>
+<generatorID>E7BF2A04-1405-EC65-9422-95DABB8F99FC</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<referedAttribute>5CC9416C-A0E2-EDD1-0C7D-D8732B47FB2E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="71049CDE-EE21-67AD-2414-7A65B07FE8AA" name="RESERVATION PK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 15:56:13 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>63BBB946-3AB6-DDDB-A268-E73041C6D442</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

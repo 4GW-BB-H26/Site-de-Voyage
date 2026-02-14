@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="AA85A910-AFED-61E0-0DBA-AAD4DED9A5B3" mainViewID="11552D03-438B-E71E-98A9-30B6A0564ACB">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 14:34:19 UTC</createdTime>
+<ownerDesignName>Modele Logique VF</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

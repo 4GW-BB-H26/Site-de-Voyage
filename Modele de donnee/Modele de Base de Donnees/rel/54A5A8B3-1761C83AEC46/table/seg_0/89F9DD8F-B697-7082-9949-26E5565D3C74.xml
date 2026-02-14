@@ -1,0 +1,145 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="89F9DD8F-B697-7082-9949-26E5565D3C74" name="USERS">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>35BA9F9C-5190-414E-C8C2-8CF23C885390</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_USERS" id="36BA478F-E418-1C30-8208-0900E2891E1D">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>250BEAB4-4153-2745-A5F6-24126E76C163</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FIRST_NAME" id="3A309330-37BE-93E6-C97C-087EFF6CEDFF">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>691DF334-F2B3-837F-F14B-BD2D2991075A</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="LAST_NAME" id="9627705B-3822-275D-7C45-E6E668F0B164">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>FDA96BFF-362E-9737-D9BC-B0FFC85677AF</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="USERNAME" id="F7341A7F-B2FC-6352-986C-7565CF792940">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>E150CE3E-BCB6-1100-5607-B84DF6666592</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="EMAIL" id="065147B5-5EA4-2186-84EC-B003FC56B5DE">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>1D03F306-971A-372F-FD93-028DCBC2A0CA</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PASSWORD" id="95E02C14-2ED4-26E6-2D35-6FBD0828E7AD">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>0FED5A85-7084-1493-0F5D-A44B1DC69436</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CREATION_DATE" id="F018E12B-8C71-0E8A-EF15-B12D1F0A61B3">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>FEB2EDFA-EBDA-F7A9-D5A8-17B23AD749B4</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FAVORITES_ID_FAVORITE" id="7BC830B3-8D0C-104B-D540-83B312B69B61">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 01:23:02 UTC</createdTime>
+<generatorID>F36B6FDB-C528-507A-686F-C3C1CB99FEF2</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="20CE8CD9-EEF4-FE6D-9C10-2799B03D45DD" referredColumn="943356E9-23D7-C40B-01C9-530F83241D78"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="878608C5-F0A2-CDA5-C452-3589953C0CED" name="USERS_PK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>816013D3-9617-1B60-040C-B0712E10659A</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="36BA478F-E418-1C30-8208-0900E2891E1D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="58C4A679-8C89-0FD3-1879-9F22AABF0CD2" name="USERS__IDX">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 01:23:02 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>28757740-2A64-1674-1E85-CECE35E63CC3</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="7BC830B3-8D0C-104B-D540-83B312B69B61"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B9232A6F-46BD-F166-A16A-D757ABD906A1" name="USERS_FAVORITES_FK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 01:23:02 UTC</createdTime>
+<generatorID>28757740-2A64-1674-1E85-CECE35E63CC3</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7BC830B3-8D0C-104B-D540-83B312B69B61"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

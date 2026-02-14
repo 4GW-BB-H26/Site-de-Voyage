@@ -1,0 +1,190 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="87F54854-8126-715E-BEEB-B7C475AB5184" name="RESERVATION">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>B1A1B21B-758B-C377-0F3D-F15C2CBF60E0</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_RESERVATION" id="7861187F-B1C3-3AD0-0133-20FF1D67140F">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>63BBB946-3AB6-DDDB-A268-E73041C6D442</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="REFERENCE_NUMBER" id="AD2A7044-CD22-E00C-BAEF-7CB42FAFD70E">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>76795BD2-826D-DDA2-2CE2-DF0539E99411</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="RESERVATION_DATE" id="6EBEF40D-52DD-FC0D-375E-063B263C4075">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>FB51C204-CF6D-8881-3D63-628CF082FC0E</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DATE_START" id="9B9F11DF-81AF-69C9-B302-2CBCEE466C99">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>F3DDD922-3E67-2B23-EC97-A0716B891233</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DATE_END" id="AA0A183E-CA08-C584-AFB1-C83D548B191A">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>032C3B6F-736E-83C3-1BAB-8700CB8269B4</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="NB_TRAVELERS" id="836F2DDC-3CA5-4091-C021-049D6F775A3F">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>D47C560C-B635-ADFF-F340-A24D39B41862</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRICE" id="8050629C-A07F-2EE4-94D1-4F0585F08507">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>A329A10B-F843-5030-F0C3-B6FF8E0306C5</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="STATUS" id="E672BDC0-F499-16D8-5D47-215C1AFF887F">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>D70D6110-02FD-5C42-055F-ED444F72CD6C</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="USERS_ID_USERS" id="8D5E02D7-AF53-E2E0-59E0-E0EEB8336D47">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>EC5BE8DE-5993-7B45-CDD2-F7540FF2D90B</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="01CA981A-C7B8-299E-E9DF-15BF16C105EE" referredColumn="36BA478F-E418-1C30-8208-0900E2891E1D"/>
+</associations>
+</Column>
+<Column name="TRIP_ID_TRIP" id="644FAE11-C853-6435-1ACA-7FAFDF71090D">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>2D3343B6-4F80-9824-AF34-AC1EED2398D6</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A306D221-AFC8-20A8-EB5D-4710B0FBE233" referredColumn="D3DB2902-3EBD-C01A-CD9B-446491BCBA7B"/>
+</associations>
+</Column>
+<Column name="ID_TRIP" id="1FEFEE5D-8673-18AE-1EFD-6ACF0C6E24FA">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 02:37:36 UTC</createdTime>
+<generatorID>98E36C9F-F457-F5C0-1AA2-EA37CC58D724</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="892B199C-12E3-4C47-28A9-E08BACC5248F" name="RESERVATION_PK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>71049CDE-EE21-67AD-2414-7A65B07FE8AA</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7861187F-B1C3-3AD0-0133-20FF1D67140F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F4F618D6-D886-C8CE-E1EF-01F55376872E" name="RESERVATION__IDX">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>E7BF2A04-1405-EC65-9422-95DABB8F99FC</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="644FAE11-C853-6435-1ACA-7FAFDF71090D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="72DC133B-6DFE-15A4-F404-28F926C69ACF" name="RESERVATION_USERS_FK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>5204E7A5-881A-35FC-C269-D098561A6B04</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8D5E02D7-AF53-E2E0-59E0-E0EEB8336D47"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3236A26C-13B4-399C-D10D-7BA30804B62C" name="RESERVATION_TRIP_FK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 01:24:11 UTC</createdTime>
+<generatorID>E7BF2A04-1405-EC65-9422-95DABB8F99FC</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="644FAE11-C853-6435-1ACA-7FAFDF71090D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

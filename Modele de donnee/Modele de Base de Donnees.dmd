@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Modele de Base de Donnees" id="6047ABE2-F6A1-FE2B-92BF-304AF7033013" version="3.5">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 14:34:19 UTC</createdTime>
+<ownerDesignName>Modele Logique VF</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>6047ABE2-F6A1-FE2B-92BF-304AF7033013</designId>
+</OSDM_Design>

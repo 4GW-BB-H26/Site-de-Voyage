@@ -1,0 +1,123 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="C56F2E95-E7B2-1BDF-3084-073878C8B849" name="REVIEWS">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>F2A03E72-8D82-5FCF-6EAB-32348F6B0166</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_REVIEW" id="315FEE14-154E-494E-BD1E-92943134E102">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>F069725C-BF97-8D84-89DC-7FB158B12AB8</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="RATING" id="ACB9D5C1-CBC4-0447-3838-925A2726EB07">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>4C27A98B-0D2E-B1B9-8C12-70569BC171F9</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="COMMENT" id="74DE1C48-CF27-2322-8490-922F3CD11EB5">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>BDDAE6F6-62E8-E0AA-5880-31BEDAF8C0CA</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PUBLISHING_DATE" id="52E8CD4F-8AFE-BBF6-DFB9-AD65A064CF7A">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>85652123-BB18-B11B-A83A-DB9F529C1D21</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="USERS_ID_USERS" id="691F9AF2-B248-2272-11C2-F9EEFB67F602">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>C41FCD99-77B8-C722-99A2-A9BDBD556030</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="62DC675F-4A22-08A1-955B-C69CB6D3E87A" referredColumn="36BA478F-E418-1C30-8208-0900E2891E1D"/>
+</associations>
+</Column>
+<Column name="PACKAGE_ID_PACKAGE" id="E5A8E244-7CE5-41F0-05FD-174A7FAC56C2">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>0B643C1B-AAB2-0D73-9991-F81C08D2C27D</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="7DE92CC3-239B-EE0B-C224-16E83D14EF7A" referredColumn="89FA75F3-AC34-459D-28EB-A10B18C4DA70"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="DD669CCE-051D-EDE4-B8DB-0938C49F7970" name="REVIEWS_PK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>45C6BE38-A2E4-C556-1A7F-57A2CAF23BED</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="315FEE14-154E-494E-BD1E-92943134E102"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="28D48F41-520B-5205-4583-3222262A4489" name="REVIEWS_PACKAGE_FK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>E25DF135-3830-D909-FBE7-7D66145E45A5</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E5A8E244-7CE5-41F0-05FD-174A7FAC56C2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D0314057-857C-417C-E6F9-F4A205D49338" name="REVIEWS_USERS_FK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>2027EF03-D934-ACF6-8697-EFA8DEA623A9</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="691F9AF2-B248-2272-11C2-F9EEFB67F602"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

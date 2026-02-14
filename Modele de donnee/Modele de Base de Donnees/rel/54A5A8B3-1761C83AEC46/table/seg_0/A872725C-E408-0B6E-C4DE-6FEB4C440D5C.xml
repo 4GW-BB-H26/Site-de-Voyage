@@ -1,0 +1,112 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="A872725C-E408-0B6E-C4DE-6FEB4C440D5C" name="FAVORITES">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>DEEF7FA6-49E6-CB76-A3B1-177F337121B6</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_FAVORITE" id="943356E9-23D7-C40B-01C9-530F83241D78">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>46A8FBB0-F8BE-19CA-ACBC-1BE94B40E756</generatorID>
+<notes><![CDATA[Cette table est supposer etre une liste de packages. Je ne suis pas certain s' il serais approprie de mettre ne relation 1 a plusieurs a la place de 1 a 1]]></notes>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DATE_ADDED" id="FF244810-2E0C-2438-A2E6-E40945AB371B">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>E42039AD-5BF4-CFA1-F7D9-34EF83ED83DF</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PACKAGE_ID_PACKAGE" id="7E238303-3450-C5BB-EFBE-966D8D0B5347">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 01:23:02 UTC</createdTime>
+<generatorID>5D17FB75-F403-4253-853A-5C20D5563B41</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C7C4957E-EF95-C087-2134-969B926144D4" referredColumn="89FA75F3-AC34-459D-28EB-A10B18C4DA70"/>
+</associations>
+</Column>
+<Column name="USERS_ID_USERS" id="86CA7F49-6CE5-4FEE-737C-1CAF691624DA">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 02:37:36 UTC</createdTime>
+<generatorID>AC626A2E-EEA7-3FDC-A27E-7FF7FA577B81</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="22846385-4462-6D27-E24F-1177C04F1D50" referredColumn="36BA478F-E418-1C30-8208-0900E2891E1D"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F1BBB707-2C05-C452-CA09-8E4C81E3F799" name="FAVORITES_PK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:25:26 UTC</createdTime>
+<generatorID>E481FD74-A077-8E04-5ED6-A2CB37841438</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="943356E9-23D7-C40B-01C9-530F83241D78"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C673717B-E1E9-4284-3FEE-6CA4795D1AA2" name="FAVORITES__IDX">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 02:37:36 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>634DFE87-B4BA-50C5-B5FA-B5EBC85B7BAD</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="86CA7F49-6CE5-4FEE-737C-1CAF691624DA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8DBAA685-06C2-E14F-6F26-0F084B7B6180" name="FAVORITES_PACKAGE_FK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 01:23:02 UTC</createdTime>
+<generatorID>D710BCEE-C0BB-5D54-E40C-76CFE1A58539</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7E238303-3450-C5BB-EFBE-966D8D0B5347"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="99961D16-F538-3B53-A5B0-57A41E74BC00" name="FAVORITES_USERS_FK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-14 02:37:36 UTC</createdTime>
+<generatorID>634DFE87-B4BA-50C5-B5FA-B5EBC85B7BAD</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="86CA7F49-6CE5-4FEE-737C-1CAF691624DA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ProcessModel class="oracle.dbtools.crest.model.design.process.ProcessModel" name="Process Model" id="61B8F8DD-887F-062D-584D-879B6FDA3D3E">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 14:34:20 UTC</createdTime>
+<ownerDesignName>Modele Logique VF</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</ProcessModel>

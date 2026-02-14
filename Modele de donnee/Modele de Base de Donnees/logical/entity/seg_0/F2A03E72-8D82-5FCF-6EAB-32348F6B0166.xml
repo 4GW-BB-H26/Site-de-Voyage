@@ -1,0 +1,111 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="F2A03E72-8D82-5FCF-6EAB-32348F6B0166" name="REVIEWS">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 18:08:12 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="ID_REVIEW" id="F069725C-BF97-8D84-89DC-7FB158B12AB8">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 18:08:28 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="RATING" id="4C27A98B-0D2E-B1B9-8C12-70569BC171F9">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 18:10:24 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="COMMENT" id="BDDAE6F6-62E8-E0AA-5880-31BEDAF8C0CA">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 18:10:46 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="PUBLISHING_DATE" id="85652123-BB18-B11B-A83A-DB9F529C1D21">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 18:12:06 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_USERS" id="C41FCD99-77B8-C722-99A2-A9BDBD556030">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:07:05 UTC</createdTime>
+<generatorID>2027EF03-D934-ACF6-8697-EFA8DEA623A9</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<referedAttribute>250BEAB4-4153-2745-A5F6-24126E76C163</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="ID_PACKAGE" id="0B643C1B-AAB2-0D73-9991-F81C08D2C27D">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 19:12:32 UTC</createdTime>
+<generatorID>E25DF135-3830-D909-FBE7-7D66145E45A5</generatorID>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
+</engineerTo>
+<referedAttribute>C43957FB-1B33-136F-717F-C0FFF39DA03D</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="45C6BE38-A2E4-C556-1A7F-57A2CAF23BED" name="REVIEWS PK">
+<createdBy>Ink</createdBy>
+<createdTime>2026-02-13 18:08:42 UTC</createdTime>
+<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>F069725C-BF97-8D84-89DC-7FB158B12AB8</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
