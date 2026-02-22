@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: #333;
+}
+liens {
+  text-decoration: none;
+  color: inherit;
+}
+img {
+  max-width: 100%;
+}
+boutons {
+  font-family: inherit;
+  cursor: pointer;
+}
