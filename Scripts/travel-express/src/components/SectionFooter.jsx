@@ -1,38 +1,42 @@
 export default function SectionFooter() {
-    return (
-      <footer className="section-footer">
-        <div className="footer-contenu">
-          <div className="footer-colonne footer-marque">
-            <div className="logo-application footer-logo">
-              <span className="logo-icone">✈</span>
-              <span className="logo-texte">TRAVEL EXPRESS</span>
-            </div>
-            <p className="footer-texte">
-              Gérez facilement toutes vos réservations de voyage au même endroit.
-            </p>
-          </div>      
-  
-          <div className="footer-colonne">
-            <h4 className="footer-titre">Support</h4>
-            <ul className="footer-liste">
-              <li>Centre d&apos;aide</li>
-              <li>Contact</li>
-              <li>FAQ</li>
-            </ul>
+  return (
+    <footer className="section-footer">
+      <div className="footer-contenu">
+        <div className="footer-colonne footer-marque">
+          <div className="logo-application footer-logo">
+            
+            {/*l'icone ✈️  est un emoji de l'avion prise de https://emojipedia.org/airplane */}
+            <span className="logo-icone">✈️</span>
+            <span className="logo-texte">TRAVEL EXPRESS</span>
           </div>
-  
-          <div className="footer-colonne">
-            <h4 className="footer-titre">Légal</h4>
-            <ul className="footer-liste">
-              <li>Conditions d&apos;utilisation</li>
-              <li>Politique de confidentialité</li>
-            </ul>
-          </div>
+          <p className="footer-texte">
+            Gérez facilement toutes vos réservations de voyage au même endroit.
+          </p>
         </div>
-  
-        <div className="footer-bas">
-          <span>@ {new Date().getFullYear()} Travel Express. Tous droits réservés.</span>
+
+        <div className="footer-colonne">
+          <h4 className="footer-titre">Support</h4>
+          <ul className="footer-liste">
+            <li>Centre d&apos;aide</li>
+            <li>Contact</li>
+            <li>FAQ</li>
+          </ul>
         </div>
-      </footer>
-    );
-  }
+
+        <div className="footer-colonne">
+          <h4 className="footer-titre">Légal</h4>
+          <ul className="footer-liste">
+            <li>Conditions d&apos;utilisation</li>
+            <li>Politique de confidentialité</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="footer-bas">
+        <span>
+          @ {new Date().getFullYear()} Travel Express. Tous droits réservés.
+        </span>
+      </div>
+    </footer>
+  );
+}
