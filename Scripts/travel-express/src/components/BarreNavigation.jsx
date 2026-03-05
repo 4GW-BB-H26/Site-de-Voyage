@@ -22,7 +22,7 @@ export default function BarreNavigation() {
         <button className="bouton-deconnexion">Se Déconnecter</button>
 
         <div className="zone-recherche-nav">
-          <span className="icone-recherche">🔍</span>
+          <span className="icone-recherche"></span>
           <input
             type="text"
             placeholder="Rechercher un voyage"
