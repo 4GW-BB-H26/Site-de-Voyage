@@ -1,34 +1,56 @@
-export default function CarteOffre({
-  imageUrl,
-  imageAlt,
-  ville,
-  dates,
-  voyageurs,
-  statut,
-  typeStatut, // "validee" | "avenir" | "annulee"
-  prix,
-}) {
+import CarteOffre from "./CarteOffre";
+
+export default function SectionOffres() {
   return (
-    <article className="carte-offre">
-      <img className="image-offre" src={imageUrl} alt={imageAlt} />
+    <section className="section-offres">
+      <h2 className="titre-section">Mes réservations</h2>
+      <p>Consultez l&apos;ensemble de vos réservations passées et à venir.</p>
 
-      <div className="contenu-offre">
-        <div className="colonne-texte">
-          <h3 className="titre-offre">{ville}</h3>
-          <p className="destination-offre">{dates}</p>
-          <p className="destination-offre">{voyageurs}</p>
-          <span className={`badge-statut badge-${typeStatut}`}>{statut}</span>
-        </div>
+      <div className="grille-offres">
+        <CarteOffre
+          imageUrl="https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg"
+          imageAlt="Paris, France"
+          ville="Paris, France"
+          dates="Du 15 mars 2026 au 22 mars 2026"
+          voyageurs="2 voyageurs"
+          statut="Validée"
+          typeStatut="validee"
+          prix="1850 CAS"
+        />
 
-        <div className="colonne-actions">
-          <p className="prix-offre">{prix}</p>
-          <div className="boutons-offre">
-            <button className="btn-offre btn-secondaire">Voir les détails</button>
-            <button className="btn-offre btn-secondaire">Télécharger</button>
-            <button className="btn-offre btn-danger">Annuler</button>
-          </div>
-        </div>
+        <CarteOffre
+          imageUrl="https://images.pexels.com/photos/373290/pexels-photo-373290.jpeg"
+          imageAlt="Tokyo, Japon"
+          ville="Tokyo, Japon"
+          dates="Du 10 avril 2026 au 20 avril 2026"
+          voyageurs="3 voyageurs"
+          statut="Validée"
+          typeStatut="validee"
+          prix="4250 CAS"
+        />
+
+        <CarteOffre
+          imageUrl="https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg"
+          imageAlt="New York, États-Unis"
+          ville="New York, États-Unis"
+          dates="Du 5 mai 2026 au 22 janvier 2026"
+          voyageurs="4 voyageurs"
+          statut="À venir"
+          typeStatut="avenir"
+          prix="2500 CAS"
+        />
+
+        <CarteOffre
+          imageUrl="https://images.pexels.com/photos/1433052/pexels-photo-1433052.jpeg"
+          imageAlt="Barcelone, Espagne"
+          ville="Barcelone, Espagne"
+          dates="Du 15 juin 2028 au 22 juin 2028"
+          voyageurs="3 voyageurs"
+          statut="Annulée"
+          typeStatut="annulee"
+          prix="3000 CAS"
+        />
       </div>
-    </article>
+    </section>
   );
 }
