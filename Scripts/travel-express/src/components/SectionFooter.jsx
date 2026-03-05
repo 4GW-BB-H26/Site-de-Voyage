@@ -10,7 +10,7 @@ export default function SectionFooter() {
             <p className="footer-texte">
               Gérez facilement toutes vos réservations de voyage au même endroit.
             </p>
-          </div>    
+          </div>      
   
           <div className="footer-colonne">
             <h4 className="footer-titre">Support</h4>
