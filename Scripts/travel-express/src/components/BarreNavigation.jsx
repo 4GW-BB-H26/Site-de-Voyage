@@ -3,7 +3,8 @@ export default function BarreNavigation() {
     <header className="barre-navigation">
       <div className="zone-gauche-nav">
         <div className="logo-application">
-          <span className="logo-icone">✈</span>
+          {/*l'icone ✈️  est un emoji de l'avion prise de https://emojipedia.org/airplane */}
+          <span className="logo-icone">✈️</span>
           <span className="logo-texte">TRAVEL EXPRESS</span>
         </div>
 
