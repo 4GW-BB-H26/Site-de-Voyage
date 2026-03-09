@@ -19,13 +19,13 @@ function App() {
 export default App;
 */
 
-import BarreNavigation from "./components/BarreNavigation";
-import Inscription from "./components/Inscription";
+
+import Inscription from "./src/components/Inscription";
 
 function App() {
   return (
     <div className="conteneur_app">
-      <BarreNavigation />
+      
       <Inscription />
       </div>
   );
