@@ -33,7 +33,7 @@ export default function BarreRecherche() {
           <input type="checkbox" /> Vol direct seulement
         </label>
         <label>
-          <input type="checkbox" /> Inclure les hôtels
+          <input type="checkbox" /> Inclure les hotels
         </label>
         <label>
           <input type="checkbox" /> Utiliser mes préférences

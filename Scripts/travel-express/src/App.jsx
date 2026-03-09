@@ -1,4 +1,3 @@
-/* 
 import BarreNavigation from "./components/BarreNavigation";
 import BarreRecherche from "./components/BarreRecherche";
 import SectionOffres from "./components/SectionOffres";
@@ -12,23 +11,8 @@ function App() {
       <BarreRecherche />
       <SectionOffres />
       <SectionFooter />
+      {/* <Inscription /> */}
     </div>
   );
 }
-
-export default App;
-*/
-
-import BarreNavigation from "./components/BarreNavigation";
-import Inscription from "./components/Inscription";
-
-function App() {
-  return (
-    <div className="conteneur_app">
-      <BarreNavigation />
-      <Inscription />
-      </div>
-  );
-}
-
 export default App;
