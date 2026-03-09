@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Inscription.css";
+import "../styles/Inscription.css";
 
 export default function Inscription() {
 const [formulaire, setFormulaire] = useState({

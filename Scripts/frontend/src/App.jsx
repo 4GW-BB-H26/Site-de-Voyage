@@ -20,7 +20,7 @@ export default App;
 */
 
 
-import Inscription from "./src/components/Inscription";
+import Inscription from "./components/Inscription";
 
 function App() {
   return (
