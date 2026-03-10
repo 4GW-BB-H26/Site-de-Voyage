@@ -117,11 +117,12 @@
 
 .barre-recherche {
   background-color: white;
-  margin: 20px auto;
-  padding: 20px;
-  width: 90%;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .formulaire-recherche {
@@ -158,8 +159,8 @@
 }
 
 .section-offres {
-  width: 90%;
-  margin: 30px auto;
+  width: 100%;
+  margin: 2rem 0 3rem;
 }
 
 .titre-section {
@@ -171,7 +172,7 @@
 .grille-offres {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .carte-offre {
@@ -314,19 +315,35 @@
   color: red;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 767px) {
   .carte-offre {
-    width: 48%;
+    flex-direction: column;
   }
-}
 
-@media (max-width: 600px) {
-  .carte-offre {
+  .image-offre {
     width: 100%;
+    height: 180px;
+  }
+
+  .contenu-offre {
+    flex-direction: column;
+  }
+
+  .colonne-actions {
+    align-items: flex-start;
   }
 
   .formulaire-recherche {
     flex-direction: column;
+  }
+
+  .zone-gauche-nav {
+    flex-wrap: wrap;
+  }
+
+  .menu-navigation {
+    flex-wrap: wrap;
+    gap: 8px;
   }
 }
 

@@ -1,3 +1,4 @@
+// Formulaire de recherche de voyages
 export default function BarreRecherche() {
   return (
     <section className="barre-recherche">

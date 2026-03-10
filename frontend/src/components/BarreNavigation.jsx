@@ -1,3 +1,4 @@
+// Barre de navigation principale
 export default function BarreNavigation() {
   return (
     <header className="barre-navigation">

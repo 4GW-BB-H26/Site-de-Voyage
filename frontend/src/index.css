@@ -9,14 +9,21 @@ body {
   background: #ffffff;
   color: #333;
 }
-liens {
+a {
   text-decoration: none;
   color: inherit;
 }
+
+a:hover {
+  color: inherit;
+}
+
 img {
   max-width: 100%;
+  height: auto;
 }
-boutons {
+
+button {
   font-family: inherit;
   cursor: pointer;
 }

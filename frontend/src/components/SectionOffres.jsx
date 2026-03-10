@@ -1,5 +1,6 @@
 import CarteOffre from "./CarteOffre";
 
+// Liste des réservations de l'utilisateur
 export default function SectionOffres() {
   return (
     <section className="section-offres">

@@ -1,3 +1,4 @@
+// Carte d'une réservation ou offre de voyage
 export default function CarteOffre({
   imageUrl,
   imageAlt,
