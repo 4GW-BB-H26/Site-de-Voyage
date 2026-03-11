@@ -1,0 +1,10 @@
+
+TO_CHAR(SYSDATE,
+----------------
+2026-03-26 21:52
+
+
+Error starting at line : 13 in command -
+@logger_install.sql
+Error report -
+SP2-0310: Unable to open file: "logger_install.sql"
