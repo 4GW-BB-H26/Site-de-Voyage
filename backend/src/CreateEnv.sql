@@ -11,4 +11,5 @@ select to_char(sysdate,'YYYY-MM-YY HH24:MI')
 FROM dual; 
 
 @utils/logger/logger_install.sql
+@config/Create_Tables.sql
 --mettre les scripts et tests ici
