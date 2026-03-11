@@ -1,56 +1,114 @@
-import CarteOffre from "./CarteOffre";
+import CarteOffrePromo from "./CarteOffrePromo";
 
-// Liste des réservations de l'utilisateur
+// Offres promotionnelles Hôtel + Vol
 export default function SectionOffres() {
+  const offres = [
+    {
+      id: 1,
+      imageUrl: "https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg",
+      imageAlt: "Cancun, Mexique",
+      titre: "Hôtel BDEB + Vol",
+      lieu: "Cancun - Mexique",
+      note: "4.7 étoiles - 9.7/10 Très Bien (120)",
+      vol: "Montreal(YUL) - Cancun(MEX)",
+      dates: "Feb 1 - Feb 7",
+      prix: "CAD $999",
+      ancienPrix: "$1499",
+    },
+    {
+      id: 2,
+      imageUrl: "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg",
+      imageAlt: "Cayo Santa-Maria, Cuba",
+      titre: "Hôtel St-Paul + Vol",
+      lieu: "Cayo Santa-Maria - Cuba",
+      note: "3.5 étoiles - 7.4/10 Très Bien (70)",
+      vol: "Montreal(YUL) - Santa-Maria(CU)",
+      dates: "Feb 10 - Feb 17",
+      prix: "CAD $700",
+      ancienPrix: "$1000",
+    },
+    {
+      id: 3,
+      imageUrl: "https://images.pexels.com/photos/1433052/pexels-photo-1433052.jpeg",
+      imageAlt: "Barcelone, Espagne",
+      titre: "Hôtel I.B. + Vol",
+      lieu: "Barcelone - Espagne",
+      note: "5 étoiles - 10/10 Très Bien (49)",
+      vol: "Montreal(YUL) - Barcelona(ESP)",
+      dates: "Mar 1 - Feb 14",
+      prix: "CAD $2500",
+      ancienPrix: "$3000",
+    },
+    {
+      id: 4,
+      imageUrl: "https://images.pexels.com/photos/373290/pexels-photo-373290.jpeg",
+      imageAlt: "Tokyo, Japon",
+      titre: "Hôtel H-016 + Vol",
+      lieu: "Tokyo - Japon",
+      note: "4.9 étoiles - 9.9/10 Très Bien (256)",
+      vol: "Montreal(YUL) - Tokyo(JPN)",
+      dates: "Apr 5 - Apr 18",
+      prix: "CAD $3200",
+      ancienPrix: "$4100",
+    },
+    {
+      id: 5,
+      imageUrl: "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg",
+      imageAlt: "New York, États-Unis",
+      titre: "Hôtel Metro + Vol",
+      lieu: "New York - États-Unis",
+      note: "4.5 étoiles - 9.2/10 Très Bien (189)",
+      vol: "Montreal(YUL) - New York(USA)",
+      dates: "Mar 15 - Mar 22",
+      prix: "CAD $1800",
+      ancienPrix: "$2200",
+    },
+    {
+      id: 6,
+      imageUrl: "https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg",
+      imageAlt: "Paris, France",
+      titre: "Hôtel Barbare + Vol",
+      lieu: "Paris - France",
+      note: "4.8 étoiles - 9.6/10 Très Bien (312)",
+      vol: "Montreal(YUL) - Paris(FRA)",
+      dates: "May 1 - May 10",
+      prix: "CAD $2100",
+      ancienPrix: "$2700",
+    },
+    {
+      id: 7,
+      imageUrl: "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg",
+      imageAlt: "Rome, Italie",
+      titre: "Hôtel Couche-Tard + Vol",
+      lieu: "Rome - Italie",
+      note: "4.6 étoiles - 9.1/10 Très Bien (98)",
+      vol: "Montreal(YUL) - Rome(ITA)",
+      dates: "Jun 10 - Jun 20",
+      prix: "CAD $2400",
+      ancienPrix: "$3100",
+    },
+    {
+      id: 8,
+      imageUrl: "https://images.pexels.com/photos/1462030/pexels-photo-1462030.jpeg",
+      imageAlt: "Bangkok, Thaïlande",
+      titre: "Hôtel Pomme + Vol",
+      lieu: "Bangkok - Thaïlande",
+      note: "4.4 étoiles - 8.8/10 Très Bien (145)",
+      vol: "Montreal(YUL) - Bangkok(THA)",
+      dates: "Jul 1 - Jul 14",
+      prix: "CAD $1850",
+      ancienPrix: "$2400",
+    },
+  ];
+
   return (
     <section className="section-offres">
-      <h2 className="titre-section">Mes réservations</h2>
-      <p>Consultez l&apos;ensemble de vos réservations passées et à venir.</p>
+      <h2 className="titre-section">Offres : Sauvez jusqu'à 25%</h2>
 
-      <div className="grille-offres">
-        <CarteOffre
-          imageUrl="https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg"
-          imageAlt="Paris, France"
-          ville="Paris, France"
-          dates="Du 15 mars 2026 au 22 mars 2026"
-          voyageurs="2 voyageurs"
-          statut="Validée"
-          typeStatut="validee"
-          prix="1850 CAD"
-        />
-
-        <CarteOffre
-          imageUrl="https://images.pexels.com/photos/373290/pexels-photo-373290.jpeg"
-          imageAlt="Tokyo, Japon"
-          ville="Tokyo, Japon"
-          dates="Du 10 avril 2026 au 20 avril 2026"
-          voyageurs="3 voyageurs"
-          statut="Validée"
-          typeStatut="validee"
-          prix="4250 CAD"
-        />
-
-        <CarteOffre
-          imageUrl="https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg"
-          imageAlt="New York, États-Unis"
-          ville="New York, États-Unis"
-          dates="Du 5 mai 2026 au 22 janvier 2026"
-          voyageurs="4 voyageurs"
-          statut="À venir"
-          typeStatut="avenir"
-          prix="2500 CAD"
-        />
-
-        <CarteOffre
-          imageUrl="https://images.pexels.com/photos/1433052/pexels-photo-1433052.jpeg"
-          imageAlt="Barcelone, Espagne"
-          ville="Barcelone, Espagne"
-          dates="Du 15 juin 2028 au 22 juin 2028"
-          voyageurs="3 voyageurs"
-          statut="Annulée"
-          typeStatut="annulee"
-          prix="3000 CAD"
-        />
+      <div className="grille-offres-promo">
+        {offres.map((offre) => (
+          <CarteOffrePromo key={offre.id} {...offre} />
+        ))}
       </div>
     </section>
   );

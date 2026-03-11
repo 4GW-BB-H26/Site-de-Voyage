@@ -2,6 +2,7 @@ import BarreNavigation from "../components/BarreNavigation";
 import BarreRecherche from "../components/BarreRecherche";
 import SectionOffres from "../components/SectionOffres";
 import SectionFooter from "../components/SectionFooter";
+
 import "../styles/styles.css";
 
 export default function PageAccueil() {

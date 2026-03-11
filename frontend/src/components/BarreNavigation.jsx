@@ -11,9 +11,9 @@ export default function BarreNavigation() {
 
         <nav className="menu-navigation">
           <span className="menu-item">Recommandées</span>
-          <span className="menu-item">Offres</span>
+          <span className="menu-item menu-item-actif">Offres</span>
           <span className="menu-item">Mes favoris</span>
-          <span className="menu-item menu-item-actif">Mes réservations</span>
+          <span className="menu-item">Mes réservations</span>
           <span className="menu-item">Compte</span>
           <span className="menu-item">Support</span>
         </nav>
