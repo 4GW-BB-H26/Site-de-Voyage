@@ -1,4 +1,4 @@
-create or replace package package_tapi is
+create or replace package PACKAGE_TAPI is
    type package_tapi_rec is record (
          id_package                 "PACKAGE".id_package%type,
          hotel_name                 "PACKAGE".hotel_name%type,
@@ -63,6 +63,6 @@ create or replace package package_tapi is
       p_taille     in number default 4
    ) return varchar2;
 
-end package_tapi;
+end PACKAGE_TAPI;
 /
 SHOW ERRORS;
