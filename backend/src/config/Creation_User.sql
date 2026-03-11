@@ -1,5 +1,5 @@
 --Script de creation du user
-
+--run in sys
 
 
 CREATE USER ProjetVoyage IDENTIFIED BY cisco;

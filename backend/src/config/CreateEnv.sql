@@ -1,4 +1,6 @@
 --Script Instalation du logger
+--run in ProjetVoyage
+
 
 --Si erreurs:
 --DROP TABLE LOGGER_PREFS CASCADE CONSTRAINTS;
