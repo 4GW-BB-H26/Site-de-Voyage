@@ -1,4 +1,12 @@
-create or replace package PACKAGE_TAPI is
+create or replace package package_tapi is
+
+-- creation de mes exception globale
+   exception_destination_invalide exception;
+   exception_prix_negatif exception;
+   exception_package_introuvable exception;
+   pragma exception_init ( exception_destination_invalide,-20001 );
+   pragma exception_init ( exception_prix_negatif,-20002 );
+   pragma exception_init ( exception_package_introuvable,-20003 );
    type package_tapi_rec is record (
          id_package                 "PACKAGE".id_package%type,
          hotel_name                 "PACKAGE".hotel_name%type,
@@ -31,38 +39,31 @@ create or replace package PACKAGE_TAPI is
       p_id_destination             "PACKAGE".id_destination%type,
       p_test                       varchar2 default 'N'
    ) return varchar2;
-
 -- update
    function upd_package (
-      p_id_package                 in "PACKAGE".id_package%type,
-      p_hotel_name                 in "PACKAGE".hotel_name%type default null,
-      p_excursion                  in "PACKAGE".excursion%type default null,
-      p_transport_type             in "PACKAGE".transport_type%type default null,
-      p_guide_name                 in "PACKAGE".guide_name%type default null,
-      p_length                     in "PACKAGE".length%type default null,
-      p_global_rating              in "PACKAGE".global_rating%type default null,
-      p_nb_ratings                 in "PACKAGE".nb_ratings%type default null,
-      p_description                in "PACKAGE".description%type default null,
-      p_price                      in "PACKAGE".price%type default null,
-      p_destination_id_destination in "PACKAGE".destination_id_destination%type default null,
-      p_id_destination             in "PACKAGE".id_destination%type default null,
+      p_id_package                 "PACKAGE".id_package%type,
+      p_hotel_name                 "PACKAGE".hotel_name%type default null,
+      p_excursion                  "PACKAGE".excursion%type default null,
+      p_transport_type             "PACKAGE".transport_type%type default null,
+      p_guide_name                 "PACKAGE".guide_name%type default null,
+      p_length                     "PACKAGE".length%type default null,
+      p_global_rating              "PACKAGE".global_rating%type default null,
+      p_nb_ratings                 "PACKAGE".nb_ratings%type default null,
+      p_description                "PACKAGE".description%type default null,
+      p_price                      "PACKAGE".price%type default null,
+      p_destination_id_destination "PACKAGE".destination_id_destination%type default null,
+      p_id_destination             "PACKAGE".id_destination%type default null,
       p_test                       varchar2 default 'N'
    ) return varchar2;
-
 -- delete
    function del_package (
       p_id_package in "PACKAGE".id_package%type,
       p_test       in varchar2 default 'N'
    ) return varchar2;
-
--- select
    function get_package (
-      p_id_package in "PACKAGE".id_package%type,
-      p_limite     in number default 5,
-      p_debut      in number default 0,
-      p_taille     in number default 4
+      p_id_package in "PACKAGE".id_package%type
    ) return varchar2;
 
-end PACKAGE_TAPI;
+end package_tapi;
 /
 SHOW ERRORS;
