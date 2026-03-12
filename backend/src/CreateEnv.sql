@@ -12,4 +12,6 @@ FROM dual;
 
 @utils/logger/logger_install.sql
 @config/Create_Tables.sql
+--@config/PACKAGE_TAPI.pks
+--@config/PACKAGE_TAPI.pkb
 --mettre les scripts et tests ici
