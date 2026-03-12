@@ -1,7 +1,9 @@
 import PageAccueil from "./pages/PageAccueil";
+import RegisterPage from "./pages/RegisterPage";
+
 
 function App() {
-  return <PageAccueil />;
+  return <RegisterPage />;
 }
 
 export default App;

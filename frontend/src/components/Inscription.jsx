@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Inscription.css";
+import "../styles/styles.css";
 
 export default function Inscription() {
 const [formulaire, setFormulaire] = useState({
@@ -24,8 +24,8 @@ const [formulaire, setFormulaire] = useState({
   };
   return (
     <div className="conteneur-inscription"><div className="boite-inscription">
-        <h1 className="titre-inscription">Créer compte</h1>
-        <p className="sous-titre-inscription">Insrivez vous à Travel Express</p>
+        <h1 className="titre-inscription">Créer un compte</h1>
+        <p className="sous-titre-inscription">Insrivez-vous à Travel Express</p>
 
         <form className="formulaire-inscription" onSubmit={gererSubmit}>
           
@@ -96,7 +96,7 @@ const [formulaire, setFormulaire] = useState({
                 onChange={gererChangement}
               />
               <label htmlFor="checkbox-conditions" className="texte-conditions">
-                J'accepte les <a href="#" className="lien-conditions">conditions d'utilisation et je relegue toutes mes posséssions ainsi que ma libre-pensée à Benjamin Nethanyahu et à l'état glorieux d'Israel</a>
+                J'ai lu et j'accepte les <a href="#" className="lien-conditions">conditions d'utilisations</a>
               </label>
             </div>
           </div>
@@ -108,7 +108,7 @@ const [formulaire, setFormulaire] = useState({
         </form>
 
         <div className="zone-connexion">
-          Si déjà un compte, GO BACK TO LOGIN 
+          Vous avez déjà un compte? 
           <a href="#" className="lien-connexion">Se connecter</a>
         </div>
       </div>
