@@ -3,7 +3,15 @@ import RegisterPage from "./pages/RegisterPage";
 
 
 function App() {
-  return <RegisterPage />;
+  return <PageAccueil />;
 }
+
+//function App(){
+//  return <LoginPage />;
+//}
+
+//function App(){
+//  return <RegisterPage />;
+//}
 
 export default App;
