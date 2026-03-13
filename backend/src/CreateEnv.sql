@@ -15,6 +15,3 @@ FROM dual;
 --@config/PACKAGE_TAPI.pks
 --@config/PACKAGE_TAPI.pkb
 --mettre les scripts et tests ici
-exec logger.PURGE_ALL;
-/
---@runTests.sql
