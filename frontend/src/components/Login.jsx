@@ -4,9 +4,8 @@ function Login(){
         <div className="row">
             
             <div className="col-6">
-                <img src="src/assets/Image_Login.png" alt="Image de lieu"></img>
-            </div>
-                
+                <img src="src/assets/img_login.jpg" alt="Image de lieu"></img>
+            </div>   
             <div className="col-6">
                 
             </div>
