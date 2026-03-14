@@ -10,8 +10,8 @@ SPOOL result.log
 select to_char(sysdate,'YYYY-MM-YY HH24:MI')
 FROM dual; 
 
-@utils/logger/logger_install.sql
+@utils/logger/logger_install.sql 
 @config/Create_Tables.sql
---@config/PACKAGE_TAPI.pks
---@config/PACKAGE_TAPI.pkb
+-- @config/PACKAGE_TAPI.pks
+-- @config/PACKAGE_TAPI.pkb
 --mettre les scripts et tests ici
