@@ -112,7 +112,8 @@ create or replace package body package_tapi as
            into r_pkg.id_package, r_pkg.hotel_name, r_pkg.excursion, r_pkg.transport_type,
                 r_pkg.guide_name, r_pkg.length, r_pkg.global_rating, r_pkg.nb_ratings,
                 r_pkg.description, r_pkg.price, r_pkg.destination_id_destination, r_pkg.id_destination
-           from "PACKAGE" where id_package = p_id_package;
+           from "PACKAGE"
+          where id_package = p_id_package;
 
          l_reponse :=
             json_object(
@@ -145,8 +146,8 @@ create or replace package body package_tapi as
 
       logger.append_param(
          l_params,
-         'l_code',
-         l_code
+         'id_package',
+         p_id_package
       );
       logger.log(
          '>>>FIN',
@@ -543,6 +544,7 @@ create or replace package body package_tapi as
    ) return varchar2 is
       l_scope   logger_logs.scope%type := gc_scope_prefix || 'get_package';
       l_params  logger.tab_param;
+      r_pkg     package_tapi_rec;
       l_reponse varchar2(4000);
    begin
       logger.append_param(
@@ -557,16 +559,25 @@ create or replace package body package_tapi as
          l_params
       );
 
-      l_reponse := router_succes(
-         'get',
-         p_id_package
-      );
+      select id_package, hotel_name, excursion, transport_type, guide_name, length,
+             global_rating, nb_ratings, description, price,
+             destination_id_destination, id_destination
+        into r_pkg.id_package, r_pkg.hotel_name, r_pkg.excursion, r_pkg.transport_type,
+             r_pkg.guide_name, r_pkg.length, r_pkg.global_rating, r_pkg.nb_ratings,
+             r_pkg.description, r_pkg.price, r_pkg.destination_id_destination, r_pkg.id_destination
+        from "PACKAGE"
+       where id_package = p_id_package;
+
 
       logger.log(
          '>>>FIN',
          l_scope,
          null,
          l_params
+      );
+      l_reponse := router_succes(
+         'get',
+         r_pkg.id_package
       );
       return l_reponse;
    exception
