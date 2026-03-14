@@ -1,0 +1,13 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node middleware/app.js",
+    "dev": "node --watch middleware/app.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "oracledb": "^6.6.0"
+  }
+}
