@@ -1,15 +1,15 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="22846385-4462-6D27-E24F-1177C04F1D50" containerWithKeyObject="A872725C-E408-0B6E-C4DE-6FEB4C440D5C" localFKIndex="99961D16-F538-3B53-A5B0-57A41E74BC00" name="FAVORITES_USERS_FK">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="79AC52E2-16A7-855A-9B59-3D59921B82C1" containerWithKeyObject="A872725C-E408-0B6E-C4DE-6FEB4C440D5C" localFKIndex="19136169-3DA6-5B8D-1A1E-2A82632B3081" name="FAVORITES_USERS_FK">
 <createdBy>Ink</createdBy>
-<createdTime>2026-02-14 02:37:36 UTC</createdTime>
-<generatorID>634DFE87-B4BA-50C5-B5FA-B5EBC85B7BAD</generatorID>
+<createdTime>2026-03-15 22:02:15 UTC</createdTime>
+<generatorID>D6855CFC-C4BD-C044-5564-5AD3F3EA28AE</generatorID>
 <ownerDesignName>Modele de Base de Donnees</ownerDesignName>
 <referredTableLongName>USERS</referredTableLongName>
 <deleteRule>NO ACTION</deleteRule>
 <referredTableID>89F9DD8F-B697-7082-9949-26E5565D3C74</referredTableID>
 <keyObject>878608C5-F0A2-CDA5-C452-3589953C0CED</keyObject>
 <referredKeyID>878608C5-F0A2-CDA5-C452-3589953C0CED</referredKeyID>
-<mandatory>true</mandatory>
+<mandatory>false</mandatory>
 <refColNames>ID_USERS</refColNames>
 <transferable>true</transferable>
 <rely>false</rely>

@@ -46,11 +46,12 @@
 <colAssociation fkAssociation="C7C4957E-EF95-C087-2134-969B926144D4" referredColumn="89FA75F3-AC34-459D-28EB-A10B18C4DA70"/>
 </associations>
 </Column>
-<Column name="USERS_ID_USERS" id="86CA7F49-6CE5-4FEE-737C-1CAF691624DA">
+<Column name="USERS_ID_USERS" id="5B09AD0B-27E6-7BAE-3224-27F202A81185">
 <createdBy>Ink</createdBy>
-<createdTime>2026-02-14 02:37:36 UTC</createdTime>
-<generatorID>AC626A2E-EEA7-3FDC-A27E-7FF7FA577B81</generatorID>
+<createdTime>2026-03-15 22:02:15 UTC</createdTime>
+<generatorID>FF03CC3F-AE34-8285-7D21-A3F1010A5BDF</generatorID>
 <ownerDesignName>Modele de Base de Donnees</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
@@ -58,7 +59,7 @@
 <previousColumn>false</previousColumn>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
-<colAssociation fkAssociation="22846385-4462-6D27-E24F-1177C04F1D50" referredColumn="36BA478F-E418-1C30-8208-0900E2891E1D"/>
+<colAssociation fkAssociation="79AC52E2-16A7-855A-9B59-3D59921B82C1" referredColumn="36BA478F-E418-1C30-8208-0900E2891E1D"/>
 </associations>
 </Column>
 </columns>
@@ -75,17 +76,6 @@
 <colUsage columnID="943356E9-23D7-C40B-01C9-530F83241D78"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="C673717B-E1E9-4284-3FEE-6CA4795D1AA2" name="FAVORITES__IDX">
-<createdBy>Ink</createdBy>
-<createdTime>2026-02-14 02:37:36 UTC</createdTime>
-<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
-<indexState>Unique Plain Index</indexState>
-<isSurrogateKey>false</isSurrogateKey>
-<relationGeneratorID>634DFE87-B4BA-50C5-B5FA-B5EBC85B7BAD</relationGeneratorID>
-<indexColumnUsage>
-<colUsage columnID="86CA7F49-6CE5-4FEE-737C-1CAF691624DA"/>
-</indexColumnUsage>
-</ind_PK_UK>
 <ind_PK_UK id="8DBAA685-06C2-E14F-6F26-0F084B7B6180" name="FAVORITES_PACKAGE_FK">
 <createdBy>Ink</createdBy>
 <createdTime>2026-02-14 01:23:02 UTC</createdTime>
@@ -97,15 +87,15 @@
 <colUsage columnID="7E238303-3450-C5BB-EFBE-966D8D0B5347"/>
 </indexColumnUsage>
 </ind_PK_UK>
-<ind_PK_UK id="99961D16-F538-3B53-A5B0-57A41E74BC00" name="FAVORITES_USERS_FK">
+<ind_PK_UK id="19136169-3DA6-5B8D-1A1E-2A82632B3081" name="FAVORITES_USERS_FK">
 <createdBy>Ink</createdBy>
-<createdTime>2026-02-14 02:37:36 UTC</createdTime>
-<generatorID>634DFE87-B4BA-50C5-B5FA-B5EBC85B7BAD</generatorID>
+<createdTime>2026-03-15 22:02:15 UTC</createdTime>
+<generatorID>D6855CFC-C4BD-C044-5564-5AD3F3EA28AE</generatorID>
 <ownerDesignName>Modele de Base de Donnees</ownerDesignName>
 <indexState>Foreign Key</indexState>
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
-<colUsage columnID="86CA7F49-6CE5-4FEE-737C-1CAF691624DA"/>
+<colUsage columnID="5B09AD0B-27E6-7BAE-3224-27F202A81185"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>
