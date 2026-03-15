@@ -3,6 +3,24 @@ CREATE OR REPLACE PACKAGE BODY package_tapi AS
    gc_scope_prefix CONSTANT VARCHAR2(31) := lower($$plsql_unit)
                                             || '.';
 
+   /**
+    * Description   Fonction utilitaire interne qui construit un JSON d'erreur standard à partir d'un code d'erreur Oracle ou applicatif.
+    *
+    * @version      1.0.0    Version initiale
+    *
+    * @example      l_json := router_erreur(-20002);
+    *
+    * @issue        1
+    *
+    * @author       Ara Ghahramanyan
+    * @created      2026-03-15
+    *
+    * @param        {number} p_code_erreur Code d'erreur SQL ou métier à router.
+    *
+    * @return       {varchar2}  Retourne un JSON contenant un tableau errors (status, title, detail, code, meta).
+    *
+    * @exception    Aucune: les exceptions sont gérées en amont, cette fonction construit seulement la structure JSON.
+    */
    FUNCTION router_erreur (
       p_code_erreur NUMBER
    ) RETURN VARCHAR2 IS
@@ -55,6 +73,26 @@ CREATE OR REPLACE PACKAGE BODY package_tapi AS
    END router_erreur;
 
 
+   /**
+    * Description   Fonction utilitaire interne qui construit un JSON de succès standard pour les opérations CRUD sur PACKAGE.
+    *
+    * @version      1.0.0    Version initiale
+    *
+    * @example      l_json := router_succes('insert', 1);
+    *
+    * @issue        1
+    *
+    * @author       Ara Ghahramanyan
+    * @created      2026-03-15
+    *
+    * @param        {varchar2} p_action     Action réalisée: 'insert', 'update', 'delete', 'get'.
+    * @param        {number}   p_id_package Identifiant du package concerné.
+    *
+    * @return       {varchar2}  Retourne un JSON contenant soit meta uniquement (delete) soit data + meta.
+    *
+    * @exception    100:   Package non trouvé: aucun enregistrement correspondant en base.
+    * @exception   -999:  Erreur serveur: toute erreur qui n'est pas prévue dans le bloc catch.
+    */
    FUNCTION router_succes (
       p_action VARCHAR2,p_id_package NUMBER
    ) RETURN VARCHAR2 IS
@@ -116,6 +154,41 @@ CREATE OR REPLACE PACKAGE BODY package_tapi AS
    END router_succes;
 
 
+   /**
+    * Description   Fonction qui permet d'insérer un nouveau package dans la table "PACKAGE".
+    *
+    * @version      1.0.0    Version initiale
+    *
+    * @example      l_json := ins_package('Hotel X', 'Safari', 'Bus', 'John Doe', 7, 4.5, 10, 'Belle excursion', 1200, 1, 1, 'N');
+    *
+    * @issue        1
+    *
+    * @author       Ara Ghahramanyan
+    * @created      2026-03-15
+    *
+    * @param        {varchar2} p_hotel_name Nom de l'hôtel.
+    * @param        {varchar2} p_excursion Nom ou description de l'excursion.
+    * @param        {varchar2} p_transport_type Type de transport utilisé.
+    * @param        {varchar2} p_guide_name Nom du guide.
+    * @param        {number}   p_length Durée du séjour (par exemple en jours).
+    * @param        {number}   p_global_rating Note globale du package.
+    * @param        {number}   p_nb_ratings Nombre de notes reçues.
+    * @param        {varchar2} p_description Description détaillée du package.
+    * @param        {number}   p_price Prix du package.
+    * @param        {number}   p_destination_id_destination Identifiant de la destination (clé étrangère).
+    * @param        {number}   p_id_destination Identifiant logique de la destination.
+    * @param        {varchar2} p_test Indicateur de test ('N' pour commit, autre pour rollback).
+    *
+    * @return       {varchar2}  Retourne un JSON contenant un objet data/meta ou un objet errors.
+    *
+    * @exception    100:   Package non trouvé: cas rares liés aux validations.
+    * @exception   -20001: Destination invalide.
+    * @exception   -20002: Prix négatif.
+    * @exception   -20003: Package introuvable.
+    * @exception   -998:  Erreur de parsing: si le JSON n'est pas valide.
+    * @exception   -997:  Format de réponse inattendu: le format est non conforme.
+    * @exception   -999:  Erreur serveur: toute erreur qui n'est pas prévue dans le bloc catch.
+    */
    FUNCTION ins_package (
       p_hotel_name VARCHAR2,p_excursion VARCHAR2,p_transport_type VARCHAR2,p_guide_name VARCHAR2,p_length NUMBER,p_global_rating
       NUMBER,p_nb_ratings NUMBER,p_description VARCHAR2,p_price NUMBER,p_destination_id_destination NUMBER,p_id_destination NUMBER
@@ -204,6 +277,42 @@ CREATE OR REPLACE PACKAGE BODY package_tapi AS
    END ins_package;
 
 
+   /**
+    * Description   Fonction qui permet de mettre à jour un package existant dans la table "PACKAGE".
+    *
+    * @version      1.0.0    Version initiale
+    *
+    * @example      l_json := upd_package(1, p_price => 1500);
+    *
+    * @issue        1
+    *
+    * @author       Ara Ghahramanyan
+    * @created      2026-03-15
+    *
+    * @param        {number}   p_id_package Identifiant unique du package à modifier.
+    * @param        {varchar2} p_hotel_name Nouveau nom de l'hôtel (optionnel).
+    * @param        {varchar2} p_excursion Nouveau nom/description de l'excursion (optionnel).
+    * @param        {varchar2} p_transport_type Nouveau type de transport (optionnel).
+    * @param        {varchar2} p_guide_name Nouveau nom du guide (optionnel).
+    * @param        {number}   p_length Nouvelle durée du séjour (optionnel).
+    * @param        {number}   p_global_rating Nouvelle note globale (optionnel).
+    * @param        {number}   p_nb_ratings Nouveau nombre de notes (optionnel).
+    * @param        {varchar2} p_description Nouvelle description (optionnel).
+    * @param        {number}   p_price Nouveau prix (optionnel).
+    * @param        {number}   p_destination_id_destination Nouvelle destination (clé étrangère, optionnel).
+    * @param        {number}   p_id_destination Nouvel identifiant logique de destination (optionnel).
+    * @param        {varchar2} p_test Indicateur de test ('N' pour commit, autre pour rollback).
+    *
+    * @return       {varchar2}  Retourne un JSON contenant le package mis à jour (data/meta) ou un objet errors.
+    *
+    * @exception    100:   Package non trouvé: aucun package ne correspond à l'identifiant.
+    * @exception   -20001: Destination invalide.
+    * @exception   -20002: Prix négatif.
+    * @exception   -20003: Package introuvable.
+    * @exception   -998:  Erreur de parsing: si le JSON n'est pas valide.
+    * @exception   -997:  Format de réponse inattendu: le format est non conforme.
+    * @exception   -999:  Erreur serveur: toute erreur qui n'est pas prévue dans le bloc catch.
+    */
    FUNCTION upd_package (
       p_id_package NUMBER,p_hotel_name VARCHAR2 DEFAULT NULL,p_excursion VARCHAR2 DEFAULT NULL,p_transport_type VARCHAR2 DEFAULT
       NULL,p_guide_name VARCHAR2 DEFAULT NULL,p_length NUMBER DEFAULT NULL,p_global_rating NUMBER DEFAULT NULL,p_nb_ratings NUMBER
@@ -317,6 +426,29 @@ CREATE OR REPLACE PACKAGE BODY package_tapi AS
    END upd_package;
 
 
+   /**
+    * Description   Fonction qui permet de supprimer un package dans la table "PACKAGE".
+    *
+    * @version      1.0.0    Version initiale
+    *
+    * @example      l_json := del_package(1);
+    *
+    * @issue        1
+    *
+    * @author       Ara Ghahramanyan
+    * @created      2026-03-15
+    *
+    * @param        {number}   p_id_package Identifiant unique du package à supprimer.
+    * @param        {varchar2} p_test Indicateur de test ('N' pour commit, autre pour rollback).
+    *
+    * @return       {varchar2}  Retourne un JSON meta (succès) ou un objet errors.
+    *
+    * @exception    100:   Package non trouvé: aucun package ne correspond à l'identifiant.
+    * @exception   -20003: Package introuvable.
+    * @exception   -998:  Erreur de parsing: si le JSON n'est pas valide.
+    * @exception   -997:  Format de réponse inattendu: le format est non conforme.
+    * @exception   -999:  Erreur serveur: toute erreur qui n'est pas prévue dans le bloc catch.
+    */
    FUNCTION del_package (
       p_id_package NUMBER,p_test VARCHAR2 DEFAULT 'N'
    ) RETURN VARCHAR2 IS
@@ -372,6 +504,28 @@ CREATE OR REPLACE PACKAGE BODY package_tapi AS
    END del_package;
 
 
+   /**
+    * Description   Fonction qui permet de récupérer un package par son identifiant et de retourner sa représentation JSON.
+    *
+    * @version      1.0.0    Version initiale
+    *
+    * @example      l_json := get_package(1);
+    *
+    * @issue        1
+    *
+    * @author       Ara Ghahramanyan
+    * @created      2026-03-15
+    *
+    * @param        {number} p_id_package Identifiant unique du package.
+    *
+    * @return       {varchar2}  Retourne un JSON contenant un objet data/meta ou un objet errors.
+    *
+    * @exception    100:   Package non trouvé: aucun package ne correspond à l'identifiant.
+    * @exception   -20003: Package introuvable.
+    * @exception   -998:  Erreur de parsing: si le JSON n'est pas valide.
+    * @exception   -997:  Format de réponse inattendu: le format est non conforme.
+    * @exception   -999:  Erreur serveur: toute erreur qui n'est pas prévue dans le bloc catch.
+    */
    FUNCTION get_package (
       p_id_package NUMBER
    ) RETURN VARCHAR2 IS
