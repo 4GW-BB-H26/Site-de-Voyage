@@ -624,3 +624,134 @@
 .forgotten-password-login:hover{
   text-decoration: underline;
 }
+
+/* Css pour reservations */
+
+.section-reservation {
+  width: 100%;
+  margin: 32px 0 48px;
+}
+
+.sous-titre-reservations {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+
+.liste-reservations {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Carte reservation */
+
+.carte-reservation {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: white;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  padding: 12px;
+}
+
+.carte-reservation-image {
+  width: 130px;
+  height: 85px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.carte-reservation-contenu {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.carte-reservation-info {
+  flex: 1;
+}
+
+.carte-reservation-titre {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0 0 4px;
+  color: #1a1a1a;
+}
+
+.carte-reservation-dates, .carte-reservation-voyageurs {
+  font-size: 12px;
+  color: #666;
+  margin: 0 0 3px;
+}
+
+.carte-reservation-bas {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.badge-statut {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.badge-validee {
+  background: #d4f5d4; color: #1a6e1a;
+}
+
+.badge-a-venir {
+  background: #fde8f3; color: #9c2a6a;
+}
+
+.badge-annulee {
+  background: #e8e8e8; color: #555;
+}
+
+.carte-reservation-prix {
+  font-size: 15px;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.carte-reservation-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-action-reservation {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: white;
+  color: 1a1a1a;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-action-reservation:hover {
+  background-color: #f5f5f5
+}
+
+.btn-action-annuler{
+  color: #c0392b;
+  border-color: #f5b8b8;
+}
+
+.btn-action-annuler:hover {
+  background-color: #fff0f0;
+}
