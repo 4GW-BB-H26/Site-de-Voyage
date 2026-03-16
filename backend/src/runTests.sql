@@ -1,6 +1,7 @@
 Prompt Execution des tests unitaires.
---BEGIN
+BEGIN
     --ut.run('nom du fichier test'); pour executer les test A FAIRE 1 A LA FOIS
---END;
+    ut.run();
+END;
 /
 SHOW ERRORS;
