@@ -1,0 +1,501 @@
+
+TO_CHAR(SYSDATE,
+----------------
+2026-03-26 01:48
+
+_____________________________________________________________________________
+User has all required privileges, installation will continue.
+_____________________________________________________________________________
+
+
+PL/SQL procedure successfully completed.
+
+tables/logger_logs.sql
+
+PL/SQL procedure successfully completed.
+
+
+PL/SQL procedure successfully completed.
+
+tables/logger_prefs.sql
+
+PL/SQL procedure successfully completed.
+
+
+Trigger BIU_LOGGER_PREFS compiled
+
+
+Errors for TRIGGER BIU_LOGGER_PREFS:
+
+LINE/COL ERROR
+-------- ----------------------------------------------------------
+6/5      PLS-00049: bad bind variable 'NEW.PREF_TYPE'
+6/29     PLS-00049: bad bind variable 'NEW.PREF_TYPE'
+9/11     PLS-00049: bad bind variable 'NEW.PREF_TYPE'
+19/13    PLS-00049: bad bind variable 'NEW.PREF_TYPE'
+30/13    PLS-00049: bad bind variable 'NEW.PREF_TYPE'
+40/13    PLS-00049: bad bind variable 'NEW.PREF_TYPE'
+
+Trigger BIU_LOGGER_PREFS altered.
+
+
+PL/SQL procedure successfully completed.
+
+
+PL/SQL procedure successfully completed.
+
+
+PL/SQL procedure successfully completed.
+
+
+PL/SQL procedure successfully completed.
+
+
+Trigger BIU_LOGGER_PREFS altered.
+
+tables/logger_logs_apex_items.sql
+
+PL/SQL procedure successfully completed.
+
+
+Trigger BIU_LOGGER_APEX_ITEMS compiled
+
+tables/logger_prefs_by_client_id.sql
+
+PL/SQL procedure successfully completed.
+
+jobs/logger_purge_job.sql
+
+PL/SQL procedure successfully completed.
+
+jobs/logger_unset_prefs_by_client.sql
+
+PL/SQL procedure successfully completed.
+
+views/logger_logs_5_min.sql
+
+View LOGGER_LOGS_5_MIN created.
+
+views/logger_logs_60_min.sql
+
+View LOGGER_LOGS_60_MIN created.
+
+views/logger_logs_terse.sql
+
+View LOGGER_LOGS_TERSE created.
+
+packages/logger.pks
+
+Package LOGGER compiled
+
+packages/logger.pkb
+
+Package Body LOGGER compiled
+
+Recompile biu_logger_prefs after logger.pkb
+
+Trigger BIU_LOGGER_PREFS altered.
+
+contexts/logger_context.sql
+
+PL/SQL procedure successfully completed.
+
+procedures/logger_configure.plb
+
+Procedure LOGGER_CONFIGURE compiled
+
+install/post_install_configuration.sql
+Calling logger_configure
+
+PL/SQL procedure successfully completed.
+
+Setting Logger Level
+
+PL/SQL procedure successfully completed.
+
+
+*************************************************
+Now executing LOGGER.STATUS...
+
+Project Home Page        : https://github.com/oraopensource/logger/
+Logger Version           : 3.1.1
+Debug Level              : DEBUG
+Capture Call Stack       : TRUE
+Protect Admin Procedures : TRUE
+APEX Tracing             : Enabled
+SCN Capture              : Disabled
+Min. Purge Level         : DEBUG
+Purge Older Than         : 7 days
+Pref by client_id expire : 12 hours
+For all client info see  : logger_prefs_by_client_id
+
+
+PL/SQL procedure successfully completed.
+
+*************************************************
+
+PL/SQL procedure successfully completed.
+
+
+View LOGGER_LOGS_TERSE altered.
+
+
+Error starting at line : 1 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+CREATE TABLE destination (
+    id_destination NUMBER NOT NULL,
+    city           VARCHAR2(50) NOT NULL,
+    country        VARCHAR2(50) NOT NULL,
+    image_link     VARCHAR2(500) NOT NULL
+)
+Error report -
+ORA-00955: name is already used by an existing object
+
+https://docs.oracle.com/error-help/db/ora-00955/
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    An attempt was made to create a database object (such
+           as a table, view, cluster, index, or synonym) that already
+           existed. A user's database objects must have distinct names.
+*Action:   Enter a unique name for the database object or modify
+           or drop the existing object so it can be reused.
+
+Error starting at line : 8 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE destination ADD CONSTRAINT destination_pk PRIMARY KEY ( id_destination )
+Error report -
+ORA-02260: table can have only one primary key
+
+https://docs.oracle.com/error-help/db/ora-02260/
+02260. 00000 -  "table can have only one primary key"
+*Cause:    Self-evident.
+*Action:   Remove the extra primary key.
+
+Error starting at line : 10 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+CREATE TABLE favorites (
+    id_favorite        NUMBER NOT NULL,
+    date_added         DATE NOT NULL,
+    package_id_package NUMBER NOT NULL,
+    users_id_users     NUMBER
+)
+Error report -
+ORA-00955: name is already used by an existing object
+
+https://docs.oracle.com/error-help/db/ora-00955/
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    An attempt was made to create a database object (such
+           as a table, view, cluster, index, or synonym) that already
+           existed. A user's database objects must have distinct names.
+*Action:   Enter a unique name for the database object or modify
+           or drop the existing object so it can be reused.
+
+Error starting at line : 17 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE favorites ADD CONSTRAINT favorites_pk PRIMARY KEY ( id_favorite )
+Error report -
+ORA-02260: table can have only one primary key
+
+https://docs.oracle.com/error-help/db/ora-02260/
+02260. 00000 -  "table can have only one primary key"
+*Cause:    Self-evident.
+*Action:   Remove the extra primary key.
+
+Error starting at line : 19 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+CREATE TABLE package (
+    id_package                 NUMBER NOT NULL,
+    hotel_name                 VARCHAR2(100) NOT NULL,
+    excursion                  VARCHAR2(100),
+    transport_type             VARCHAR2(50) NOT NULL,
+    guide_name                 VARCHAR2(50) NOT NULL,
+    length                     NUMBER NOT NULL,
+    global_rating              NUMBER NOT NULL,
+    nb_ratings                 NUMBER NOT NULL,
+    description                VARCHAR2(250),
+    price                      NUMBER NOT NULL,
+    destination_id_destination NUMBER NOT NULL,
+    id_destination             NUMBER NOT NULL
+)
+Error report -
+ORA-00955: name is already used by an existing object
+
+https://docs.oracle.com/error-help/db/ora-00955/
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    An attempt was made to create a database object (such
+           as a table, view, cluster, index, or synonym) that already
+           existed. A user's database objects must have distinct names.
+*Action:   Enter a unique name for the database object or modify
+           or drop the existing object so it can be reused.
+
+Error starting at line : 34 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+CREATE UNIQUE INDEX package__idx ON
+    package (
+        destination_id_destination
+    ASC )
+Error report -
+ORA-00955: name is already used by an existing object
+
+https://docs.oracle.com/error-help/db/ora-00955/
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    An attempt was made to create a database object (such
+           as a table, view, cluster, index, or synonym) that already
+           existed. A user's database objects must have distinct names.
+*Action:   Enter a unique name for the database object or modify
+           or drop the existing object so it can be reused.
+
+Error starting at line : 39 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE package ADD CONSTRAINT package_pk PRIMARY KEY ( id_package )
+Error report -
+ORA-02260: table can have only one primary key
+
+https://docs.oracle.com/error-help/db/ora-02260/
+02260. 00000 -  "table can have only one primary key"
+*Cause:    Self-evident.
+*Action:   Remove the extra primary key.
+
+Error starting at line : 41 File @ C:\Users\rakanL,
+    trip_id_trip     NUMBER NOT NULL,
+    id_trip          NUMBER NOT NULL
+)
+Error report -
+ORA-00955: name is already used by an existing object
+
+https://docs.oracle.com/error-help/db/ora-00955/
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    An attempt was made to create a database object (such
+           as a table, view, cluster, index, or synonym) that already
+           existed. A user's database objects must have distinct names.
+*Action:   Enter a unique name for the database object or modify
+           or drop the existing object so it can be reused.
+
+Error starting at line : 55 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+CREATE UNIQUE INDEX reservation__idx ON
+    reservation (
+        trip_id_trip
+    ASC )
+Error report -
+ORA-00955: name is already used by an existing object
+
+https://docs.oracle.com/error-help/db/ora-00955/
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    An attempt was made to create a database object (such
+           as a table, view, cluster, index, or synonym) that already
+           existed. A user's database objects must have distinct names.
+*Action:   Enter a unique name for the database object or modify
+           or drop the existing object so it can be reused.
+
+Error starting at line : 60 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE reservation ADD CONSTRAINT reservation_pk PRIMARY KEY ( id_reservation )
+Error report -
+ORA-02260: table can have only one primary key
+
+https://docs.oracle.com/error-help/db/ora-02260/
+02260. 00000 -  "table can have only one primary key"
+*Cause:    Self-evident.
+*Action:   Remove the extra primary key.
+
+Error starting at line : 62 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+CREATE TABLE reviews (
+    id_review          NUMBER NOT NULL,
+    rating             NUMBER NOT NULL,
+    "COMMENT"          VARCHAR2(500) NOT NULL,
+    publishing_date    DATE NOT NULL,
+    users_id_users     NUMBER NOT NULL,
+    package_id_package NUMBER NOT NULL
+)
+Error report -
+ORA-00955: name is already used by an existing object
+
+https://docs.oracle.com/error-help/db/ora-00955/
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    An attempt was made to create a database object (such
+           as a table, view, cluster, index, or synonym) that already
+           existed. A user's database objects must have distinct names.
+*Action:   Enter a unique name for the database object or modify
+           or drop the existing object so it can be reused.
+
+Error starting at line : 71 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE reviews ADD CONSTRAINT reviews_pk PRIMARY KEY ( id_review )
+Error report -
+ORA-02260: table can have only one primary key
+
+https://docs.oracle.com/error-help/db/ora-02260/
+02260. 00000 -  "table can have only one primary key"
+*Cause:    Self-evident.
+*Action:   Remove the extra primary key.
+
+Error starting at line : 73 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+CREATE TABLE trip (
+    id_trip            NUMBER NOT NULL,
+    depart_date        TIMESTAMP NOT NULL,
+    return_date        TIMESTAMP NOT NULL,
+    package_id_package NUMBER NOT NULL
+)
+Error report -
+ORA-00955: name is already used by an existing object
+
+https://docs.oracle.com/error-help/db/ora-00955/
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    An attempt was made to create a database object (such
+           as a table, view, cluster, index, or synonym) that already
+           existed. A user's database objects must have distinct names.
+*Action:   Enter a unique name for the database object or modify
+           or drop the existing object so it can be reused.
+
+Error starting at line : 80 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE trip ADD CONSTRAINT trip_pk PRIMARY KEY ( id_trip )
+Error report -
+ORA-02260: table can have only one primary key
+
+https://docs.oracle.com/error-help/db/ora-02260/
+02260. 00000 -  "table can have only one primary key"
+*Cause:    Self-evident.
+*Action:   Remove the extra primary key.
+
+Error starting at line : 82 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+CREATE TABLE users (
+    id_users      NUMBER NOT NULL,
+    first_name    VARCHAR2(50) NOT NULL,
+    last_name     VARCHAR2(50) NOT NULL,
+    username      VARCHAR2(50) NOT NULL,
+    email         VARCHAR2(50) NOT NULL,
+    password      VARCHAR2(50) NOT NULL,
+    creation_date DATE NOT NULL
+)
+Error report -
+ORA-00955: name is already used by an existing object
+
+https://docs.oracle.com/error-help/db/ora-00955/
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    An attempt was made to create a database object (such
+           as a table, view, cluster, index, or synonym) that already
+           existed. A user's database objects must have distinct names.
+*Action:   Enter a unique name for the database object or modify
+           or drop the existing object so it can be reused.
+
+Error starting at line : 92 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE users ADD CONSTRAINT users_pk PRIMARY KEY ( id_users )
+Error report -
+ORA-02260: table can have only one primary key
+
+https://docs.oracle.com/error-help/db/ora-02260/
+02260. 00000 -  "table can have only one primary key"
+*Cause:    Self-evident.
+*Action:   Remove the extra primary key.
+
+Error starting at line : 94 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE favorites
+    ADD CONSTRAINT favorites_package_fk FOREIGN KEY ( package_id_package )
+        REFERENCES package ( id_package )
+Error report -
+ORA-02275: such a referential constraint already exists in the table
+
+https://docs.oracle.com/error-help/db/ora-02275/
+02275. 00000 -  "such a referential constraint already exists in the table"
+*Cause:    Self-evident.
+*Action:   Remove the extra constraint.
+
+Error starting at line : 98 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE favorites
+    ADD CONSTRAINT favorites_users_fk FOREIGN KEY ( users_id_users )
+        REFERENCES users ( id_users )
+Error report -
+ORA-02275: such a referential constraint already exists in the table
+
+https://docs.oracle.com/error-help/db/ora-02275/
+02275. 00000 -  "such a referential constraint already exists in the table"
+*Cause:    Self-evident.
+*Action:   Remove the extra constraint.
+
+Error starting at line : 102 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE package
+    ADD CONSTRAINT package_destination_fk FOREIGN KEY ( destination_id_destination )
+        REFERENCES destination ( id_destination )
+Error report -
+ORA-02275: such a referential constraint already exists in the table
+
+https://docs.oracle.com/error-help/db/ora-02275/
+02275. 00000 -  "such a referential constraint already exists in the table"
+*Cause:    Self-evident.
+*Action:   Remove the extra constraint.
+
+Error starting at line : 106 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE reservation
+    ADD CONSTRAINT reservation_trip_fk FOREIGN KEY ( trip_id_trip )
+        REFERENCES trip ( id_trip )
+Error report -
+ORA-02275: such a referential constraint already exists in the table
+
+https://docs.oracle.com/error-help/db/ora-02275/
+02275. 00000 -  "such a referential constraint already exists in the table"
+*Cause:    Self-evident.
+*Action:   Remove the extra constraint.
+
+Error starting at line : 110 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE reservation
+    ADD CONSTRAINT reservation_users_fk FOREIGN KEY ( users_id_users )
+        REFERENCES users ( id_users )
+Error report -
+ORA-02275: such a referential constraint already exists in the table
+
+https://docs.oracle.com/error-help/db/ora-02275/
+02275. 00000 -  "such a referential constraint already exists in the table"
+*Cause:    Self-evident.
+*Action:   Remove the extra constraint.
+
+Error starting at line : 114 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE reviews
+    ADD CONSTRAINT reviews_package_fk FOREIGN KEY ( package_id_package )
+        REFERENCES package ( id_package )
+Error report -
+ORA-02275: such a referential constraint already exists in the table
+
+https://docs.oracle.com/error-help/db/ora-02275/
+02275. 00000 -  "such a referential constraint already exists in the table"
+*Cause:    Self-evident.
+*Action:   Remove the extra constraint.
+
+Error starting at line : 118 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE reviews
+    ADD CONSTRAINT reviews_users_fk FOREIGN KEY ( users_id_users )
+        REFERENCES users ( id_users )
+Error report -
+ORA-02275: such a referential constraint already exists in the table
+
+https://docs.oracle.com/error-help/db/ora-02275/
+02275. 00000 -  "such a referential constraint already exists in the table"
+*Cause:    Self-evident.
+*Action:   Remove the extra constraint.
+
+Error starting at line : 122 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+In command -
+ALTER TABLE trip
+    ADD CONSTRAINT trip_package_fk FOREIGN KEY ( package_id_package )
+        REFERENCES package ( id_package )
+Error report -
+ORA-02275: such a referential constraint already exists in the table
+
+https://docs.oracle.com/error-help/db/ora-02275/
+02275. 00000 -  "such a referential constraint already exists in the table"
+*Cause:    Self-evident.
+*Action:   Remove the extra constraint.
+
+Table LOGGER_PREFS dropped.
+

@@ -1,4 +1,5 @@
 create or replace package body destination_tapi is
+
 -- insert
    function ins_destination (
       p_city       in destination.city%type,
@@ -6,7 +7,18 @@ create or replace package body destination_tapi is
       p_image_link in destination.image_link%type,
       p_test       varchar2 default 'N'
    ) return varchar2 as
-
+   /**
+    * Description: Fonction pour insérer une destination dans table DESTINATION.
+    * @example: destination_tapi.ins_destination('Paris', 'France', 'lien.jpg'); 
+    * @author Zidane R. Mansouri
+    * @created 2026-03-10
+    * @param: p_city = Nom de la ville
+    * @param: p_country = Nom du pays
+    * @param: p_image_link = Lien de l'image
+    * @param: p_test: paramètre pour ne pas sauvegarder les tests, 
+    * si 'N' alors commit
+    * @return: varchar2 de la reponse JSON
+    */
       gc_scope_prefix  constant varchar2(31) := lower($$plsql_unit)
                                                || '.';
       l_scope          logger_logs.scope%type := gc_scope_prefix || 'ins_destination';
