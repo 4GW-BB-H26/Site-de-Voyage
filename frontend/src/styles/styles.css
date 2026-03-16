@@ -653,8 +653,9 @@
   gap: 16px;
   background: white;
   border-radius: 12px;
-  border: 2px solid transparent;
+  border: 2px solid rgb(72, 156, 216);
   padding: 12px;
+  margin-bottom: 12px;
 }
 
 .carte-reservation-image {
@@ -736,9 +737,9 @@
   font-size: 12px;
   padding: 5px 14px;
   border-radius: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(62, 127, 173);
   background: white;
-  color: 1a1a1a;
+  color: rgb(72, 156, 216);
   cursor: pointer;
   white-space: nowrap;
 }
@@ -750,6 +751,7 @@
 .btn-action-annuler{
   color: #c0392b;
   border-color: #f5b8b8;
+  background-color: white;
 }
 
 .btn-action-annuler:hover {
