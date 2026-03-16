@@ -10,7 +10,7 @@ const reservations = [
         travelers: 2,
         status: "Validée",
         price: 1850,
-        imgUrl: placeholder,
+        imgUrl: "https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg",
    },
 {
         id: 2,
@@ -21,7 +21,7 @@ const reservations = [
         travelers: 3,
         status: "Validée",
         price: 4250,
-        imgUrl: placeholder,
+        imgUrl: "https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg",
    },
    {
         id: 3,
@@ -32,7 +32,7 @@ const reservations = [
         travelers: 4,
         status: "À venir",
         price: 2500,
-        imgUrl: placeholder,
+        imgUrl: "https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg",
    },
    {
         id: 4,
@@ -43,7 +43,7 @@ const reservations = [
         travelers: 3,
         status: "Annulée",
         price: 3000,
-        imgUrl: placeholder,
+        imgUrl: "https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg",
    },
 
 ];
