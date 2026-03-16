@@ -64,13 +64,13 @@ export default function SectionReservation() {
                     <CarteReservation
                         key={rt.id}
                         imageUrl={rt.imgUrl}
-                        imageAlt={'${rt.destination}, ${rt.country}'}
-                        ville={'${rt.destination}, ${rt.country}'}
-                        dates={'Du ${formatDate(r.startDate)} au ${formatDate(rt.endDate)}'}
-                        voyageurs={'${rt.travelers} Voyageur${rt.travelers > 1 ? "s" : ""}'}
+                        imageAlt={`${rt.destination}, ${rt.country}`}
+                        ville={`${rt.destination}, ${rt.country}`}
+                        dates={`Du ${formatDate(rt.startDate)} au ${formatDate(rt.endDate)}`}
+                        voyageurs={`${rt.travelers} Voyageur${rt.travelers > 1 ? "s" : ""}`}
                         statut={rt.status}
                         typeStatut={rt.status}
-                        prix={'${rt.price.toLocaleString("fr-CA")} CA$'}
+                        prix={`${rt.price.toLocaleString("fr-CA")} CA$`}
                     />
                 ))}
             </div>
