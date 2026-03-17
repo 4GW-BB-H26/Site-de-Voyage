@@ -52,15 +52,24 @@ create or replace package body destination_tapi is
          null,
          l_params
       );
+      --pour genere ID 
+      select nvl(
+         max(id_destination),
+         0
+      ) + 1
+        into l_id_destination
+        from destination;
 
-    -- methode pour linsertion d'une destination    
+      -- ins 
       insert into destination (
+         id_destination,
          city,
          country,
          image_link
-      ) values ( p_city,
+      ) values ( l_id_destination,
+                 p_city,
                  p_country,
-                 p_image_link ) returning id_destination into l_id_destination;
+                 p_image_link );
 
       logger.append_param(
          l_params,
@@ -73,13 +82,11 @@ create or replace package body destination_tapi is
          null,
          l_params
       );
-
-    -- condition pour la verification d'un test 
       if p_test = 'N' then
          commit;
       end if;
 
-    -- methode pour mettre l'objet jason a lintérieur de la variable l_reponse et creation d un objet JSON avec le status et l id inséré
+--json dans reponse   
       l_reponse :=
          json_object(
             key 'status' value 'success',
@@ -91,8 +98,6 @@ create or replace package body destination_tapi is
          );
 
       return l_reponse;
-
--- exeption 
    exception
       when others then
          rollback;
@@ -203,9 +208,18 @@ create or replace package body destination_tapi is
             -20001,
             'id_destination nexiste pas'
          );
+      when others then
+         rollback;
+         logger.log_error(
+            'Erreur Update',
+            l_scope,
+            null,
+            l_params
+         );
+         raise;
    end upd_destination;
 
-
+--del
    function del_destination (
       p_id_destination in destination.id_destination%type,
       p_test           varchar2 default 'N'
@@ -240,7 +254,7 @@ create or replace package body destination_tapi is
       logger.append_param(
          l_params,
          'sql%rowcount',
-         sql%rowcount
+         l_nbre_rangee
       );
       logger.log(
          '>>>fin de la procédure',
@@ -267,9 +281,18 @@ create or replace package body destination_tapi is
             -20001,
             'id_destination nexiste pas'
          );
+      when others then
+         rollback;
+         logger.log_error(
+            'Erreur Delete',
+            l_scope,
+            null,
+            l_params
+         );
+         raise;
    end del_destination;
 
-
+--get
    function get_destination (
       p_id_destination in destination.id_destination%type
    ) return varchar2 as
@@ -327,6 +350,14 @@ create or replace package body destination_tapi is
             -20001,
             'id_destination nexiste pas !'
          );
+      when others then
+         logger.log_error(
+            'Erreur Get',
+            l_scope,
+            null,
+            l_params
+         );
+         raise;
    end get_destination;
 
 end destination_tapi;
