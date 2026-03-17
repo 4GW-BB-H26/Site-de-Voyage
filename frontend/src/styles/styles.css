@@ -757,3 +757,18 @@
 .btn-action-annuler:hover {
   background-color: #fff0f0;
 }
+.form-soumis input:invalid {
+border: 2px solid red;
+}
+.erreur-texte {
+  color: red;
+  font-weight: bold;
+  margin-top: 5px;
+  font-size: 14px;
+}
+.succes-texte {
+  color: green;
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 14px;
+}
