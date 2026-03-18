@@ -13,7 +13,6 @@ export default function CarteReservation({
     dates,
     voyageurs,
     statut,
-    typeStatut,
     prix,
 })  {
     return (

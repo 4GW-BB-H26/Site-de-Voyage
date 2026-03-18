@@ -11,6 +11,7 @@ const reservations = [
         status: "Validée",
         price: 1850,
         imgUrl: "https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg",
+        //image temporaire avant que je connecte le frontend avec le backend
    },
 {
         id: 2,
@@ -54,6 +55,22 @@ const formatDate = (dateStr) =>
     } );
 
 export default function SectionReservation() {
+/*Certain changement que je ferais dans le future quand que je vais connecter la database avec le frontend
+
+J'ajouterais {userID} dans la parenthese de la fonction
+
+useEffect(() => {
+        fetch(`http://localhost:3000/reservations/${userId}`)
+            .then(res => { if (!res.ok) throw new Error("Erreur réseau"); return res.json(); })
+            .then(data => { setReservations(data); setLoading(false); })
+            .catch(err => { setError(err.message); setLoading(false); });
+    }, [userId]);
+
+    Pour ceci, j'enleverais les données temporaires que j'avais en haut dans le document
+
+    J'ajouterais aussi des messages qui vont apparaitre quand que la page load, a une erreur, ou
+    qu'elle n'a de reservations dans la page.
+*/
     return (
         <section className="section-reservation">
             <h2 className="titre-section">Mes réservations</h2>
