@@ -170,7 +170,7 @@ create or replace package body trip_tapi as
    * Description   Supprime un voyage selon son identifiant unique.
    *
    * @version      1.0.0
-   * @example      trip_tapi.delete_trip(3);
+   * @example      trip_tapi.delete_trip;
    * @author       Tristan Tanguay
    * @created      2026-03-17
    * @param        p_id_trip   Identifiant du voyage à supprimer.
