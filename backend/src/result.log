@@ -1,8 +1,3 @@
-
-TO_CHAR(SYSDATE,
-----------------
-2026-03-26 03:17
-
 _____________________________________________________________________________
 User has all required privileges, installation will continue.
 _____________________________________________________________________________
@@ -111,7 +106,7 @@ Logger Version           : 3.1.1
 Debug Level              : DEBUG
 Capture Call Stack       : TRUE
 Protect Admin Procedures : TRUE
-APEX Tracing             : Enabled
+APEX Tracing             : Disabled
 SCN Capture              : Disabled
 Min. Purge Level         : DEBUG
 Purge Older Than         : 7 days
@@ -129,7 +124,7 @@ PL/SQL procedure successfully completed.
 View LOGGER_LOGS_TERSE altered.
 
 
-Error starting at line : 1 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 1 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 CREATE TABLE destination (
     id_destination NUMBER NOT NULL,
@@ -148,7 +143,7 @@ https://docs.oracle.com/error-help/db/ora-00955/
 *Action:   Enter a unique name for the database object or modify
            or drop the existing object so it can be reused.
 
-Error starting at line : 8 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 8 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE destination ADD CONSTRAINT destination_pk PRIMARY KEY ( id_destination )
 Error report -
@@ -159,7 +154,7 @@ https://docs.oracle.com/error-help/db/ora-02260/
 *Cause:    Self-evident.
 *Action:   Remove the extra primary key.
 
-Error starting at line : 10 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 10 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 CREATE TABLE favorites (
     id_favorite        NUMBER NOT NULL,
@@ -178,7 +173,7 @@ https://docs.oracle.com/error-help/db/ora-00955/
 *Action:   Enter a unique name for the database object or modify
            or drop the existing object so it can be reused.
 
-Error starting at line : 17 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 17 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE favorites ADD CONSTRAINT favorites_pk PRIMARY KEY ( id_favorite )
 Error report -
@@ -189,7 +184,7 @@ https://docs.oracle.com/error-help/db/ora-02260/
 *Cause:    Self-evident.
 *Action:   Remove the extra primary key.
 
-Error starting at line : 19 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 19 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 CREATE TABLE package (
     id_package                 NUMBER NOT NULL,
@@ -216,7 +211,7 @@ https://docs.oracle.com/error-help/db/ora-00955/
 *Action:   Enter a unique name for the database object or modify
            or drop the existing object so it can be reused.
 
-Error starting at line : 34 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 34 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 CREATE UNIQUE INDEX package__idx ON
     package (
@@ -233,7 +228,7 @@ https://docs.oracle.com/error-help/db/ora-00955/
 *Action:   Enter a unique name for the database object or modify
            or drop the existing object so it can be reused.
 
-Error starting at line : 39 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 39 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE package ADD CONSTRAINT package_pk PRIMARY KEY ( id_package )
 Error report -
@@ -244,7 +239,7 @@ https://docs.oracle.com/error-help/db/ora-02260/
 *Cause:    Self-evident.
 *Action:   Remove the extra primary key.
 
-Error starting at line : 41 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 41 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 CREATE TABLE reservation (
     id_reservation   NUMBER NOT NULL,
@@ -270,7 +265,7 @@ https://docs.oracle.com/error-help/db/ora-00955/
 *Action:   Enter a unique name for the database object or modify
            or drop the existing object so it can be reused.
 
-Error starting at line : 55 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 55 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 CREATE UNIQUE INDEX reservation__idx ON
     reservation (
@@ -287,7 +282,7 @@ https://docs.oracle.com/error-help/db/ora-00955/
 *Action:   Enter a unique name for the database object or modify
            or drop the existing object so it can be reused.
 
-Error starting at line : 60 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 60 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE reservation ADD CONSTRAINT reservation_pk PRIMARY KEY ( id_reservation )
 Error report -
@@ -298,7 +293,7 @@ https://docs.oracle.com/error-help/db/ora-02260/
 *Cause:    Self-evident.
 *Action:   Remove the extra primary key.
 
-Error starting at line : 62 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 62 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 CREATE TABLE reviews (
     id_review          NUMBER NOT NULL,
@@ -319,7 +314,7 @@ https://docs.oracle.com/error-help/db/ora-00955/
 *Action:   Enter a unique name for the database object or modify
            or drop the existing object so it can be reused.
 
-Error starting at line : 71 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 71 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE reviews ADD CONSTRAINT reviews_pk PRIMARY KEY ( id_review )
 Error report -
@@ -330,7 +325,7 @@ https://docs.oracle.com/error-help/db/ora-02260/
 *Cause:    Self-evident.
 *Action:   Remove the extra primary key.
 
-Error starting at line : 73 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 73 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 CREATE TABLE trip (
     id_trip            NUMBER NOT NULL,
@@ -349,7 +344,7 @@ https://docs.oracle.com/error-help/db/ora-00955/
 *Action:   Enter a unique name for the database object or modify
            or drop the existing object so it can be reused.
 
-Error starting at line : 80 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 80 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE trip ADD CONSTRAINT trip_pk PRIMARY KEY ( id_trip )
 Error report -
@@ -360,7 +355,7 @@ https://docs.oracle.com/error-help/db/ora-02260/
 *Cause:    Self-evident.
 *Action:   Remove the extra primary key.
 
-Error starting at line : 82 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 82 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 CREATE TABLE users (
     id_users      NUMBER NOT NULL,
@@ -382,7 +377,7 @@ https://docs.oracle.com/error-help/db/ora-00955/
 *Action:   Enter a unique name for the database object or modify
            or drop the existing object so it can be reused.
 
-Error starting at line : 92 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 92 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE users ADD CONSTRAINT users_pk PRIMARY KEY ( id_users )
 Error report -
@@ -393,7 +388,7 @@ https://docs.oracle.com/error-help/db/ora-02260/
 *Cause:    Self-evident.
 *Action:   Remove the extra primary key.
 
-Error starting at line : 94 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 94 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE favorites
     ADD CONSTRAINT favorites_package_fk FOREIGN KEY ( package_id_package )
@@ -406,7 +401,7 @@ https://docs.oracle.com/error-help/db/ora-02275/
 *Cause:    Self-evident.
 *Action:   Remove the extra constraint.
 
-Error starting at line : 98 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 98 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE favorites
     ADD CONSTRAINT favorites_users_fk FOREIGN KEY ( users_id_users )
@@ -419,7 +414,7 @@ https://docs.oracle.com/error-help/db/ora-02275/
 *Cause:    Self-evident.
 *Action:   Remove the extra constraint.
 
-Error starting at line : 102 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 102 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE package
     ADD CONSTRAINT package_destination_fk FOREIGN KEY ( destination_id_destination )
@@ -432,7 +427,7 @@ https://docs.oracle.com/error-help/db/ora-02275/
 *Cause:    Self-evident.
 *Action:   Remove the extra constraint.
 
-Error starting at line : 106 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 106 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE reservation
     ADD CONSTRAINT reservation_trip_fk FOREIGN KEY ( trip_id_trip )
@@ -445,7 +440,7 @@ https://docs.oracle.com/error-help/db/ora-02275/
 *Cause:    Self-evident.
 *Action:   Remove the extra constraint.
 
-Error starting at line : 110 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 110 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE reservation
     ADD CONSTRAINT reservation_users_fk FOREIGN KEY ( users_id_users )
@@ -458,7 +453,7 @@ https://docs.oracle.com/error-help/db/ora-02275/
 *Cause:    Self-evident.
 *Action:   Remove the extra constraint.
 
-Error starting at line : 114 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 114 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE reviews
     ADD CONSTRAINT reviews_package_fk FOREIGN KEY ( package_id_package )
@@ -471,7 +466,7 @@ https://docs.oracle.com/error-help/db/ora-02275/
 *Cause:    Self-evident.
 *Action:   Remove the extra constraint.
 
-Error starting at line : 118 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 118 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE reviews
     ADD CONSTRAINT reviews_users_fk FOREIGN KEY ( users_id_users )
@@ -484,7 +479,7 @@ https://docs.oracle.com/error-help/db/ora-02275/
 *Cause:    Self-evident.
 *Action:   Remove the extra constraint.
 
-Error starting at line : 122 File @ C:\Users\rakan\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
+Error starting at line : 122 File @ C:\Users\Trisw\OneDrive\Documents\GitHub\Equipe-1-TP\backend\src\config\Create_Tables.sql
 In command -
 ALTER TABLE trip
     ADD CONSTRAINT trip_package_fk FOREIGN KEY ( package_id_package )
@@ -497,18 +492,11 @@ https://docs.oracle.com/error-help/db/ora-02275/
 *Cause:    Self-evident.
 *Action:   Remove the extra constraint.
 Execution des tests unitaires.
-    ut.run();
-    *
-ERROR at line 3:
-ORA-06550: line 3, column 5:
-PLS-00201: identifier 'UT.RUN' must be declared
-ORA-06550: line 3, column 5:
-PL/SQL: Statement ignored
-
-https://docs.oracle.com/error-help/db/ora-06550/
+Finished in .000024 seconds
+0 tests, 0 failed, 0 errored, 0 disabled, 0 warning(s)
+ 
 
 
-More Details :
-https://docs.oracle.com/error-help/db/ora-06550/
-https://docs.oracle.com/error-help/db/pls-00201/
+PL/SQL procedure successfully completed.
+
 No errors.
