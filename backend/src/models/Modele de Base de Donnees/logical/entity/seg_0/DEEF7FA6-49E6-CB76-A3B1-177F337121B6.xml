@@ -56,14 +56,15 @@
 <logicalDatatype>LOGDT019</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="ID_USERS" id="AC626A2E-EEA7-3FDC-A27E-7FF7FA577B81">
+<Attribute name="ID_USERS" id="FF03CC3F-AE34-8285-7D21-A3F1010A5BDF">
 <createdBy>Ink</createdBy>
-<createdTime>2026-02-14 02:32:12 UTC</createdTime>
-<generatorID>634DFE87-B4BA-50C5-B5FA-B5EBC85B7BAD</generatorID>
+<createdTime>2026-03-15 22:00:20 UTC</createdTime>
+<generatorID>D6855CFC-C4BD-C044-5564-5AD3F3EA28AE</generatorID>
 <ownerDesignName>Modele de Base de Donnees</ownerDesignName>
 <engineerTo>
 <item key="54A5A8B3-C684-0940-6922-1761C83AEC46" value="true"/>
 </engineerTo>
+<nullsAllowed>true</nullsAllowed>
 <referedAttribute>250BEAB4-4153-2745-A5F6-24126E76C163</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>

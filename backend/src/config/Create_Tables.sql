@@ -11,13 +11,8 @@ CREATE TABLE favorites (
     id_favorite        NUMBER NOT NULL,
     date_added         DATE NOT NULL,
     package_id_package NUMBER NOT NULL,
-    users_id_users     NUMBER NOT NULL
+    users_id_users     NUMBER
 );
-
-CREATE UNIQUE INDEX favorites__idx ON
-    favorites (
-        users_id_users
-    ASC );
 
 ALTER TABLE favorites ADD CONSTRAINT favorites_pk PRIMARY KEY ( id_favorite );
 
@@ -85,20 +80,14 @@ CREATE TABLE trip (
 ALTER TABLE trip ADD CONSTRAINT trip_pk PRIMARY KEY ( id_trip );
 
 CREATE TABLE users (
-    id_users              NUMBER NOT NULL,
-    first_name            VARCHAR2(50) NOT NULL,
-    last_name             VARCHAR2(50) NOT NULL,
-    username              VARCHAR2(50) NOT NULL,
-    email                 VARCHAR2(50) NOT NULL,
-    password              VARCHAR2(50) NOT NULL,
-    creation_date         DATE NOT NULL,
-    favorites_id_favorite NUMBER NOT NULL
+    id_users      NUMBER NOT NULL,
+    first_name    VARCHAR2(50) NOT NULL,
+    last_name     VARCHAR2(50) NOT NULL,
+    username      VARCHAR2(50) NOT NULL,
+    email         VARCHAR2(50) NOT NULL,
+    password      VARCHAR2(50) NOT NULL,
+    creation_date DATE NOT NULL
 );
-
-CREATE UNIQUE INDEX users__idx ON
-    users (
-        favorites_id_favorite
-    ASC );
 
 ALTER TABLE users ADD CONSTRAINT users_pk PRIMARY KEY ( id_users );
 
@@ -133,7 +122,3 @@ ALTER TABLE reviews
 ALTER TABLE trip
     ADD CONSTRAINT trip_package_fk FOREIGN KEY ( package_id_package )
         REFERENCES package ( id_package );
-
-ALTER TABLE users
-    ADD CONSTRAINT users_favorites_fk FOREIGN KEY ( favorites_id_favorite )
-        REFERENCES favorites ( id_favorite );

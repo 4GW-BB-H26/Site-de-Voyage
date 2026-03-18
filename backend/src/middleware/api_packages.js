@@ -1,16 +1,20 @@
+// Import des modules nécessaires (framework HTTP, driver Oracle, config DB et logger)
 import express from "express";
 import oracledb from "oracledb";
 import dbConfig from "./dbconfig.js";
 import logger from "./logger.js";
 
+// Création du routeur Express pour regrouper les routes liées aux packages
 const router = express.Router();
+// Définition du type de paramètre de sortie Oracle pour recevoir une grande chaîne JSON
 const OUT_STRING = { dir: oracledb.BIND_OUT, type: oracledb.STRING, maxSize: 40000 };
 
-/**
- * GET: Récupérer un package par ID
- */
+// Route GET : récupère un package à partir de son identifiant
+// Appelle la procédure Oracle package_tapi.get_package et retourne le JSON reçu
 router.get("/packages/:id", async (req, res) => {
+  // Récupération et conversion du paramètre d'URL en nombre entier
   const id = parseInt(req.params.id, 10);
+  // Validation de base : l'ID doit être présent et numérique
   if (!id || isNaN(id)) {
     return res.status(400).json({
       errors: [{
@@ -23,11 +27,14 @@ router.get("/packages/:id", async (req, res) => {
     });
   }
 
+  // La connexion à la base est créée dans un bloc try/finally pour être fermée proprement
   let connection;
   try {
+    // Ouverture de la connexion Oracle en utilisant la configuration centralisée
     connection = await oracledb.getConnection(dbConfig);
     logger.log("info", "Connexion réussie à la base de données Oracle");
 
+    // Appel de la procédure stockée Oracle avec un paramètre IN (id) et un OUT (reto)
     const result = await connection.execute(
       `BEGIN :reto := package_tapi.get_package(p_id_package => :id); END;`,
       { reto: OUT_STRING, id }
@@ -35,8 +42,10 @@ router.get("/packages/:id", async (req, res) => {
 
     let retour;
     try {
+      // La procédure retourne une chaîne JSON dans le OUT bind, on la parse
       retour = JSON.parse(result.outBinds.reto);
     } catch (err) {
+      // Si le JSON est invalide, on considère que c’est une erreur interne
       return res.status(500).json({
         errors: [{
           status: "500",
@@ -48,13 +57,16 @@ router.get("/packages/:id", async (req, res) => {
       });
     }
 
+    // Si Oracle a renvoyé une liste d’erreurs, on propage le status contenu dans la première
     if (retour.errors && Array.isArray(retour.errors)) {
       const status = parseInt(retour.errors[0]?.status || "500", 10);
       return res.status(status).json({ errors: retour.errors });
     }
+    // Cas nominal : la réponse contient un bloc data + meta, on renvoie tel quel
     if (retour.data && retour.meta) {
       return res.status(200).json(retour);
     }
+    // Si le format est inattendu, on renvoie une erreur générique avec le contenu brut
     return res.status(500).json({
       errors: [{
         status: "500",
@@ -65,7 +77,9 @@ router.get("/packages/:id", async (req, res) => {
       }]
     });
   } catch (err) {
+    // Journalisation de toute erreur non anticipée
     logger.log("error", err);
+    // Gestion spécifique de certains codes Oracle (ex. enregistrement introuvable)
     if (err.errorNum === 20001 || err.errorNum === 1403) {
       return res.status(404).json({
         errors: [{
@@ -77,6 +91,7 @@ router.get("/packages/:id", async (req, res) => {
         }]
       });
     }
+    // Tout autre cas est traité comme une erreur serveur générique
     return res.status(500).json({
       errors: [{
         status: "500",
@@ -87,6 +102,7 @@ router.get("/packages/:id", async (req, res) => {
       }]
     });
   } finally {
+    // Fermeture systématique de la connexion si elle a été ouverte
     if (connection) {
       try {
         await connection.close();
@@ -97,11 +113,12 @@ router.get("/packages/:id", async (req, res) => {
   }
 });
 
-/**
- * POST: Créer un nouveau package
- */
+// Route POST : crée un nouveau package avec les données envoyées dans le corps de la requête
+// Appelle la procédure Oracle package_tapi.ins_package et insère un enregistrement
 router.post("/packages", express.json(), async (req, res) => {
+  // Récupération des données envoyées dans le corps de la requête (JSON)
   const packageData = req.body;
+  // Vérifie que le corps de la requête existe
   if (!packageData) {
     return res.status(400).json({
       errors: [{
@@ -116,9 +133,11 @@ router.post("/packages", express.json(), async (req, res) => {
 
   let connection;
   try {
+    // Connexion Oracle pour l’insertion
     connection = await oracledb.getConnection(dbConfig);
     logger.log("info", "Connexion réussie à la base de données Oracle");
 
+    // Appel de la procédure d’insertion avec mapping des champs JS vers les paramètres PL/SQL
     const result = await connection.execute(
       `BEGIN
          :reto := package_tapi.ins_package(
@@ -128,7 +147,9 @@ router.post("/packages", express.json(), async (req, res) => {
          );
        END;`,
       {
+        // Paramètre OUT qui recevra le JSON de retour
         reto: OUT_STRING,
+        // On accepte plusieurs conventions de nommage (snake_case et camelCase)
         hotel_name: packageData.hotel_name ?? packageData.hotelName ?? "",
         excursion: packageData.excursion ?? "",
         transport_type: packageData.transport_type ?? packageData.transportType ?? "",
@@ -143,11 +164,13 @@ router.post("/packages", express.json(), async (req, res) => {
       }
     );
 
+    // Validation explicite de la transaction côté Oracle
     await connection.commit();
     logger.log("info", "Package inséré avec succès.");
 
     let retour;
     try {
+      // Parse du JSON renvoyé par la procédure
       retour = JSON.parse(result.outBinds.reto);
     } catch (e) {
       return res.status(500).json({
@@ -161,14 +184,17 @@ router.post("/packages", express.json(), async (req, res) => {
       });
     }
 
+    // Propagation des erreurs métier si présentes dans la réponse PL/SQL
     if (retour.errors && Array.isArray(retour.errors)) {
       const status = parseInt(retour.errors[0]?.status || "500", 10);
       return res.status(status).json({ errors: retour.errors });
     }
+    // Cas de succès : on renvoie la ressource créée avec un code 201
     if (retour.data && retour.meta) {
       retour.meta.statusCode = retour.meta.statusCode || 201;
       return res.status(201).json(retour);
     }
+    // Format non prévu
     return res.status(500).json({
       errors: [{
         status: "500",
@@ -179,6 +205,7 @@ router.post("/packages", express.json(), async (req, res) => {
       }]
     });
   } catch (err) {
+    // En cas d’exception technique, on log et renvoie une erreur 500
     logger.log("error", err);
     return res.status(500).json({
       errors: [{
@@ -190,6 +217,7 @@ router.post("/packages", express.json(), async (req, res) => {
       }]
     });
   } finally {
+    // Fermeture sécurisée de la connexion
     if (connection) {
       try {
         await connection.close();
@@ -200,12 +228,14 @@ router.post("/packages", express.json(), async (req, res) => {
   }
 });
 
-/**
- * PUT: Mettre à jour un package
- */
+// Route PUT : met à jour un package existant identifié par son ID
+// Appelle la procédure Oracle package_tapi.upd_package avec les nouvelles valeurs
 router.put("/packages/:id", express.json(), async (req, res) => {
+  // Conversion de l’ID de l’URL en entier
   const id = parseInt(req.params.id, 10);
+  // Données de mise à jour envoyées par le client
   const packageData = req.body;
+  // Validation des paramètres d’entrée
   if (!id || isNaN(id) || !packageData) {
     return res.status(400).json({
       errors: [{
@@ -220,9 +250,11 @@ router.put("/packages/:id", express.json(), async (req, res) => {
 
   let connection;
   try {
+    // Connexion Oracle pour la mise à jour
     connection = await oracledb.getConnection(dbConfig);
     logger.log("info", "Connexion réussie à la base de données Oracle");
 
+    // Appel de la procédure d’update avec les champs modifiables
     const result = await connection.execute(
       `BEGIN
          :reto := package_tapi.upd_package(
@@ -248,10 +280,12 @@ router.put("/packages/:id", express.json(), async (req, res) => {
       }
     );
 
+    // Validation de la transaction
     await connection.commit();
 
     let retour;
     try {
+      // Traitement du JSON renvoyé par PL/SQL
       retour = JSON.parse(result.outBinds.reto);
     } catch (e) {
       return res.status(500).json({
@@ -265,13 +299,16 @@ router.put("/packages/:id", express.json(), async (req, res) => {
       });
     }
 
+    // Si des erreurs métier sont renvoyées, on les propage avec le bon code HTTP
     if (retour.errors && Array.isArray(retour.errors)) {
       const status = parseInt(retour.errors[0]?.status || "500", 10);
       return res.status(status).json({ errors: retour.errors });
     }
+    // Retourne la ressource mise à jour en cas de succès
     if (retour.data && retour.meta) {
       return res.status(200).json(retour);
     }
+    // Format non prévu
     return res.status(500).json({
       errors: [{
         status: "500",
@@ -283,6 +320,7 @@ router.put("/packages/:id", express.json(), async (req, res) => {
     });
   } catch (err) {
     logger.log("error", err);
+    // Si Oracle signale que le package n’existe pas, on renvoie un 404
     if (err.errorNum === 20001 || err.errorNum === 1403) {
       return res.status(404).json({
         errors: [{
@@ -294,6 +332,7 @@ router.put("/packages/:id", express.json(), async (req, res) => {
         }]
       });
     }
+    // Cas général : erreur serveur
     return res.status(500).json({
       errors: [{
         status: "500",
@@ -304,6 +343,7 @@ router.put("/packages/:id", express.json(), async (req, res) => {
       }]
     });
   } finally {
+    // Toujours fermer la connexion si elle existe
     if (connection) {
       try {
         await connection.close();
@@ -314,11 +354,12 @@ router.put("/packages/:id", express.json(), async (req, res) => {
   }
 });
 
-/**
- * DELETE: Supprimer un package
- */
+// Route DELETE : supprime un package à partir de son identifiant
+// Appelle la procédure Oracle package_tapi.del_package pour marquer/supprimer l’enregistrement
 router.delete("/packages/:id", async (req, res) => {
+  // Récupération de l’ID du package à supprimer
   const id = parseInt(req.params.id, 10);
+  // Validation : l’ID doit être fourni et numérique
   if (!id || isNaN(id)) {
     return res.status(400).json({
       errors: [{
@@ -333,18 +374,22 @@ router.delete("/packages/:id", async (req, res) => {
 
   let connection;
   try {
+    // Connexion Oracle pour la suppression
     connection = await oracledb.getConnection(dbConfig);
     logger.log("info", "Connexion réussie à la base de données Oracle");
 
+    // Appel de la procédure de suppression logique/physique côté Oracle
     const result = await connection.execute(
       `BEGIN :reto := package_tapi.del_package(:p_id_package, 'N'); END;`,
       { reto: OUT_STRING, p_id_package: id }
     );
 
+    // Validation de la suppression
     await connection.commit();
 
     let retour;
     try {
+      // Parse du JSON retourné par la procédure
       retour = JSON.parse(result.outBinds.reto);
     } catch (e) {
       return res.status(500).json({
@@ -358,13 +403,16 @@ router.delete("/packages/:id", async (req, res) => {
       });
     }
 
+    // Si des erreurs sont présentes, on renvoie le status correspondant
     if (retour.errors && Array.isArray(retour.errors)) {
       const status = parseInt(retour.errors[0]?.status || "500", 10);
       return res.status(status).json({ errors: retour.errors });
     }
+    // En cas de succès, certaines implémentations renvoient seulement meta ou data + meta
     if (retour.meta || (retour.data && retour.meta)) {
       return res.status(200).json(retour);
     }
+    // Format non attendu de la réponse
     return res.status(500).json({
       errors: [{
         status: "500",
@@ -376,6 +424,7 @@ router.delete("/packages/:id", async (req, res) => {
     });
   } catch (err) {
     logger.log("error", err);
+    // Gestion spécifique quand Oracle indique que l’enregistrement n’existe pas
     if (err.errorNum === 20001 || err.errorNum === 1403) {
       return res.status(404).json({
         errors: [{
@@ -387,6 +436,7 @@ router.delete("/packages/:id", async (req, res) => {
         }]
       });
     }
+    // Toute autre erreur est renvoyée comme erreur serveur
     return res.status(500).json({
       errors: [{
         status: "500",
@@ -397,6 +447,7 @@ router.delete("/packages/:id", async (req, res) => {
       }]
     });
   } finally {
+    // Fermeture de la connexion en toutes circonstances
     if (connection) {
       try {
         await connection.close();

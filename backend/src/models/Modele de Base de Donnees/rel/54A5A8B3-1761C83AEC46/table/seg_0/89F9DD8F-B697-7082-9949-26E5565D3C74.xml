@@ -90,21 +90,6 @@
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="FAVORITES_ID_FAVORITE" id="7BC830B3-8D0C-104B-D540-83B312B69B61">
-<createdBy>Ink</createdBy>
-<createdTime>2026-02-14 01:23:02 UTC</createdTime>
-<generatorID>F36B6FDB-C528-507A-686F-C3C1CB99FEF2</generatorID>
-<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT019</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-<previousColumn>false</previousColumn>
-<autoIncrementCycle>false</autoIncrementCycle>
-<associations>
-<colAssociation fkAssociation="20CE8CD9-EEF4-FE6D-9C10-2799B03D45DD" referredColumn="943356E9-23D7-C40B-01C9-530F83241D78"/>
-</associations>
-</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="878608C5-F0A2-CDA5-C452-3589953C0CED" name="USERS_PK">
@@ -117,28 +102,6 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="36BA478F-E418-1C30-8208-0900E2891E1D"/>
-</indexColumnUsage>
-</ind_PK_UK>
-<ind_PK_UK id="58C4A679-8C89-0FD3-1879-9F22AABF0CD2" name="USERS__IDX">
-<createdBy>Ink</createdBy>
-<createdTime>2026-02-14 01:23:02 UTC</createdTime>
-<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
-<indexState>Unique Plain Index</indexState>
-<isSurrogateKey>false</isSurrogateKey>
-<relationGeneratorID>28757740-2A64-1674-1E85-CECE35E63CC3</relationGeneratorID>
-<indexColumnUsage>
-<colUsage columnID="7BC830B3-8D0C-104B-D540-83B312B69B61"/>
-</indexColumnUsage>
-</ind_PK_UK>
-<ind_PK_UK id="B9232A6F-46BD-F166-A16A-D757ABD906A1" name="USERS_FAVORITES_FK">
-<createdBy>Ink</createdBy>
-<createdTime>2026-02-14 01:23:02 UTC</createdTime>
-<generatorID>28757740-2A64-1674-1E85-CECE35E63CC3</generatorID>
-<ownerDesignName>Modele de Base de Donnees</ownerDesignName>
-<indexState>Foreign Key</indexState>
-<isSurrogateKey>false</isSurrogateKey>
-<indexColumnUsage>
-<colUsage columnID="7BC830B3-8D0C-104B-D540-83B312B69B61"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>
