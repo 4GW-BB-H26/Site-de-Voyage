@@ -1,5 +1,8 @@
 # Equipe-1-TP
 
+IMPORTANT: Les scripts sont fini, il ne sont par contre pas connecter entre eux, nous avons manquer de temps et en sommes désolés.
+
+
 1. Configuration BD Oracle :
 
 Créer connections:
