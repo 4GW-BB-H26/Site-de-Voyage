@@ -1,42 +1,128 @@
 //API pour la table USERS 
 //Ce script a ete inspiree du fichier Revision mysql avec nodejs fourni pas m.Rim Mseddi 
 
+import express from "express";
 import oracledb from "oracledb";
 import dbConfig from "./dbconfig.js";
 
+const router = express.Router(); 
 
-const oracledb = require('oracledb');
-
-
-
-async function SeConnecter(){ //pour pouvoir se connecter a la db
+//GET on prend une donnee
+router.get("/user", async (req, res) => {
+    let connection; // pour qu'on puisse le fermer vers la fin
     try{
-        const connexion = oracledb.getConnection(dbConfig);
-        console.log("Connexion reussi!")
+        connection = await oracledb.getConnection(dbConfig);
+        const result = await connection.execute(
+            `SELECT * FROM USERS
+            WHERE EMAIL = :email AND PASSWORD = :password`, 
+            {  
+                email: req.query.email,
+                password: req.query.password
+            }
+        );
+        console.log(result); //verification du resultat;
+        res.json(result.rows);
 
-        return connexion
+    }catch (err) {
+        console.error("erreur dans le GET: ", err);
+        res.send(err.message);
+
+    }finally{
+        if(connection){
+            await connection.close();
+        }
+    }
+});
+
+//post / create
+router.post("/users", express.json(), async(req, res) => {
+    let connection;
+    try{
+        connection = await oracledb.getConnection(dbConfig);
+        const result = await connection.execute(
+            `INSERT INTO USERS (ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, CREATION_DATE)
+            VALUES (1, :first_name, :last_name, :username, :email, :password, SYSDATE)`,
+            // l'ID par defaut de 1 est a changer plus tard pour un id qui fait +1 a chaque nouvelle donnees 
+            {
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                username: req.body.username,
+                email: req.body.email,
+                password: req.body.password,
+            }
+        );
+        await connection.commit();
+        console.log("creation du compte reussi!");
+        res.json(result.rowsAffected);
+
+    }catch (err){
+        console.error("Erreur dans le POST: ",err);
+        res.send(err.message);
+
+    }finally{
+        if(connection){
+            await connection.close();
+        }
+    }
+});
+
+//put / update 
+router.put("/users/:id", express.json(), async(req, res) => {
+    let connection;
+    try{
+        connection = await oracledb.getConnection(dbConfig);
+        const result = await connection.execute(
+            `UPDATE USERS
+            SET FIRST_NAME = :first_name, LAST_NAME = :last_name, USERNAME = :username, EMAIL = :email, PASSWORD = :password
+            WHERE ID_USERS = :id`,
+            {
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                username: req.body.username,
+                email: req.body.email,
+                password: req.body.password,
+                id: req.params.id,
+            }
+        );
+        await connection.commit();
+        console.log("MAJ de l'utilisateur");
+        res.json(result.rowsAffected);
+
     }catch(err){
-        console.error('erreur de connexion : Verifie les credentiel. Erreur : ', err)
+        console.error("erreur dans le PUT: ", err);
+        res.send(err.message);
+
+    }finally{
+        if(connection){
+            await connection.close();
+        }
     }
-}
+});
 
-async function ShowUsers(connexion) { // fonction qui affiche la liste des utilisateurs, utile pour la page admin
-    const result = (await connexion).execute(
-        'SELECT * FROM USERS;'
-    )
-    console.table(result.rows);
-};
+//DELETE on efface un compte
+router.delete("/users/:id", async (req, res)=>{
+    let connection;
+    try{
+        connection = await oracledb.getConnection(dbConfig);
+        const result = await connection.execute(
+            `DELETE FROM USERS WHERE ID_USERS = :id`,
+            {
+                id: req.params.id,
+            }
+        );
+        await connection.commit();
+        console.log("utilisateur supprimer")
+        res.json(result.rowsAffected);
 
-async function FindUser(connexion, Courriel, MDP){
-    const result = (await connexion).execute(
-        'SELECT EMAIL, PASSWORD FROM USERS WHERE EMAIL := courriel AND PASSWORD := MDP', {Courriel, MDP}
-    );
+    }catch(err){
+        console.error("Erreur d'effacement dans le DELETE ", err);
+        res.send(err.message);
 
-    if(result.rows().length > 0){
-        console.log("connection reussi!")
-        return true;
-    }else{
-        console.log("Erreur de connexion :(")
-        return false;
+    }finally{
+        if(connection){
+            await connection.close();
+        }
     }
-}
+});
+
+//no clue how to test it 
