@@ -25,16 +25,17 @@ export default function CarteReservation({
                     <h3 className="carte-reservation-titre">{ville}</h3>
                     <p className="carte-reservation-dates">{dates}</p>
                     <p className="carte-reservation-voyageurs">{voyageurs}</p>
-                    <div className="carte-reservation-bas"></div>
-                        <span className={"badge-statut ${classeStatut(statut)}"}>{statut}</span>
+                    <div className="carte-reservation-bas">
+                        <span className={`badge-statut ${classeStatut(statut)}`}>{statut}</span>
                         <span className="carte-reservation-prix">{prix}</span>
+                        </div>
                 </div>
             </div>
 
             <div className="carte-reservation-actions">
                 <button className="btn-action-reservation"> <FiEye/> Voir les détails</button>
                 <button className="btn-action-reservation"> <FiDownload/> Télécharger</button>
-                <button className="btn-action-reservation, btn-action-annuler"> <FiX/> Annuler </button>
+                <button className="btn-action-reservation btn-action-annuler"> <FiX/> Annuler </button>
             </div>
         </article>
     ) ;
