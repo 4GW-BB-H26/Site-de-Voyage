@@ -7,7 +7,6 @@ import apiPackages from "./api_packages.js";
 import apiDestinations from "./api_destinations.js";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(apiPackages);
@@ -29,6 +28,4 @@ app.get('/', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`API démarrée sur http://localhost:${PORT}`);
-});
+export default app;
