@@ -1,128 +1,158 @@
-//API pour la table USERS 
-//Ce script a ete inspiree du fichier Revision mysql avec nodejs fourni pas m.Rim Mseddi 
+//API pour la table USERS
+//Ce script a ete inspiree du fichier Revision mysql avec nodejs fourni pas m.Rim Mseddi
 
 import express from "express";
 import oracledb from "oracledb";
 import dbConfig from "./dbconfig.js";
 
-const router = express.Router(); 
+const router = express.Router();
 
-//GET on prend une donnee
 router.get("/user", async (req, res) => {
-    let connection; // pour qu'on puisse le fermer vers la fin
-    try{
-        connection = await oracledb.getConnection(dbConfig);
-        const result = await connection.execute(
-            `SELECT * FROM USERS
-            WHERE EMAIL = :email AND PASSWORD = :password`, 
-            {  
-                email: req.query.email,
-                password: req.query.password
-            }
-        );
-        console.log(result); //verification du resultat;
-        res.json(result.rows);
+  const email = req.query.email;
+  const password = req.query.password;
+  if (!email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Courriel et mot de passe requis.",
+    });
+  }
 
-    }catch (err) {
-        console.error("erreur dans le GET: ", err);
-        res.send(err.message);
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+    const result = await connection.execute(
+      `SELECT ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL
+       FROM USERS
+       WHERE EMAIL = :email AND PASSWORD = :password`,
+      { email, password },
+      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+    );
 
-    }finally{
-        if(connection){
-            await connection.close();
-        }
+    if (!result.rows.length) {
+      return res.status(401).json({
+        success: false,
+        message: "Courriel ou mot de passe incorrect.",
+      });
     }
+
+    const row = result.rows[0];
+    return res.json({
+      success: true,
+      user: {
+        id_users: row.ID_USERS,
+        first_name: row.FIRST_NAME,
+        last_name: row.LAST_NAME,
+        username: row.USERNAME,
+        email: row.EMAIL,
+      },
+    });
+  } catch (err) {
+    console.error("erreur dans le GET: ", err);
+    return res.status(500).json({
+      success: false,
+      message: err.message || "Erreur serveur",
+    });
+  } finally {
+    if (connection) {
+      await connection.close();
+    }
+  }
 });
 
-//post / create
-router.post("/users", express.json(), async(req, res) => {
-    let connection;
-    try{
-        connection = await oracledb.getConnection(dbConfig);
-        const result = await connection.execute(
-            `INSERT INTO USERS (ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, CREATION_DATE)
-            VALUES (1, :first_name, :last_name, :username, :email, :password, SYSDATE)`,
-            // l'ID par defaut de 1 est a changer plus tard pour un id qui fait +1 a chaque nouvelle donnees 
-            {
-                first_name: req.body.first_name,
-                last_name: req.body.last_name,
-                username: req.body.username,
-                email: req.body.email,
-                password: req.body.password,
-            }
-        );
-        await connection.commit();
-        console.log("creation du compte reussi!");
-        res.json(result.rowsAffected);
+router.post("/users", express.json(), async (req, res) => {
+  const { first_name, last_name, username, email, password } = req.body || {};
+  if (!first_name || !last_name || !username || !email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Tous les champs sont requis.",
+    });
+  }
 
-    }catch (err){
-        console.error("Erreur dans le POST: ",err);
-        res.send(err.message);
-
-    }finally{
-        if(connection){
-            await connection.close();
-        }
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+    const result = await connection.execute(
+      `INSERT INTO USERS (ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, CREATION_DATE)
+       VALUES ((SELECT NVL(MAX(ID_USERS), 0) + 1 FROM USERS), :first_name, :last_name, :username, :email, :password, SYSDATE)`,
+      { first_name, last_name, username, email, password }
+    );
+    await connection.commit();
+    return res.status(201).json({
+      success: true,
+      rowsAffected: result.rowsAffected,
+    });
+  } catch (err) {
+    console.error("Erreur dans le POST: ", err);
+    if (err.errorNum === 1) {
+      return res.status(409).json({
+        success: false,
+        message: "Ce courriel ou ce nom d'utilisateur existe deja.",
+      });
     }
+    return res.status(500).json({
+      success: false,
+      message: err.message || "Erreur serveur",
+    });
+  } finally {
+    if (connection) {
+      await connection.close();
+    }
+  }
 });
 
-//put / update 
-router.put("/users/:id", express.json(), async(req, res) => {
-    let connection;
-    try{
-        connection = await oracledb.getConnection(dbConfig);
-        const result = await connection.execute(
-            `UPDATE USERS
-            SET FIRST_NAME = :first_name, LAST_NAME = :last_name, USERNAME = :username, EMAIL = :email, PASSWORD = :password
-            WHERE ID_USERS = :id`,
-            {
-                first_name: req.body.first_name,
-                last_name: req.body.last_name,
-                username: req.body.username,
-                email: req.body.email,
-                password: req.body.password,
-                id: req.params.id,
-            }
-        );
-        await connection.commit();
-        console.log("MAJ de l'utilisateur");
-        res.json(result.rowsAffected);
-
-    }catch(err){
-        console.error("erreur dans le PUT: ", err);
-        res.send(err.message);
-
-    }finally{
-        if(connection){
-            await connection.close();
-        }
+router.put("/users/:id", express.json(), async (req, res) => {
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+    const result = await connection.execute(
+      `UPDATE USERS
+       SET FIRST_NAME = :first_name, LAST_NAME = :last_name, USERNAME = :username, EMAIL = :email, PASSWORD = :password
+       WHERE ID_USERS = :id`,
+      {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+        id: req.params.id,
+      }
+    );
+    await connection.commit();
+    return res.json({ success: true, rowsAffected: result.rowsAffected });
+  } catch (err) {
+    console.error("erreur dans le PUT: ", err);
+    return res.status(500).json({
+      success: false,
+      message: err.message || "Erreur serveur",
+    });
+  } finally {
+    if (connection) {
+      await connection.close();
     }
+  }
 });
 
-//DELETE on efface un compte
-router.delete("/users/:id", async (req, res)=>{
-    let connection;
-    try{
-        connection = await oracledb.getConnection(dbConfig);
-        const result = await connection.execute(
-            `DELETE FROM USERS WHERE ID_USERS = :id`,
-            {
-                id: req.params.id,
-            }
-        );
-        await connection.commit();
-        console.log("utilisateur supprimer")
-        res.json(result.rowsAffected);
-
-    }catch(err){
-        console.error("Erreur d'effacement dans le DELETE ", err);
-        res.send(err.message);
-
-    }finally{
-        if(connection){
-            await connection.close();
-        }
+router.delete("/users/:id", async (req, res) => {
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+    const result = await connection.execute(
+      `DELETE FROM USERS WHERE ID_USERS = :id`,
+      { id: req.params.id }
+    );
+    await connection.commit();
+    return res.json({ success: true, rowsAffected: result.rowsAffected });
+  } catch (err) {
+    console.error("Erreur d'effacement dans le DELETE ", err);
+    return res.status(500).json({
+      success: false,
+      message: err.message || "Erreur serveur",
+    });
+  } finally {
+    if (connection) {
+      await connection.close();
     }
+  }
 });
 
-//no clue how to test it 
+export default router;

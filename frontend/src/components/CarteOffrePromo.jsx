@@ -4,7 +4,6 @@ import { FiHeart } from "react-icons/fi";
 import { BsHeartFill } from "react-icons/bs";
 
 export default function CarteOffrePromo({
-  id,
   imageUrl,
   imageAlt,
   titre,

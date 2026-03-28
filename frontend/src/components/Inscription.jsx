@@ -1,6 +1,7 @@
-//Très inspiré de l'exercice 3 fourni par Mme Rim Mseddi 
+//Très inspiré de l'exercice 3 fourni par Mme Rim Mseddi
 import React, { useState, useRef } from "react";
 import "../styles/styles.css";
+import { API_BASE } from "../config/api.js";
 
 export default function Inscription() {
   const [formulaire, setFormulaire] = useState({
@@ -16,7 +17,8 @@ export default function Inscription() {
   const [errorPersonal, setErrorPersonal] = useState("");
   const [errorConditions, setErrorConditions] = useState("");
   const [validationText, setValidationText] = useState("");
-  const [Submitted, setSubmitted] = useState(false); 
+  const [Submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const formRef = useRef(null);
 
   const gererChangement = (e) => {
@@ -27,29 +29,32 @@ export default function Inscription() {
     });
   };
 
-  const test = () => {
-    setSubmitted(true); 
+  const test = async () => {
+    setSubmitted(true);
+    setValidationText("");
 
-    var personal = true;
     const form = formRef.current;
-    
     const elements = form.elements;
 
+    let personal = true;
     if (
-      !elements['nom'].checkValidity() ||
-      !elements['prenom'].checkValidity() ||
-      !elements['username'].checkValidity() ||
-      !elements['courriel'].checkValidity() ||
-      !elements['motDePasse'].checkValidity() ||
-      !elements['confirmation'].checkValidity()
+      !elements.nom.checkValidity() ||
+      !elements.prenom.checkValidity() ||
+      !elements.username.checkValidity() ||
+      !elements.courriel.checkValidity() ||
+      !elements.motDePasse.checkValidity() ||
+      !elements.confirmation.checkValidity()
     ) {
       setErrorPersonal("Veuillez remplir les champs de façon appropriée SVP");
+      personal = false;
+    } else if (formulaire.motDePasse !== formulaire.confirmation) {
+      setErrorPersonal("Les mots de passe ne correspondent pas.");
       personal = false;
     } else {
       setErrorPersonal("");
     }
 
-    var conditions = true;
+    let conditions = true;
     if (!formulaire.accepteConditions) {
       setErrorConditions("Veuillez accepter les conditions d'utilisation");
       conditions = false;
@@ -57,14 +62,39 @@ export default function Inscription() {
       setErrorConditions("");
     }
 
-    if (personal && conditions) {
-      var validation = "Bonjour " + formulaire.prenom + " " + formulaire.nom;
-      validation += ", nous vous répondrons par courriel au " + formulaire.courriel;
-      validation += " (Pseudo choisi : " + formulaire.username + ")";
+    if (!personal || !conditions) {
+      return;
+    }
 
-      setValidationText(validation);
-    } else {
-      setValidationText("");
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE}/users`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          first_name: formulaire.prenom,
+          last_name: formulaire.nom,
+          username: formulaire.username,
+          email: formulaire.courriel,
+          password: formulaire.motDePasse,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === false) {
+        setErrorPersonal(data.message || "Inscription impossible pour le moment.");
+        return;
+      }
+
+      setValidationText(
+        `Compte cree pour ${formulaire.prenom} ${formulaire.nom}. Vous pouvez maintenant vous connecter.`
+      );
+    } catch {
+      setErrorPersonal(
+        "Impossible de joindre le serveur. Verifiez que l'API est demarree (port 3000)."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -172,17 +202,20 @@ export default function Inscription() {
           <div id="errorConditions" className="erreur-texte">{errorConditions}</div>
           <div id="validationText" className="succes-texte">{validationText}</div>
           
-          <input 
-            type="button" 
-            value="S'inscrire" 
-            className="bouton-inscription" 
+          <input
+            type="button"
+            value={loading ? "Envoi..." : "S'inscrire"}
+            className="bouton-inscription"
             onClick={test}
+            disabled={loading}
           />
         </form>
 
         <div className="zone-connexion">
-          Vous avez déjà un compte? 
-          <a href="#" className="lien-connexion">Se connecter</a>
+          Vous avez déjà un compte?
+          <a href="#login" className="lien-connexion">
+            Se connecter
+          </a>
         </div>
       </div>
     </div>
