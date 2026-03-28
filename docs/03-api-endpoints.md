@@ -6,6 +6,7 @@ Principales ressources :
 
 | Méthode | Chemin | Description |
 |--------|--------|-------------|
+| GET | `/accueil` | Données page d’accueil (`titreSectionOffres`, `offres[]`) |
 | GET | `/health` | Santé du service |
 | GET | `/user` | Connexion (query `email`, `password`) |
 | POST | `/users` | Création d’utilisateur |
