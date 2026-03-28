@@ -1,6 +1,6 @@
 import imgLogin from "../assets/img_login.jpg";
 import "../styles/styles.css";
-import React, { useState } from "react";
+import { useState } from "react";
 import { loginUser } from "../api/auth.js";
 
 function Login() {
@@ -9,6 +9,7 @@ function Login() {
     password: "",
   });
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -19,6 +20,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
     if (!info.email.trim() || !info.password) {
       setError("Veuillez entrer votre courriel et votre mot de passe.");
       return;
@@ -38,7 +40,8 @@ function Login() {
       }
 
       sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
-      window.location.hash = "#accueil";
+      setSuccess(`Bienvenue, ${data.user.first_name || data.user.username || "voyageur"} !`);
+      setInfo((prev) => ({ ...prev, password: "" }));
     } catch {
       setError("Impossible de joindre le serveur. Verifiez que l'API est demarree.");
     } finally {
@@ -90,19 +93,24 @@ function Login() {
                 {error}
               </p>
             ) : null}
+            {success ? (
+              <p className="text-success small mb-2" role="status">
+                {success}
+              </p>
+            ) : null}
 
             <button className="login-button" type="submit" disabled={loading}>
               {loading ? "CONNEXION..." : "SE CONNECTER"}
             </button>
             <p />
 
-            <a className="inscription-button-login d-inline-block" href="#inscription">
-              S&apos;INSCRIRE
-            </a>
+            <span className="inscription-button-login d-inline-block text-muted small">
+              S&apos;inscrire : modifiez l&apos;URL en <code>#inscription</code>
+            </span>
             <p />
-            <a href="#accueil" className="small text-secondary">
-              Retour à l&apos;accueil
-            </a>
+            <span className="small text-secondary">
+              Accueil : modifiez l&apos;URL en <code>#accueil</code>
+            </span>
           </form>
         </div>
       </div>

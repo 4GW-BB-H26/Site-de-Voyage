@@ -6,6 +6,10 @@ function currentHashKey() {
   return h;
 }
 
+/**
+ * Barre décorative : aucun lien ne modifie l’URL.
+ * Pour changer d’écran, modifiez manuellement le fragment (#accueil, #login, #inscription, #reservations).
+ */
 export default function BarreNavigation() {
   const [hashKey, setHashKey] = useState(currentHashKey);
 
@@ -16,39 +20,29 @@ export default function BarreNavigation() {
   }, []);
 
   const itemClass = (key) =>
-    `menu-item${hashKey === key ? " menu-item-actif" : ""}`;
+    `menu-item menu-item-inactif${hashKey === key ? " menu-item-actif" : ""}`;
 
   const handleLogout = () => {
     sessionStorage.removeItem("travelExpressUser");
-    window.location.hash = "#accueil";
   };
 
   return (
     <header className="barre-navigation">
       <div className="zone-gauche-nav">
-        <a href="#accueil" className="logo-application text-decoration-none text-reset">
+        <span className="logo-application">
           <span className="logo-icone">✈️</span>
           <span className="logo-texte">TRAVEL EXPRESS</span>
-        </a>
+        </span>
 
-        <nav className="menu-navigation">
-          <a href="#accueil" className="menu-item">
-            Recommandées
-          </a>
-          <a
-            href="#accueil"
-            className={hashKey === "accueil" ? "menu-item menu-item-actif" : "menu-item"}
-          >
+        <nav className="menu-navigation" aria-label="Menu (non cliquable)">
+          <span className={itemClass("accueil")}>Recommandées</span>
+          <span className={hashKey === "accueil" ? "menu-item menu-item-actif menu-item-inactif" : "menu-item menu-item-inactif"}>
             Offres
-          </a>
-          <span className="menu-item">Mes favoris</span>
-          <a href="#reservations" className={itemClass("reservations")}>
-            Mes réservations
-          </a>
-          <a href="#login" className={itemClass("login")}>
-            Compte
-          </a>
-          <span className="menu-item">Support</span>
+          </span>
+          <span className="menu-item menu-item-inactif">Mes favoris</span>
+          <span className={itemClass("reservations")}>Mes réservations</span>
+          <span className={itemClass("login")}>Compte</span>
+          <span className="menu-item menu-item-inactif">Support</span>
         </nav>
       </div>
 

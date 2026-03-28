@@ -190,7 +190,8 @@ export default function Inscription() {
                 required
               />
               <label htmlFor="checkbox-conditions" className="texte-conditions">
-                J'ai lu et j'accepte les <a href="#" className="lien-conditions">conditions d'utilisations</a>
+                J&apos;ai lu et j&apos;accepte les{" "}
+                <span className="lien-conditions">conditions d&apos;utilisations</span>
               </label>
             </div>
           </div>
@@ -208,10 +209,8 @@ export default function Inscription() {
         </form>
 
         <div className="zone-connexion">
-          Vous avez déjà un compte?
-          <a href="#login" className="lien-connexion">
-            Se connecter
-          </a>
+          Vous avez déjà un compte? Connexion : modifiez l&apos;URL en{" "}
+          <code>#login</code>
         </div>
       </div>
     </div>

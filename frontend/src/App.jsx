@@ -4,6 +4,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import ReservationPage from "./pages/ReservationPage";
 
+/** Fragments reconnus (saisie manuelle dans la barre d’adresse du navigateur). */
 const PAGES = new Set(["accueil", "login", "inscription", "reservations"]);
 
 function readHashPage() {
@@ -34,3 +35,4 @@ function App() {
 }
 
 export default App;
+

@@ -26,7 +26,14 @@ export default function SectionReservation() {
       setError("");
 
       const raw = sessionStorage.getItem("travelExpressUser");
-      const user = raw ? JSON.parse(raw) : null;
+      let user = null;
+      if (raw) {
+        try {
+          user = JSON.parse(raw);
+        } catch {
+          sessionStorage.removeItem("travelExpressUser");
+        }
+      }
       const userId = user?.id_users;
 
       if (!userId) {
@@ -83,7 +90,8 @@ export default function SectionReservation() {
       <section className="section-reservation">
         <h2 className="titre-section">Mes réservations</h2>
         <p className="sous-titre-reservations">
-          <a href="#login">Connectez-vous</a> pour voir vos reservations.
+          Pour vous connecter, modifiez l&apos;URL en <code>#login</code>, puis revenez en{" "}
+          <code>#reservations</code>.
         </p>
       </section>
     );
