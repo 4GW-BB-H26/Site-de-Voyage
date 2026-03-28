@@ -5,5 +5,5 @@
 export default {
   user: process.env.ORACLE_USER || "ProjetVoyage",
   password: process.env.ORACLE_PASSWORD || "cisco",
-  connectString: process.env.ORACLE_CONNECT_STRING || "localhost:1521/FREEPDB1"
+  connectString: process.env.ORACLE_CONNECT_STRING || "localhost:1521/FREEPDB1",
 };

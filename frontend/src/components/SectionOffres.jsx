@@ -35,7 +35,7 @@ export default function SectionOffres() {
       lieu: "Barcelone - Espagne",
       note: "5 étoiles - 10/10 Très Bien (49)",
       vol: "Montreal(YUL) - Barcelona(ESP)",
-      dates: "Mar 1 - Feb 14",
+      dates: "Mar 1 - Mar 14",
       prix: "CAD $2500",
       ancienPrix: "$3000",
     },

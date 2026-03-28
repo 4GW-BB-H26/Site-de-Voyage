@@ -1,7 +1,7 @@
 import imgLogin from "../assets/img_login.jpg";
 import "../styles/styles.css";
 import React, { useState } from "react";
-import { API_BASE } from "../config/api.js";
+import { loginUser } from "../api/auth.js";
 
 function Login() {
   const [info, setInfo] = useState({
@@ -26,11 +26,10 @@ function Login() {
 
     setLoading(true);
     try {
-      const qs = new URLSearchParams({
-        email: info.email.trim(),
+      const res = await loginUser({
+        email: info.email,
         password: info.password,
       });
-      const res = await fetch(`${API_BASE}/user?${qs.toString()}`);
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data.success || !data.user) {

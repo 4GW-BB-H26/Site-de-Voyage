@@ -1,8 +1,5 @@
-import express from "express";
 import oracledb from "oracledb";
-import dbConfig from "./dbconfig.js";
-
-const router = express.Router();
+import dbConfig from "../config/db.js";
 
 function formatDateValue(d) {
   if (!d) return "";
@@ -22,7 +19,7 @@ function mapReservationStatus(s) {
   return raw;
 }
 
-router.get("/reservations/user/:userId", async (req, res) => {
+export async function listReservationsByUser(req, res) {
   const userId = parseInt(req.params.userId, 10);
   if (!userId || Number.isNaN(userId)) {
     return res.status(400).json({ error: "Identifiant utilisateur invalide." });
@@ -67,9 +64,9 @@ router.get("/reservations/user/:userId", async (req, res) => {
       await connection.close();
     }
   }
-});
+}
 
-router.get("/reservations/:id", async (req, res) => {
+export async function getReservation(req, res) {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -87,10 +84,9 @@ router.get("/reservations/:id", async (req, res) => {
       await connection.close();
     }
   }
-});
+}
 
-// post
-router.post("/reservations", express.json(), async (req, res) => {
+export async function createReservation(req, res) {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -102,17 +98,17 @@ router.post("/reservations", express.json(), async (req, res) => {
         :trip_id_trip, :id_trip
       ); END;`,
       {
-        id_reservation:   req.body.id_reservation,
+        id_reservation: req.body.id_reservation,
         reference_number: req.body.reference_number,
         reservation_date: new Date(req.body.reservation_date),
-        date_start:       new Date(req.body.date_start),
-        date_end:         new Date(req.body.date_end),
-        nb_travelers:     req.body.nb_travelers,
-        price:            req.body.price,
-        status:           req.body.status,
-        users_id_users:   req.body.users_id_users,
-        trip_id_trip:     req.body.trip_id_trip,
-        id_trip:          req.body.id_trip
+        date_start: new Date(req.body.date_start),
+        date_end: new Date(req.body.date_end),
+        nb_travelers: req.body.nb_travelers,
+        price: req.body.price,
+        status: req.body.status,
+        users_id_users: req.body.users_id_users,
+        trip_id_trip: req.body.trip_id_trip,
+        id_trip: req.body.id_trip,
       }
     );
     await connection.commit();
@@ -126,30 +122,25 @@ router.post("/reservations", express.json(), async (req, res) => {
       await connection.close();
     }
   }
-});
+}
 
-//Il devrait avoir une autre route PUT ici mais je n'avais pas le temps de le faire.
-
-// delete
-router.delete("/reservations/:id", async (req, res) => {
-    let connection;
-    try {
-        connection = await oracledb.getConnection(dbConfig);
-        await connection.execute (
-            `BEGIN reservation_tapi.delete_reservation(:id); END;`,
-            { id: req.params.id }
-        );
-        await connection.commit();
-        console.log(`Réservation avec l'ID ${req.params.id} supprimée`)
-        res.json({ message: `Réservation ${req.params.id} supprimée avec succès`})
-    }  catch (err) {
-        console.error(err);
-        res.status(500).send(err.message);
-    } finally {
-        if (connection) {
-            await connection.close();
-        }
+export async function deleteReservation(req, res) {
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+    await connection.execute(
+      `BEGIN reservation_tapi.delete_reservation(:id); END;`,
+      { id: req.params.id }
+    );
+    await connection.commit();
+    console.log(`Réservation avec l'ID ${req.params.id} supprimée`);
+    res.json({ message: `Réservation ${req.params.id} supprimée avec succès` });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  } finally {
+    if (connection) {
+      await connection.close();
     }
-});
-
-export default router;
+  }
+}

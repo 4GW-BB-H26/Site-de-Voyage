@@ -1,95 +1,58 @@
-# Equipe-1-TP
+# Travel Express
 
-IMPORTANT: Les scripts sont fini, il ne sont par contre pas connecter entre eux, nous avons manquer de temps et en sommes désolés.
+Application transactionnelle de réservation de voyages : interface **React (Vite)** et API **Express** avec base **Oracle**.
 
+## Structure du dépôt
 
-1. Configuration BD Oracle :
+```
+Equipe-1-TP/
+├── frontend/          # Application React (Vite)
+├── backend/           # API Express + Oracle
+├── docs/              # Documentation du projet
+├── .gitignore
+└── README.md
+```
 
-Créer connections:
+### Frontend (`frontend/`)
 
-sys@freepdb1
-username : sys
-Role : SYSDBA
-pass : oracle
-port : 1521
-servicename : freepdb1
+- `index.html` — point d’entrée Vite (à la racine du dossier `frontend/`, convention Vite).
+- `public/` — fichiers statiques servis tels quels.
+- `src/api/` — appels HTTP (fetch) vers l’API.
+- `src/components/` — composants réutilisables.
+- `src/pages/` — pages écran.
+- `src/hooks/`, `src/context/`, `src/utils/` — à compléter selon les besoins.
+- `src/styles/` — feuilles de style.
 
-Run "Creation_User.sql" avec sys
+Variables d’environnement : créer `frontend/.env` avec par exemple `VITE_API_URL=http://localhost:3000`.
 
-ProjetVoyage@freepdb1
-username : ProjetVoyage
-Role : Default
-pass : cisco
-port : 1521
-servicename : freepdb1
+### Backend (`backend/`)
 
-Run "CreateEnv.sql" avec ProjetVoyage
+- `src/server.js` — démarrage HTTP.
+- `src/app.js` — configuration Express et montage des routes.
+- `src/config/` — configuration (Oracle, variables d’environnement).
+- `src/controllers/` — logique des requêtes HTTP.
+- `src/routes/` — définition des routes Express.
+- `src/middleware/` — middlewares Express (erreurs, etc.).
+- `src/utils/` — utilitaires applicatifs (ex. journalisation console).
 
-Compiler touts les fichiers .pks et .pkb présent dans .\backend\src\config
+Copier `backend/.env.example` vers `backend/.env` et ajuster les identifiants Oracle.
 
-2. Terminal et test Backend
+## Démarrage
 
-Naviguez dans le dossier backend
-Terminal -> New Terminal
+**API** (depuis `backend/`) :
 
-cd backend
-npm install express oracledb
-node src/middleware/app.js
-
-3. Frontend Generation
-
-Naviguez dans le dossier frontend
-Terminal -> New Terminal
-
-cd frontend/src
+```bash
 npm install
 npm run dev
+```
 
+**Frontend** (depuis `frontend/`) :
 
-4. Contributors
+```bash
+npm install
+npm run dev
+```
 
-------------------------------
-Zidane R. Mansouri :
+## Documentation
 
-Component   - Inscription
-Page        - Register
-Destination - Back end
-Destination - Api
-Doc         - ReadMe
-Support     - Test Postman
-
-------------------------------
-Ara Ghahramanyan :
-
-Component   - Footer 
-Component   - Barre navigation
-Component   - Section offres
-Component   - Carte offre
-Page        - Accueuil
-Back end    - Packages
-API         - Packages
-
-------------------------------
-Charbel Barrak :
-
-Component - Login
-Page      - Page Login
-Back end  - Users
-API       - Users
-Install   - logger
-Install   - Env. Scripts
-
-
-------------------------------
-
-Tristan Tanguay
-
-Component - Barre Recherche
-Component - Carte Offre Promo
-Component - Carte Reservation
-Page      - Reservation Page
-Back end  - Reservations
-API       - Reservations
-Doc       - Cas d'utilisation
-
-------------------------------
+Voir le dossier `docs/` : `01-analyse préliminaire.md`, `02-personas.md`, `03-api-endpoints.md`, `04-database-schema.md`.

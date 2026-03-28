@@ -1,13 +1,7 @@
-//API pour la table USERS
-//Ce script a ete inspiree du fichier Revision mysql avec nodejs fourni pas m.Rim Mseddi
-
-import express from "express";
 import oracledb from "oracledb";
-import dbConfig from "./dbconfig.js";
+import dbConfig from "../config/db.js";
 
-const router = express.Router();
-
-router.get("/user", async (req, res) => {
+export async function getUser(req, res) {
   const email = req.query.email;
   const password = req.query.password;
   if (!email || !password) {
@@ -57,9 +51,9 @@ router.get("/user", async (req, res) => {
       await connection.close();
     }
   }
-});
+}
 
-router.post("/users", express.json(), async (req, res) => {
+export async function createUser(req, res) {
   const { first_name, last_name, username, email, password } = req.body || {};
   if (!first_name || !last_name || !username || !email || !password) {
     return res.status(400).json({
@@ -98,9 +92,9 @@ router.post("/users", express.json(), async (req, res) => {
       await connection.close();
     }
   }
-});
+}
 
-router.put("/users/:id", express.json(), async (req, res) => {
+export async function updateUser(req, res) {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -130,9 +124,9 @@ router.put("/users/:id", express.json(), async (req, res) => {
       await connection.close();
     }
   }
-});
+}
 
-router.delete("/users/:id", async (req, res) => {
+export async function deleteUser(req, res) {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -153,6 +147,4 @@ router.delete("/users/:id", async (req, res) => {
       await connection.close();
     }
   }
-});
-
-export default router;
+}

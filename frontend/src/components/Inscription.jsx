@@ -1,7 +1,7 @@
 //Très inspiré de l'exercice 3 fourni par Mme Rim Mseddi
 import React, { useState, useRef } from "react";
 import "../styles/styles.css";
-import { API_BASE } from "../config/api.js";
+import { registerUser } from "../api/users.js";
 
 export default function Inscription() {
   const [formulaire, setFormulaire] = useState({
@@ -68,16 +68,12 @@ export default function Inscription() {
 
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/users`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          first_name: formulaire.prenom,
-          last_name: formulaire.nom,
-          username: formulaire.username,
-          email: formulaire.courriel,
-          password: formulaire.motDePasse,
-        }),
+      const res = await registerUser({
+        first_name: formulaire.prenom,
+        last_name: formulaire.nom,
+        username: formulaire.username,
+        email: formulaire.courriel,
+        password: formulaire.motDePasse,
       });
 
       const data = await res.json().catch(() => ({}));

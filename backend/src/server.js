@@ -1,8 +1,7 @@
 import "dotenv/config";
-import app from "./middleware/app.js";
+import app from "./app.js";
+import { port } from "./config/config.js";
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`API demarree sur http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`API demarree sur http://localhost:${port}`);
 });

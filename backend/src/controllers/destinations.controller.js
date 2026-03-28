@@ -1,15 +1,11 @@
-import express from "express";
 import oracledb from "oracledb";
-import dbConfig from "./dbconfig.js";
+import dbConfig from "../config/db.js";
+import { OUT_STRING } from "../config/oracle.js";
 
-const router = express.Router();
-// Variable pour recuperer JSON renvoye par PLSQL
-const OUT_STRING = { dir: oracledb.BIND_OUT, type: oracledb.STRING, maxSize: 40000 };
-
-// get
-router.get("/destinations/:id", async (req, res) => {
+export async function getDestination(req, res) {
+  let connection;
   try {
-    const connection = await oracledb.getConnection(dbConfig);
+    connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(
       `BEGIN :reto := destination_tapi.get_destination(:id); END;`,
       { reto: OUT_STRING, id: req.params.id }
@@ -19,20 +15,24 @@ router.get("/destinations/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send(err.message);
+  } finally {
+    if (connection) {
+      await connection.close();
+    }
   }
-});
+}
 
-// post
-router.post("/destinations", express.json(), async (req, res) => {
+export async function createDestination(req, res) {
+  let connection;
   try {
-    const connection = await oracledb.getConnection(dbConfig);
+    connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(
       `BEGIN :reto := destination_tapi.ins_destination(:city, :country, :image_link, 'N'); END;`,
-      { 
-        reto: OUT_STRING, 
-        city: req.body.city, 
-        country: req.body.country, 
-        image_link: req.body.image_link || req.body.imageLink 
+      {
+        reto: OUT_STRING,
+        city: req.body.city,
+        country: req.body.country,
+        image_link: req.body.image_link || req.body.imageLink,
       }
     );
     await connection.commit();
@@ -41,21 +41,25 @@ router.post("/destinations", express.json(), async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send(err.message);
+  } finally {
+    if (connection) {
+      await connection.close();
+    }
   }
-});
+}
 
-// put
-router.put("/destinations/:id", express.json(), async (req, res) => {
+export async function updateDestination(req, res) {
+  let connection;
   try {
-    const connection = await oracledb.getConnection(dbConfig);
+    connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(
       `BEGIN :reto := destination_tapi.upd_destination(:city, :id, :country, :image_link, 'N'); END;`,
-      { 
-        reto: OUT_STRING, 
-        city: req.body.city, 
-        id: req.params.id, 
-        country: req.body.country, 
-        image_link: req.body.image_link || req.body.imageLink 
+      {
+        reto: OUT_STRING,
+        city: req.body.city,
+        id: req.params.id,
+        country: req.body.country,
+        image_link: req.body.image_link || req.body.imageLink,
       }
     );
     await connection.commit();
@@ -64,13 +68,17 @@ router.put("/destinations/:id", express.json(), async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send(err.message);
+  } finally {
+    if (connection) {
+      await connection.close();
+    }
   }
-});
+}
 
-// dlete
-router.delete("/destinations/:id", async (req, res) => {
+export async function deleteDestination(req, res) {
+  let connection;
   try {
-    const connection = await oracledb.getConnection(dbConfig);
+    connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(
       `BEGIN :reto := destination_tapi.del_destination(:id, 'N'); END;`,
       { reto: OUT_STRING, id: req.params.id }
@@ -81,7 +89,9 @@ router.delete("/destinations/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send(err.message);
+  } finally {
+    if (connection) {
+      await connection.close();
+    }
   }
-});
-
-export default router;
+}

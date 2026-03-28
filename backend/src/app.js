@@ -1,12 +1,13 @@
 /**
- * Configuration Express de l'API
+ * Application Express — enregistrement des routes et middlewares
  */
 
 import express from "express";
-import apiPackages from "./api_packages.js";
-import apiDestinations from "./api_destinations.js";
-import apiUsers from "./api_users.js";
-import apiReservations from "./api_reservations.js";
+import packagesRoutes from "./routes/packages.routes.js";
+import destinationsRoutes from "./routes/destinations.routes.js";
+import usersRoutes from "./routes/users.routes.js";
+import reservationsRoutes from "./routes/reservations.routes.js";
+import { notFoundHandler, errorHandler } from "./middleware/error.middleware.js";
 
 const app = express();
 
@@ -23,10 +24,10 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(apiPackages);
-app.use(apiDestinations);
-app.use(apiUsers);
-app.use(apiReservations);
+app.use(packagesRoutes);
+app.use(destinationsRoutes);
+app.use(usersRoutes);
+app.use(reservationsRoutes);
 
 app.get("/", (req, res) => {
   res.json({
@@ -47,9 +48,9 @@ app.get("/", (req, res) => {
       "GET /reservations/user/:userId": "Lister les reservations d'un utilisateur",
       "GET /reservations/:id": "Recuperer une reservation",
       "POST /reservations": "Creer une reservation",
-      "DELETE /reservations/:id": "Supprimer une reservation"
+      "DELETE /reservations/:id": "Supprimer une reservation",
     },
-    health: "/health"
+    health: "/health",
   });
 });
 
@@ -57,13 +58,7 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-app.use((req, res) => {
-  res.status(404).json({ error: "Route introuvable" });
-});
-
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ error: "Erreur interne du serveur" });
-});
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 export default app;

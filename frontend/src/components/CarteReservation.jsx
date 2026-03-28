@@ -4,6 +4,7 @@ const classeStatut = (statut) => {
     if (statut === "Validée") return "badge-validee";
     if (statut === "À venir") return "badge-a-venir";
     if (statut === "Annulée") return "badge-annulee";
+    return "";
 };
 
 export default function CarteReservation({

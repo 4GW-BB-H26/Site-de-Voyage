@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
 import CarteReservation from "./CarteReservation";
-import { API_BASE } from "../config/api.js";
+import { fetchReservationsForUser } from "../api/reservations.js";
 
-const formatDate = (dateStr) =>
-  new Date(dateStr).toLocaleDateString("fr-CA", {
+const formatDate = (dateStr) => {
+  if (dateStr == null || dateStr === "") return "—";
+  const d = new Date(dateStr);
+  if (Number.isNaN(d.getTime())) return "—";
+  return d.toLocaleDateString("fr-CA", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
+};
 
 export default function SectionReservation() {
   const [reservations, setReservations] = useState([]);
@@ -33,9 +37,7 @@ export default function SectionReservation() {
       }
 
       try {
-        const res = await fetch(
-          `${API_BASE}/reservations/user/${userId}`
-        );
+        const res = await fetchReservationsForUser(userId);
         const data = await res.json().catch(() => null);
 
         if (!res.ok) {
@@ -126,7 +128,11 @@ export default function SectionReservation() {
             dates={`Du ${formatDate(rt.startDate)} au ${formatDate(rt.endDate)}`}
             voyageurs={`${rt.travelers} Voyageur${rt.travelers > 1 ? "s" : ""}`}
             statut={rt.status}
-            prix={`${Number(rt.price).toLocaleString("fr-CA")} CA$`}
+            prix={
+              rt.price != null && rt.price !== ""
+                ? `${Number(rt.price).toLocaleString("fr-CA")} CA$`
+                : "—"
+            }
           />
         ))}
       </div>
