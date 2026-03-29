@@ -777,3 +777,14 @@ border: 2px solid red;
   margin-top: 15px;
   font-size: 14px;
 }
+
+.lien-menu{
+  color: white;
+}
+
+.lien-menu:hover{
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+
+}

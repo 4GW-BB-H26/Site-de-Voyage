@@ -41,6 +41,9 @@ function Login() {
 
       sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
       setSuccess(`Bienvenue, ${data.user.first_name || data.user.username || "voyageur"} !`);
+      setTimeout(() => {
+        window.location.hash = "#/acceuil"
+      }, 1000);
       setInfo((prev) => ({ ...prev, password: "" }));
     } catch {
       setError("Impossible de joindre le serveur. Verifiez que l'API est demarree.");
@@ -105,11 +108,11 @@ function Login() {
             <p />
 
             <span className="inscription-button-login d-inline-block text-muted small">
-              S&apos;inscrire : modifiez l&apos;URL en <code>#inscription</code>
+              <a href="/#/inscription">S&apos;inscrire</a>
             </span>
             <p />
             <span className="small text-secondary">
-              Accueil : modifiez l&apos;URL en <code>#accueil</code>
+              <a href="/#/PageAcceuil"/>
             </span>
           </form>
         </div>

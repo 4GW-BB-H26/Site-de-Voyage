@@ -40,22 +40,23 @@ export default function BarreNavigation() {
             Offres
           </span>
           <span className="menu-item menu-item-inactif">Mes favoris</span>
-          <span className={itemClass("reservations")}>Mes réservations</span>
+          <a className="lien-menu" href="/#/reservations">Mes réservations</a>
           <span className={itemClass("login")}>Compte</span>
           <span className="menu-item menu-item-inactif">Support</span>
         </nav>
       </div>
 
       <div className="zone-droite-nav">
-        <button type="button" className="bouton-deconnexion" onClick={handleLogout}>
-          Se Déconnecter
+        <button type="button" className="bouton-deconnexion" onClick={handleLogout} href="/#/login">
+          <a href="/#/login">Deconnexion</a>
+
         </button>
 
         <div className="zone-recherche-nav">
           <span className="icone-recherche"></span>
           <input
             type="text"
-            placeholder="Rechercher un voyage"
+            placeholder="Rechercher une offre"
             className="champ-recherche-nav"
           />
         </div>

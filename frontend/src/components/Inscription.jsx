@@ -92,6 +92,11 @@ export default function Inscription() {
     } finally {
       setLoading(false);
     }
+    sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
+    setTimeout(() => {
+      window.location.hash = "#/acceuil"
+    }, 1000);
+
   };
 
   return (
@@ -209,8 +214,10 @@ export default function Inscription() {
         </form>
 
         <div className="zone-connexion">
-          Vous avez déjà un compte? Connexion : modifiez l&apos;URL en{" "}
-          <code>#login</code>
+          <label>
+          Déjà un compte?
+          <a href="/#/login" className="lien-connexion">Connectez-vous!</a>
+        </label>
         </div>
       </div>
     </div>
