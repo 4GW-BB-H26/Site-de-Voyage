@@ -8,6 +8,8 @@ import destinationsRoutes from "./routes/destinations.routes.js";
 import usersRoutes from "./routes/users.routes.js";
 import reservationsRoutes from "./routes/reservations.routes.js";
 import { notFoundHandler, errorHandler } from "./middleware/error.middleware.js";
+import favoriteRoutes from "./routes/favorites.routes.js";
+import commentRoutes from "./routes/comments.routes.js";
 
 const app = express();
 
@@ -28,6 +30,8 @@ app.use(packagesRoutes);
 app.use(destinationsRoutes);
 app.use(usersRoutes);
 app.use(reservationsRoutes);
+app.use(favoriteRoutes);
+app.use(commentRoutes);
 
 app.get("/", (req, res) => {
   res.json({

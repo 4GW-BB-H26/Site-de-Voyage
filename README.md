@@ -56,3 +56,31 @@ npm run dev
 ## Documentation
 
 Voir le dossier `docs/` : `01-analyse préliminaire.md`, `02-personas.md`, `03-api-endpoints.md`, `04-database-schema.md`.
+
+Mongo DB
+
+Création container :
+docker run -d --name mongo-db -p 27017:27017 mongo:7
+
+Si existe dejà :
+docker start mongo-db
+
+Playground Test :
+
+use('voyage_db');
+
+//insertion fav
+db.favoris.insertOne({
+    userId: "user123",
+    destinationId: "paris01",
+    nomDestination: "Paris",
+    dateAjout: new Date()
+});
+
+//insrtion comment
+db.commentaires.insertOne({
+    destinationId: "paris01",
+    auteur: "Rakane",
+    texte: "Pire voyage de ma vie, mais merite quand meme un 5",
+    note: 5
+});
