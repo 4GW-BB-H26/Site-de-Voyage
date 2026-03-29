@@ -56,6 +56,7 @@ app.get("/", (req, res) => {
       "GET /reservations/:id": "Recuperer une reservation",
       "POST /reservations": "Creer une reservation",
       "DELETE /reservations/:id": "Supprimer une reservation",
+      "PUT /reservation/ :id/cancel": "Annuler une reservation",
     },
     health: "/health",
   });
