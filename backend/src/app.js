@@ -7,6 +7,7 @@ import packagesRoutes from "./routes/packages.routes.js";
 import destinationsRoutes from "./routes/destinations.routes.js";
 import usersRoutes from "./routes/users.routes.js";
 import reservationsRoutes from "./routes/reservations.routes.js";
+import accueilRoutes from "./routes/accueil.routes.js";
 import { notFoundHandler, errorHandler } from "./middleware/error.middleware.js";
 import favoriteRoutes from "./routes/favorites.routes.js";
 import commentRoutes from "./routes/comments.routes.js";
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(accueilRoutes);
 app.use(packagesRoutes);
 app.use(destinationsRoutes);
 app.use(usersRoutes);
@@ -49,6 +51,7 @@ app.get("/", (req, res) => {
       "POST /users": "Creer un utilisateur",
       "PUT /users/:id": "Modifier un utilisateur",
       "DELETE /users/:id": "Supprimer un utilisateur",
+      "GET /accueil": "Donnees page d'accueil (offres promotionnelles)",
       "GET /reservations/user/:userId": "Lister les reservations d'un utilisateur",
       "GET /reservations/:id": "Recuperer une reservation",
       "POST /reservations": "Creer une reservation",
