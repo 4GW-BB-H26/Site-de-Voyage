@@ -6,10 +6,6 @@ function currentHashKey() {
   return h;
 }
 
-/**
- * Barre décorative : aucun lien ne modifie l’URL.
- * Pour changer d’écran, modifiez manuellement le fragment (#accueil, #login, #inscription, #reservations).
- */
 export default function BarreNavigation() {
   const [hashKey, setHashKey] = useState(currentHashKey);
 
@@ -39,7 +35,7 @@ export default function BarreNavigation() {
           <span className={hashKey === "accueil" ? "menu-item menu-item-actif menu-item-inactif" : "menu-item menu-item-inactif"}>
             Offres
           </span>
-          <span className="menu-item menu-item-inactif">Mes favoris</span>
+          <a className="lien-menu" href="/#/favoris">Mes favoris</a>
           <a className="lien-menu" href="/#/reservations">Mes réservations</a>
           <span className={itemClass("login")}>Compte</span>
           <span className="menu-item menu-item-inactif">Support</span>
