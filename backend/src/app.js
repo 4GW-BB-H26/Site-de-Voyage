@@ -3,14 +3,14 @@
  */
 
 import express from "express";
-import packagesRoutes from "./routes/packages.routes.js";
-import destinationsRoutes from "./routes/destinations.routes.js";
-import usersRoutes from "./routes/users.routes.js";
-import reservationsRoutes from "./routes/reservations.routes.js";
-import accueilRoutes from "./routes/accueil.routes.js";
+import packagesRoutes from "./routes/packages_routes.js";
+import destinationsRoutes from "./routes/destinations_routes.js";
+import usersRoutes from "./routes/users_routes.js";
+import reservationsRoutes from "./routes/reservations_routes.js";
+import accueilRoutes from "./routes/accueil_routes.js";
 import { notFoundHandler, errorHandler } from "./middleware/error.middleware.js";
-import favoriteRoutes from "./routes/favorites.routes.js";
-import commentRoutes from "./routes/comments.routes.js";
+import favoriteRoutes from "./routes/favorites_routes.js";
+import commentRoutes from "./routes/comments_routes.js";
 
 const app = express();
 
