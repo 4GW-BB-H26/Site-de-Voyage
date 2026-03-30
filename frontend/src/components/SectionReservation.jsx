@@ -126,7 +126,7 @@ export default function SectionReservation() {
         Consultez l&apos;ensemble de vos réservations passées et à venir.
       </p>
 
-      <div className="list-reservation">
+      <div className="liste-reservations">
         {reservations.map((rt) => (
           <CarteReservation
             key={rt.id}
