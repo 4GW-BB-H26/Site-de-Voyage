@@ -13,6 +13,7 @@ dist-ssr
 *.local
 
 # Secrets
+backend/src/result.log
 backend/.env
 frontend/.env
 frontend/.env.*
