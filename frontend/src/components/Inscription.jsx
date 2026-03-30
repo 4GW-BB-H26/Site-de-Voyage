@@ -81,7 +81,10 @@ export default function Inscription() {
         setErrorPersonal(data.message || "Inscription impossible pour le moment.");
         return;
       }
-
+      sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
+      setTimeout(() => {
+      window.location.hash = "#/acceuil"
+    }, 1000);
       setValidationText(
         `Compte cree pour ${formulaire.prenom} ${formulaire.nom}. Vous pouvez maintenant vous connecter.`
       );
@@ -92,11 +95,6 @@ export default function Inscription() {
     } finally {
       setLoading(false);
     }
-    sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
-    setTimeout(() => {
-      window.location.hash = "#/acceuil"
-    }, 1000);
-
   };
 
   return (
