@@ -1,8 +1,7 @@
 import "dotenv/config";
 import app from "./app.js";
 import { port } from "./config/config.js";
-//import { connectToMongo } from "./db/mongo.js";
-//attendre quon figrue out mongo avant denlever le commentaire 
+import { connectToMongo } from "./db/mongo.js";
 //await connectToMongo(process.env.MONGODB_URI, process.env.MONGODB_DB_NAME);
 
 app.listen(port, () => {
