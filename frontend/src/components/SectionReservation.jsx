@@ -89,10 +89,10 @@ export default function SectionReservation() {
     return (
       <section className="section-reservation">
         <h2 className="titre-section">Mes réservations</h2>
-        <p className="sous-titre-reservations">
-          Pour vous connecter, modifiez l&apos;URL en <code>#login</code>, puis revenez en{" "}
-          <code>#reservations</code>.
-        </p>
+        <label className="sous-titre-reservations">
+          Pour voir vos reservations,
+          <a className="lien-connexion"href="/#/login" >Connectez-vous!</a>.
+        </label>
       </section>
     );
   }
