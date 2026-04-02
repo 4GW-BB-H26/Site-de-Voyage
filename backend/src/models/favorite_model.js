@@ -1,5 +1,6 @@
 import { getDb } from "../db/mongo.js";
 
 export function favoritesCollection() {
-    return getDb().collection("favoris");
+  const database = getDb();
+  return database ? database.collection("favoris") : null;
 }
