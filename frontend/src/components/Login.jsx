@@ -35,7 +35,11 @@ function Login() {
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data.success || !data.user) {
-        setError(data.message || "Connexion impossible. Verifiez vos identifiants.");
+        setError(
+          data.error ||
+            data.message ||
+            "Connexion impossible. Verifiez vos identifiants."
+        );
         return;
       }
 

@@ -5,6 +5,7 @@ import {
   exigerRessourceUtilisateur,
   exigerUtilisateurCorps,
 } from "../middleware/auth_jwt_middleware.js";
+import { asyncHandler } from "../middleware/error_middleware.js";
 
 const router = express.Router();
 
@@ -12,17 +13,26 @@ router.get(
   "/reservations/user/:userId",
   exigerJetonValide,
   exigerRessourceUtilisateur("userId"),
-  reservationsController.listReservationsByUser
+  asyncHandler(reservationsController.listReservationsByUser)
 );
-router.get("/reservations/:id", reservationsController.getReservation);
+router.get(
+  "/reservations/:id",
+  asyncHandler(reservationsController.getReservation)
+);
 router.post(
   "/reservations",
   express.json(),
   exigerJetonValide,
   exigerUtilisateurCorps("users_id_users"),
-  reservationsController.createReservation
+  asyncHandler(reservationsController.createReservation)
 );
-router.put("/reservations/:id/cancel", reservationsController.cancelReservation);
-router.delete("/reservations/:id", reservationsController.deleteReservation);
+router.put(
+  "/reservations/:id/cancel",
+  asyncHandler(reservationsController.cancelReservation)
+);
+router.delete(
+  "/reservations/:id",
+  asyncHandler(reservationsController.deleteReservation)
+);
 
 export default router;

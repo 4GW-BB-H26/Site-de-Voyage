@@ -1,11 +1,16 @@
 import { commentsCollection } from "../models/comment_model.js";
 import { ObjectId } from "mongodb";
+import { ErreurApplicative } from "../utils/errors.js";
 
-function serviceIndisponible(res) {
-  return res.status(503).json({
-    error:
-      "MongoDB non connecte. Verifiez MONGODB_URI, MONGODB_DB_NAME et Docker.",
-  });
+function serviceIndisponible(next) {
+  return next(
+    new ErreurApplicative("Service MongoDB non connecté.", {
+      status: 503,
+      code: "MONGO_INDISPONIBLE",
+      recouvrement:
+        "Vérifiez MONGODB_URI et MONGODB_DB_NAME dans .env, démarrez MongoDB (ex. Docker), puis redémarrez l’API.",
+    })
+  );
 }
 
 function parseObjectId(id, res) {
@@ -17,9 +22,9 @@ function parseObjectId(id, res) {
   }
 }
 
-export async function addComment(req, res) {
+export async function addComment(req, res, next) {
   const coll = commentsCollection();
-  if (!coll) return serviceIndisponible(res);
+  if (!coll) return serviceIndisponible(next);
 
   const { destinationId, auteur, texte, note } = req.body || {};
   const dest = destinationId != null ? String(destinationId).trim() : "";
@@ -51,26 +56,26 @@ export async function addComment(req, res) {
     const result = await coll.insertOne(comment);
     return res.status(201).json({ _id: result.insertedId, ...comment });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return next(err);
   }
 }
 
-export async function getCommentsByDestination(req, res) {
+export async function getCommentsByDestination(req, res, next) {
   const coll = commentsCollection();
-  if (!coll) return serviceIndisponible(res);
+  if (!coll) return serviceIndisponible(next);
 
   try {
     const destId = String(req.params.destId);
     const comments = await coll.find({ destinationId: destId }).toArray();
     return res.json(comments);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return next(err);
   }
 }
 
-export async function getCommentById(req, res) {
+export async function getCommentById(req, res, next) {
   const coll = commentsCollection();
-  if (!coll) return serviceIndisponible(res);
+  if (!coll) return serviceIndisponible(next);
 
   const oid = parseObjectId(req.params.id, res);
   if (!oid) return;
@@ -82,13 +87,13 @@ export async function getCommentById(req, res) {
     }
     return res.json(doc);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return next(err);
   }
 }
 
-export async function updateComment(req, res) {
+export async function updateComment(req, res, next) {
   const coll = commentsCollection();
-  if (!coll) return serviceIndisponible(res);
+  if (!coll) return serviceIndisponible(next);
 
   const oid = parseObjectId(req.params.id, res);
   if (!oid) return;
@@ -134,13 +139,13 @@ export async function updateComment(req, res) {
     const doc = await coll.findOne({ _id: oid });
     return res.json(doc);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return next(err);
   }
 }
 
-export async function removeComment(req, res) {
+export async function removeComment(req, res, next) {
   const coll = commentsCollection();
-  if (!coll) return serviceIndisponible(res);
+  if (!coll) return serviceIndisponible(next);
 
   const oid = parseObjectId(req.params.id, res);
   if (!oid) return;
@@ -152,6 +157,6 @@ export async function removeComment(req, res) {
     }
     return res.json({ message: "Commentaire supprime" });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return next(err);
   }
 }

@@ -19,7 +19,7 @@ function mapReservationStatus(s) {
   return raw;
 }
 
-export async function listReservationsByUser(req, res) {
+export async function listReservationsByUser(req, res, next) {
   const userId = parseInt(req.params.userId, 10);
   if (!userId || Number.isNaN(userId)) {
     return res.status(400).json({ error: "Identifiant utilisateur invalide." });
@@ -58,13 +58,13 @@ export async function listReservationsByUser(req, res) {
     return res.json(rows);
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: err.message || "Erreur serveur" });
+    return next(err);
   } finally {
     if (connection) await connection.close();
   }
 }
 
-export async function getReservation(req, res) {
+export async function getReservation(req, res, next) {
   const id = parseInt(req.params.id, 10);
   if (!id || Number.isNaN(id)) {
     return res.status(400).json({ error: "Identifiant de réservation invalide." });
@@ -105,13 +105,13 @@ export async function getReservation(req, res) {
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: err.message || "Erreur serveur" });
+    return next(err);
   } finally {
     if (connection) await connection.close();
   }
 }
 
-export async function createReservation(req, res) {
+export async function createReservation(req, res, next) {
   const {
     id_reservation, reference_number, reservation_date,
     date_start, date_end, nb_travelers,
@@ -157,13 +157,13 @@ export async function createReservation(req, res) {
     return res.status(201).json({ message: `Réservation ${id_reservation} créée avec succès` });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: err.message || "Erreur serveur" });
+    return next(err);
   } finally {
     if (connection) await connection.close();
   }
 }
 
-export async function cancelReservation(req, res) {
+export async function cancelReservation(req, res, next) {
   const id = parseInt(req.params.id, 10);
   if (!id || Number.isNaN(id)) {
     return res.status(400).json({ error: "Identifiant de réservation invalide." });
@@ -197,13 +197,13 @@ export async function cancelReservation(req, res) {
     return res.json({ message: `Réservation ${id} annulée avec succès` });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: err.message || "Erreur serveur" });
+    return next(err);
   } finally {
     if (connection) await connection.close();
   }
 }
 
-export async function deleteReservation(req, res) {
+export async function deleteReservation(req, res, next) {
   const id = parseInt(req.params.id, 10);
   if (!id || Number.isNaN(id)) {
     return res.status(400).json({ error: "Identifiant de réservation invalide." });
@@ -226,7 +226,7 @@ export async function deleteReservation(req, res) {
     return res.json({ message: `Réservation ${id} supprimée avec succès` });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: err.message || "Erreur serveur" });
+    return next(err);
   } finally {
     if (connection) await connection.close();
   }

@@ -74,10 +74,7 @@ async function loginAvecIdentifiants(email, password) {
     return {
       erreur: {
         status: 500,
-        payload: {
-          success: false,
-          message: err.message || "Erreur serveur",
-        },
+        nextErr: err,
       },
     };
   } finally {
@@ -87,7 +84,7 @@ async function loginAvecIdentifiants(email, password) {
   }
 }
 
-export async function getUser(req, res) {
+export async function getUser(req, res, next) {
   const email = req.query.email;
   const password = req.query.password;
   if (!email || !password) {
@@ -99,6 +96,7 @@ export async function getUser(req, res) {
 
   const resultat = await loginAvecIdentifiants(email, password);
   if (resultat.erreur) {
+    if (resultat.erreur.nextErr) return next(resultat.erreur.nextErr);
     return res.status(resultat.erreur.status).json(resultat.erreur.payload);
   }
 
@@ -110,7 +108,7 @@ export async function getUser(req, res) {
   });
 }
 
-export async function postAuthLogin(req, res) {
+export async function postAuthLogin(req, res, next) {
   const email = req.body?.email;
   const password = req.body?.password;
   if (
@@ -127,6 +125,7 @@ export async function postAuthLogin(req, res) {
 
   const resultat = await loginAvecIdentifiants(email.trim(), password);
   if (resultat.erreur) {
+    if (resultat.erreur.nextErr) return next(resultat.erreur.nextErr);
     return res.status(resultat.erreur.status).json(resultat.erreur.payload);
   }
 
@@ -150,7 +149,7 @@ export function getAuthMe(req, res) {
   });
 }
 
-export async function createUser(req, res) {
+export async function createUser(req, res, next) {
   const { first_name, last_name, username, email, password } = req.body || {};
   if (
     !first_name ||
@@ -188,10 +187,7 @@ export async function createUser(req, res) {
         message: "Ce courriel ou ce nom d'utilisateur existe deja.",
       });
     }
-    return res.status(500).json({
-      success: false,
-      message: err.message || "Erreur serveur",
-    });
+    return next(err);
   } finally {
     if (connection) {
       await connection.close();
@@ -199,7 +195,7 @@ export async function createUser(req, res) {
   }
 }
 
-export async function updateUser(req, res) {
+export async function updateUser(req, res, next) {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -244,10 +240,7 @@ export async function updateUser(req, res) {
     return res.json({ success: true, rowsAffected: result.rowsAffected });
   } catch (err) {
     console.error("erreur dans le PUT: ", err);
-    return res.status(500).json({
-      success: false,
-      message: err.message || "Erreur serveur",
-    });
+    return next(err);
   } finally {
     if (connection) {
       await connection.close();
@@ -255,7 +248,7 @@ export async function updateUser(req, res) {
   }
 }
 
-export async function deleteUser(req, res) {
+export async function deleteUser(req, res, next) {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -267,10 +260,7 @@ export async function deleteUser(req, res) {
     return res.json({ success: true, rowsAffected: result.rowsAffected });
   } catch (err) {
     console.error("Erreur d'effacement dans le DELETE ", err);
-    return res.status(500).json({
-      success: false,
-      message: err.message || "Erreur serveur",
-    });
+    return next(err);
   } finally {
     if (connection) {
       await connection.close();
