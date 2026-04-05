@@ -1,17 +1,12 @@
 import oracledb from "oracledb";
 import dbConfig from "../config/db.js";
 import { hasherMotDePasse, verifierMotDePasseStocke } from "../utils/password.js";
+import { creerJetonUtilisateur } from "../utils/jetonsJwt.js";
 
-export async function getUser(req, res) {
-  const email = req.query.email;
-  const password = req.query.password;
-  if (!email || !password) {
-    return res.status(400).json({
-      success: false,
-      message: "Courriel et mot de passe requis.",
-    });
-  }
-
+/**
+ * @returns {Promise<{ erreur: { status: number; payload: object } } | { user: object }>}
+ */
+async function loginAvecIdentifiants(email, password) {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -25,10 +20,15 @@ export async function getUser(req, res) {
 
     const row = result.rows[0];
     if (!row) {
-      return res.status(401).json({
-        success: false,
-        message: "Courriel ou mot de passe incorrect.",
-      });
+      return {
+        erreur: {
+          status: 401,
+          payload: {
+            success: false,
+            message: "Courriel ou mot de passe incorrect.",
+          },
+        },
+      };
     }
 
     const stored = row.PASSWORD ?? row.password;
@@ -37,10 +37,15 @@ export async function getUser(req, res) {
       stored
     );
     if (!valide) {
-      return res.status(401).json({
-        success: false,
-        message: "Courriel ou mot de passe incorrect.",
-      });
+      return {
+        erreur: {
+          status: 401,
+          payload: {
+            success: false,
+            message: "Courriel ou mot de passe incorrect.",
+          },
+        },
+      };
     }
 
     if (necessiteRehachage) {
@@ -56,27 +61,93 @@ export async function getUser(req, res) {
       }
     }
 
-    return res.json({
-      success: true,
-      user: {
-        id_users: row.ID_USERS,
-        first_name: row.FIRST_NAME,
-        last_name: row.LAST_NAME,
-        username: row.USERNAME,
-        email: row.EMAIL,
-      },
-    });
+    const user = {
+      id_users: Number(row.ID_USERS),
+      first_name: row.FIRST_NAME,
+      last_name: row.LAST_NAME,
+      username: row.USERNAME,
+      email: row.EMAIL,
+    };
+    return { user };
   } catch (err) {
-    console.error("erreur dans le GET: ", err);
-    return res.status(500).json({
-      success: false,
-      message: err.message || "Erreur serveur",
-    });
+    console.error("connexion: ", err);
+    return {
+      erreur: {
+        status: 500,
+        payload: {
+          success: false,
+          message: err.message || "Erreur serveur",
+        },
+      },
+    };
   } finally {
     if (connection) {
       await connection.close();
     }
   }
+}
+
+export async function getUser(req, res) {
+  const email = req.query.email;
+  const password = req.query.password;
+  if (!email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Courriel et mot de passe requis.",
+    });
+  }
+
+  const resultat = await loginAvecIdentifiants(email, password);
+  if (resultat.erreur) {
+    return res.status(resultat.erreur.status).json(resultat.erreur.payload);
+  }
+
+  const token = creerJetonUtilisateur(resultat.user);
+  return res.json({
+    success: true,
+    user: resultat.user,
+    token,
+  });
+}
+
+export async function postAuthLogin(req, res) {
+  const email = req.body?.email;
+  const password = req.body?.password;
+  if (
+    !email ||
+    !password ||
+    typeof email !== "string" ||
+    typeof password !== "string"
+  ) {
+    return res.status(400).json({
+      success: false,
+      message: "Courriel et mot de passe requis.",
+    });
+  }
+
+  const resultat = await loginAvecIdentifiants(email.trim(), password);
+  if (resultat.erreur) {
+    return res.status(resultat.erreur.status).json(resultat.erreur.payload);
+  }
+
+  const token = creerJetonUtilisateur(resultat.user);
+  return res.json({
+    success: true,
+    user: resultat.user,
+    token,
+  });
+}
+
+export function getAuthMe(req, res) {
+  const u = req.utilisateurJwt;
+  return res.json({
+    success: true,
+    user: {
+      id_users: u.id_users,
+      email: u.email,
+      username: u.username,
+    },
+  });
 }
 
 export async function createUser(req, res) {
@@ -128,7 +199,6 @@ export async function createUser(req, res) {
   }
 }
 
-//Encryption
 export async function updateUser(req, res) {
   let connection;
   try {
@@ -169,7 +239,6 @@ export async function updateUser(req, res) {
         }
       );
     }
-
 
     await connection.commit();
     return res.json({ success: true, rowsAffected: result.rowsAffected });

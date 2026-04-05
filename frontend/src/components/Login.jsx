@@ -40,6 +40,9 @@ function Login() {
       }
 
       sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
+      if (data.token) {
+        sessionStorage.setItem("travelExpressToken", data.token);
+      }
       setSuccess(`Bienvenue, ${data.user.first_name || data.user.username || "voyageur"} !`);
       setTimeout(() => {
         window.location.hash = "#/acceuil"

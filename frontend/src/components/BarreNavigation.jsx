@@ -20,6 +20,7 @@ export default function BarreNavigation() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("travelExpressUser");
+    sessionStorage.removeItem("travelExpressToken");
   };
 
   return (
