@@ -7,6 +7,7 @@
     "dev": "node --watch src/server.js"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "dotenv": "^17.3.1",
     "express": "^4.22.1",
     "mongodb": "^7.1.1",

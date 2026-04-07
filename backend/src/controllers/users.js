@@ -1,5 +1,6 @@
 import oracledb from "oracledb";
 import dbConfig from "../config/db.js";
+import { hasherMotDePasse, verifierMotDePasseStocke } from "../utils/password.js";
 
 export async function getUser(req, res) {
   const email = req.query.email;
@@ -15,21 +16,46 @@ export async function getUser(req, res) {
   try {
     connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(
-      `SELECT ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL
+      `SELECT ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD
        FROM USERS
-       WHERE EMAIL = :email AND PASSWORD = :password`,
-      { email, password },
+       WHERE EMAIL = :email`,
+      { email },
       { outFormat: oracledb.OUT_FORMAT_OBJECT }
     );
 
-    if (!result.rows.length) {
+    const row = result.rows[0];
+    if (!row) {
       return res.status(401).json({
         success: false,
         message: "Courriel ou mot de passe incorrect.",
       });
     }
 
-    const row = result.rows[0];
+    const stored = row.PASSWORD ?? row.password;
+    const { valide, necessiteRehachage } = await verifierMotDePasseStocke(
+      password,
+      stored
+    );
+    if (!valide) {
+      return res.status(401).json({
+        success: false,
+        message: "Courriel ou mot de passe incorrect.",
+      });
+    }
+
+    if (necessiteRehachage) {
+      try {
+        const hachageMotDePasse = await hasherMotDePasse(password);
+        await connection.execute(
+          `UPDATE USERS SET PASSWORD = :password WHERE ID_USERS = :id`,
+          { password: hachageMotDePasse, id: row.ID_USERS }
+        );
+        await connection.commit();
+      } catch (rehashErr) {
+        console.error("Échec migration hash mot de passe: ", rehashErr);
+      }
+    }
+
     return res.json({
       success: true,
       user: {
@@ -55,7 +81,14 @@ export async function getUser(req, res) {
 
 export async function createUser(req, res) {
   const { first_name, last_name, username, email, password } = req.body || {};
-  if (!first_name || !last_name || !username || !email || !password) {
+  if (
+    !first_name ||
+    !last_name ||
+    !username ||
+    !email ||
+    typeof password !== "string" ||
+    !password.trim()
+  ) {
     return res.status(400).json({
       success: false,
       message: "Tous les champs sont requis.",
@@ -64,11 +97,12 @@ export async function createUser(req, res) {
 
   let connection;
   try {
+    const hachageMotDePasse = await hasherMotDePasse(password);
     connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(
       `INSERT INTO USERS (ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, CREATION_DATE)
        VALUES ((SELECT NVL(MAX(ID_USERS), 0) + 1 FROM USERS), :first_name, :last_name, :username, :email, :password, SYSDATE)`,
-      { first_name, last_name, username, email, password }
+      { first_name, last_name, username, email, password: hachageMotDePasse }
     );
     await connection.commit();
     return res.status(201).json({
@@ -94,23 +128,49 @@ export async function createUser(req, res) {
   }
 }
 
+//Encryption
 export async function updateUser(req, res) {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
-    const result = await connection.execute(
-      `UPDATE USERS
-       SET FIRST_NAME = :first_name, LAST_NAME = :last_name, USERNAME = :username, EMAIL = :email, PASSWORD = :password
-       WHERE ID_USERS = :id`,
-      {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        id: req.params.id,
-      }
-    );
+    const newPassword = req.body.password;
+    const passwordProvided =
+      newPassword !== undefined &&
+      newPassword !== null &&
+      String(newPassword).trim() !== "";
+
+    let result;
+    if (passwordProvided) {
+      const hachageMotDePasse = await hasherMotDePasse(String(newPassword));
+      result = await connection.execute(
+        `UPDATE USERS
+         SET FIRST_NAME = :first_name, LAST_NAME = :last_name, USERNAME = :username, EMAIL = :email, PASSWORD = :password
+         WHERE ID_USERS = :id`,
+        {
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          username: req.body.username,
+          email: req.body.email,
+          password: hachageMotDePasse,
+          id: req.params.id,
+        }
+      );
+    } else {
+      result = await connection.execute(
+        `UPDATE USERS
+         SET FIRST_NAME = :first_name, LAST_NAME = :last_name, USERNAME = :username, EMAIL = :email
+         WHERE ID_USERS = :id`,
+        {
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          username: req.body.username,
+          email: req.body.email,
+          id: req.params.id,
+        }
+      );
+    }
+
+
     await connection.commit();
     return res.json({ success: true, rowsAffected: result.rowsAffected });
   } catch (err) {

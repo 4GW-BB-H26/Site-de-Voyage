@@ -1,8 +1,11 @@
 // Carte d'une réservation ou offre de voyage
+import InfosPays from './InfosPays';
+
 export default function CarteOffre({
   imageUrl,
   imageAlt,
   ville,
+  pays,
   dates,
   voyageurs,
   statut,
@@ -18,6 +21,7 @@ export default function CarteOffre({
           <h3 className="titre-offre">{ville}</h3>
           <p className="destination-offre">{dates}</p>
           <p className="destination-offre">{voyageurs}</p>
+          {pays && <InfosPays nomPays="Canada" />}
           <span className={`badge-statut badge-${typeStatut}`}>{statut}</span>
         </div>
 

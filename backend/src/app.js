@@ -8,7 +8,7 @@ import destinationsRoutes from "./routes/destinations_routes.js";
 import usersRoutes from "./routes/users_routes.js";
 import reservationsRoutes from "./routes/reservations_routes.js";
 import accueilRoutes from "./routes/accueil_routes.js";
-import { notFoundHandler, errorHandler } from "./middleware/error.middleware.js";
+import { notFoundHandler, errorHandler } from "./middleware/error_middleware.js";
 import favoriteRoutes from "./routes/favorites_routes.js";
 import commentRoutes from "./routes/comments_routes.js";
 
@@ -57,6 +57,20 @@ app.get("/", (req, res) => {
       "POST /reservations": "Creer une reservation",
       "DELETE /reservations/:id": "Supprimer une reservation",
       "PUT /reservation/ :id/cancel": "Annuler une reservation",
+      mongoFavoris: {
+        "POST /favorites": "Creer",
+        "GET /favorites/user/:userId": "Lister par utilisateur",
+        "GET /favorites/:id": "Lire un document",
+        "PUT /favorites/:id": "Modifier",
+        "DELETE /favorites/:id": "Supprimer",
+      },
+      mongoCommentaires: {
+        "POST /comments": "Creer",
+        "GET /comments/destination/:destId": "Lister par destination",
+        "GET /comments/:id": "Lire un document",
+        "PUT /comments/:id": "Modifier",
+        "DELETE /comments/:id": "Supprimer",
+      },
     },
     health: "/health",
   });
