@@ -7,7 +7,7 @@ import FavorisPage from "./pages/FavorisPage";
 import SupportPage from "./pages/SupportPage";
 
 /** Fragments reconnus (saisie manuelle dans la barre d’adresse du navigateur). */
-const PAGES = new Set(["accueil", "login", "inscription", "reservations", "favoris"]);
+const PAGES = new Set(["accueil", "login", "inscription", "reservations", "favoris", "support"]);
 
 function readHashPage() {
   const raw = window.location.hash.replace(/^#\/?/, "").toLowerCase();
