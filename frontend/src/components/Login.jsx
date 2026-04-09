@@ -11,6 +11,7 @@ function Login() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +41,7 @@ function Login() {
       }
 
       sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
+      
       setSuccess(`Bienvenue, ${data.user.first_name || data.user.username || "voyageur"} !`);
       setTimeout(() => {
         window.location.hash = "#/acceuil"

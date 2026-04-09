@@ -8,6 +8,9 @@ function currentHashKey() {
 
 export default function BarreNavigation() {
   const [hashKey, setHashKey] = useState(currentHashKey);
+  let boutonName = "Se connecter";
+  let link = "/#/login"
+  if(sessionStorage.getItem("travelExpressUser")!= null) { boutonName = "Deconnexion"; link = "/#/accueil"}
 
   useEffect(() => {
     const onHash = () => setHashKey(currentHashKey());
@@ -21,6 +24,7 @@ export default function BarreNavigation() {
   const handleLogout = () => {
     sessionStorage.removeItem("travelExpressUser");
   };
+
 
   return (
     <header className="barre-navigation">
@@ -44,7 +48,7 @@ export default function BarreNavigation() {
 
       <div className="zone-droite-nav">
         <button type="button" className="bouton-deconnexion" onClick={handleLogout} href="/#/login">
-          <a href="/#/login">Deconnexion</a>
+          <a href={link}>{boutonName}</a>
 
         </button>
 
