@@ -3,9 +3,11 @@ import PageAccueil from "./pages/PageAccueil";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import ReservationPage from "./pages/ReservationPage";
+import FavorisPage from "./pages/FavorisPage";
+import SupportPage from "./pages/SupportPage";
 
 /** Fragments reconnus (saisie manuelle dans la barre d’adresse du navigateur). */
-const PAGES = new Set(["accueil", "login", "inscription", "reservations"]);
+const PAGES = new Set(["accueil", "login", "inscription", "reservations", "favoris"]);
 
 function readHashPage() {
   const raw = window.location.hash.replace(/^#\/?/, "").toLowerCase();
@@ -29,6 +31,10 @@ function App() {
       return <RegisterPage />;
     case "reservations":
       return <ReservationPage />;
+    case "favoris":
+      return <FavorisPage />;
+    case "support":
+      return <SupportPage />;
     default:
       return <PageAccueil />;
   }

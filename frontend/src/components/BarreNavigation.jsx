@@ -16,7 +16,7 @@ export default function BarreNavigation() {
   }, []);
 
   const itemClass = (key) =>
-    `menu-item menu-item-inactif${hashKey === key ? " menu-item-actif" : ""}`;
+    `menu-item${hashKey === key ? " menu-item-actif" : ""}`;
 
   const handleLogout = () => {
     sessionStorage.removeItem("travelExpressUser");
@@ -30,22 +30,23 @@ export default function BarreNavigation() {
           <span className="logo-texte">TRAVEL EXPRESS</span>
         </span>
 
-        <nav className="menu-navigation" aria-label="Menu (non cliquable)">
-          <span className={itemClass("accueil")}>Recommandées</span>
-          <span className={hashKey === "accueil" ? "menu-item menu-item-actif menu-item-inactif" : "menu-item menu-item-inactif"}>
-            Offres
-          </span>
-          <a className="lien-menu" href="/#/favoris">Mes favoris</a>
-          <a className="lien-menu" href="/#/reservations">Mes réservations</a>
-          <span className={itemClass("login")}>Compte</span>
-          <span className="menu-item menu-item-inactif">Support</span>
+        <nav className="menu-navigation" aria-label="Navigation principale">
+          <a className={`lien-menu ${itemClass("accueil")}`} href="#accueil">Recommandées</a>
+          <a className={`lien-menu ${itemClass("accueil")}`} href="#accueil">Offres</a>
+          <a className={`lien-menu ${itemClass("favoris")}`} href="#favoris">Mes favoris</a>
+          <a className={`lien-menu ${itemClass("reservations")}`} href="#reservations">Mes réservations</a>
+          <a className={`lien-menu ${itemClass("login")}`} href="#login">Compte</a>
+          <a className={`lien-menu ${itemClass("support")}`} href="#support">Support</a>
         </nav>
       </div>
 
       <div className="zone-droite-nav">
-        <button type="button" className="bouton-deconnexion" onClick={handleLogout} href="/#/login">
-          <a href="/#/login">Deconnexion</a>
-
+        <button
+          type="button"
+          className="bouton-deconnexion"
+          onClick={handleLogout}
+        >
+          <a href="#login">Déconnexion</a>
         </button>
 
         <div className="zone-recherche-nav">
