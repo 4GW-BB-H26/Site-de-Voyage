@@ -151,11 +151,15 @@ export function getAuthMe(req, res) {
 
 export async function createUser(req, res, next) {
   const { first_name, last_name, username, email, password } = req.body || {};
+  const prenom = typeof first_name === "string" ? first_name.trim() : "";
+  const nom = typeof last_name === "string" ? last_name.trim() : "";
+  const nomUtilisateur = typeof username === "string" ? username.trim() : "";
+  const courriel = typeof email === "string" ? email.trim().toLowerCase() : "";
   if (
-    !first_name ||
-    !last_name ||
-    !username ||
-    !email ||
+    !prenom ||
+    !nom ||
+    !nomUtilisateur ||
+    !courriel ||
     typeof password !== "string" ||
     !password.trim()
   ) {
@@ -169,15 +173,42 @@ export async function createUser(req, res, next) {
   try {
     const hachageMotDePasse = await hasherMotDePasse(password);
     connection = await oracledb.getConnection(dbConfig);
-    const result = await connection.execute(
+    await connection.execute(
       `INSERT INTO USERS (ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, CREATION_DATE)
        VALUES ((SELECT NVL(MAX(ID_USERS), 0) + 1 FROM USERS), :first_name, :last_name, :username, :email, :password, SYSDATE)`,
-      { first_name, last_name, username, email, password: hachageMotDePasse }
+      {
+        first_name: prenom,
+        last_name: nom,
+        username: nomUtilisateur,
+        email: courriel,
+        password: hachageMotDePasse,
+      }
     );
     await connection.commit();
+
+    const created = await connection.execute(
+      `SELECT ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL
+       FROM USERS
+       WHERE EMAIL = :email`,
+      { email: courriel },
+      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+    );
+    const row = created.rows?.[0];
+    const user = row
+      ? {
+          id_users: Number(row.ID_USERS),
+          first_name: row.FIRST_NAME,
+          last_name: row.LAST_NAME,
+          username: row.USERNAME,
+          email: row.EMAIL,
+        }
+      : null;
+
+    const token = user ? creerJetonUtilisateur(user) : null;
     return res.status(201).json({
       success: true,
-      rowsAffected: result.rowsAffected,
+      user,
+      ...(token ? { token } : {}),
     });
   } catch (err) {
     console.error("Erreur dans le POST: ", err);

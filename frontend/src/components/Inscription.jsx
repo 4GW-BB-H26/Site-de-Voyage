@@ -78,10 +78,17 @@ export default function Inscription() {
 
       const data = await res.json().catch(() => ({}));
       if (!res.ok || data.success === false) {
-        setErrorPersonal(data.message || "Inscription impossible pour le moment.");
+        setErrorPersonal(
+          data.error || data.message || "Inscription impossible pour le moment."
+        );
         return;
       }
-      sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
+      if (data.user) {
+        sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
+      }
+      if (data.token) {
+        sessionStorage.setItem("travelExpressToken", data.token);
+      }
       setTimeout(() => {
       window.location.hash = "#/login"
     }, 1000);
