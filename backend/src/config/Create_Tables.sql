@@ -85,7 +85,7 @@ CREATE TABLE users (
     last_name     VARCHAR2(50) NOT NULL,
     username      VARCHAR2(50) NOT NULL,
     email         VARCHAR2(50) NOT NULL,
-    password      VARCHAR2(100) NOT NULL,
+    password      VARCHAR2(50) NOT NULL,
     creation_date DATE NOT NULL
 );
 
