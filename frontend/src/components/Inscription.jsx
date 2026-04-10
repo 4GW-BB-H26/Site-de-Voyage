@@ -29,7 +29,7 @@ export default function Inscription() {
     });
   };
 
-  const test = async () => {
+  const submitForm = async () => {
     setSubmitted(true);
     setValidationText("");
 
@@ -83,7 +83,7 @@ export default function Inscription() {
       }
       sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
       setTimeout(() => {
-      window.location.hash = "#/acceuil"
+      window.location.hash = "#/login"
     }, 1000);
       setValidationText(
         `Compte cree pour ${formulaire.prenom} ${formulaire.nom}. Vous pouvez maintenant vous connecter.`
@@ -206,7 +206,7 @@ export default function Inscription() {
             type="button"
             value={loading ? "Envoi..." : "S'inscrire"}
             className="bouton-inscription"
-            onClick={test}
+            onClick={submitForm}
             disabled={loading}
           />
         </form>
