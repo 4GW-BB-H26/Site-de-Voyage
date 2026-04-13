@@ -39,7 +39,7 @@ export async function listReservationsByUser(req, res, next) {
        ORDER BY r.DATE_START DESC`,
       { userId },
       { outFormat: oracledb.OUT_FORMAT_OBJECT }
-    );
+    );  //SECURITY
 
     const rows = (result.rows || []).map((row) => ({
       id: row.ID_RESERVATION,
@@ -150,7 +150,7 @@ export async function createReservation(req, res, next) {
         users_id_users,
         trip_id_trip,
         id_trip,
-      }
+      } //Security
     );
     await connection.commit();
     console.log(`Réservation ID ${id_reservation} créée avec succès`);
