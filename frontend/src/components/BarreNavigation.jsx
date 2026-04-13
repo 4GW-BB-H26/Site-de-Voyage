@@ -18,7 +18,7 @@ export default function BarreNavigation() {
   }, []);
 
   const itemClass = (key) =>
-    `menu-item menu-item-inactif${hashKey === key ? " menu-item-actif" : ""}`;
+    `menu-item${hashKey === key ? " menu-item-actif" : ""}`;
 
   const handleLogout = () => {
     sessionStorage.removeItem("travelExpressUser");
