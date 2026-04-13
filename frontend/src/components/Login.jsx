@@ -54,7 +54,7 @@ function Login() {
     }
   };
 
-  return (
+  return ( 
     <div className="row">
       <div className="col-6">
         <img src={imgLogin} alt="Paysage de voyage" />
