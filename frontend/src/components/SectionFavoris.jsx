@@ -77,11 +77,11 @@ export default function SectionFavoris() {
   if (error === "connect") {
     return (
       <section className="section-favoris">
-        <h2 className="titre-section">Mes favoris</h2>
-        <p className="sous-titre-reservations">
-          Pour vous connecter, modifiez l'URL en <code>#login</code>, puis revenez en{" "}
-          <code>#favoris</code>.
-        </p>
+        <h2 className="titre-section">Mes Favoris</h2>
+        <label className="sous-titre-reservations">
+          Pour voir vos favoris,
+          <a className="lien-connexion"href="/#/login" >Connectez-vous!</a>.
+        </label>
       </section>
     );
   }
