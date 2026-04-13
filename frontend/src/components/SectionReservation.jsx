@@ -32,6 +32,7 @@ export default function SectionReservation() {
           user = JSON.parse(raw);
         } catch {
           sessionStorage.removeItem("travelExpressUser");
+          sessionStorage.removeItem("travelExpressToken");
         }
       }
       const userId = user?.id_users;
@@ -49,9 +50,8 @@ export default function SectionReservation() {
 
         if (!res.ok) {
           const msg =
-            data && data.error
-              ? data.error
-              : "Impossible de charger vos reservations.";
+            (data && (data.error || data.message)) ||
+            "Impossible de charger vos reservations.";
           throw new Error(msg);
         }
 

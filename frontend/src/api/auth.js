@@ -1,13 +1,17 @@
 import { API_BASE } from "./client.js";
 
 /**
- * @param {{ email: string; password: string }} credentials
+ * Connexion : mot de passe dans le corps (POST), pas dans l’URL.
+ * @param {{ email: string; password: string }} identifiants
  * @returns {Promise<Response>}
  */
-export function loginUser(credentials) {
-  const qs = new URLSearchParams({
-    email: credentials.email.trim(),
-    password: credentials.password,
+export function loginUser(identifiants) {
+  return fetch(`${API_BASE}/auth/login`, { //fetch
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: identifiants.email.trim(),
+      password: identifiants.password,
+    }),
   });
-  return fetch(`${API_BASE}/user?${qs.toString()}`);
 }

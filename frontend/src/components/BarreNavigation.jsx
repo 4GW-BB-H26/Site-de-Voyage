@@ -8,6 +8,8 @@ function currentHashKey() {
 
 export default function BarreNavigation() {
   const [hashKey, setHashKey] = useState(currentHashKey);
+  const estConnecte = sessionStorage.getItem("travelExpressUser") != null;
+  const boutonName = estConnecte ? "Deconnexion" : "Se connecter";
 
   useEffect(() => {
     const onHash = () => setHashKey(currentHashKey());
@@ -20,7 +22,10 @@ export default function BarreNavigation() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("travelExpressUser");
+    sessionStorage.removeItem("travelExpressToken");
+    window.location.hash = "#/login";
   };
+
 
   return (
     <header className="barre-navigation">
@@ -30,24 +35,25 @@ export default function BarreNavigation() {
           <span className="logo-texte">TRAVEL EXPRESS</span>
         </span>
 
-        <nav className="menu-navigation" aria-label="Navigation principale">
-          <a className={`lien-menu ${itemClass("accueil")}`} href="#accueil">Recommandées</a>
-          <a className={`lien-menu ${itemClass("accueil")}`} href="#accueil">Offres</a>
-          <a className={`lien-menu ${itemClass("favoris")}`} href="#favoris">Mes favoris</a>
-          <a className={`lien-menu ${itemClass("reservations")}`} href="#reservations">Mes réservations</a>
-          <a className={`lien-menu ${itemClass("login")}`} href="#login">Compte</a>
-          <a className={`lien-menu ${itemClass("support")}`} href="#support">Support</a>
+        <nav className="menu-navigation" aria-label="Menu principal">
+          <a className={itemClass("accueil")} href="/#/accueil">Recommandées</a>
+          <a className={itemClass("accueil")} href="/#/accueil">Offres</a>
+          <a className={itemClass("reservations")} href="/#/reservations">Mes réservations</a>
+          <a className={itemClass("login")} href="/#/login">Compte</a>
+          <span className="menu-item menu-item-inactif">Support</span>
         </nav>
       </div>
 
       <div className="zone-droite-nav">
-        <button
-          type="button"
-          className="bouton-deconnexion"
-          onClick={handleLogout}
-        >
-          <a href="#login">Déconnexion</a>
-        </button>
+        {estConnecte ? (
+          <button type="button" className="bouton-deconnexion" onClick={handleLogout}>
+            {boutonName}
+          </button>
+        ) : (
+          <a href="/#/login" className="bouton-deconnexion">
+            {boutonName}
+          </a>
+        )}
 
         <div className="zone-recherche-nav">
           <span className="icone-recherche"></span>

@@ -11,6 +11,7 @@ function Login() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,14 +36,21 @@ function Login() {
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data.success || !data.user) {
-        setError(data.message || "Connexion impossible. Verifiez vos identifiants.");
+        setError(
+          data.error ||
+            data.message ||
+            "Connexion impossible. Verifiez vos identifiants."
+        );
         return;
       }
 
       sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
+      if (data.token) {
+        sessionStorage.setItem("travelExpressToken", data.token);
+      }
       setSuccess(`Bienvenue, ${data.user.first_name || data.user.username || "voyageur"} !`);
       setTimeout(() => {
-        window.location.hash = "#/acceuil"
+        window.location.hash = "#/accueil"
       }, 1000);
       setInfo((prev) => ({ ...prev, password: "" }));
     } catch {
