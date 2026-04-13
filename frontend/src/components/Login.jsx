@@ -50,7 +50,7 @@ function Login() {
       }
       setSuccess(`Bienvenue, ${data.user.first_name || data.user.username || "voyageur"} !`);
       setTimeout(() => {
-        window.location.hash = "#/accueil"
+        window.location.hash = "#/accueil";
       }, 1000);
       setInfo((prev) => ({ ...prev, password: "" }));
     } catch {

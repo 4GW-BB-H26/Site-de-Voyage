@@ -173,6 +173,9 @@ export async function createUser(req, res, next) {
   try {
     const hachageMotDePasse = await hasherMotDePasse(password);
     connection = await oracledb.getConnection(dbConfig);
+    // Evite les collisions d'ID avec la strategie MAX(ID_USERS)+1
+    // en serialisant les insertions concurrentes sur USERS.
+    await connection.execute(`LOCK TABLE USERS IN EXCLUSIVE MODE`);
     await connection.execute(
       `INSERT INTO USERS (ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, CREATION_DATE)
        VALUES ((SELECT NVL(MAX(ID_USERS), 0) + 1 FROM USERS), :first_name, :last_name, :username, :email, :password, SYSDATE)`,

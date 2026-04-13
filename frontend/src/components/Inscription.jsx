@@ -78,9 +78,10 @@ export default function Inscription() {
 
       const data = await res.json().catch(() => ({}));
       if (!res.ok || data.success === false) {
-        setErrorPersonal(
-          data.error || data.message || "Inscription impossible pour le moment."
-        );
+        const messageErreur =
+          data.error || data.message || "Inscription impossible pour le moment.";
+        const recouvrement = typeof data.recouvrement === "string" ? data.recouvrement : "";
+        setErrorPersonal(recouvrement ? `${messageErreur} ${recouvrement}` : messageErreur);
         return;
       }
       if (data.user) {
