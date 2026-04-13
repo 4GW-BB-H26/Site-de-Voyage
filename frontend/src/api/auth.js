@@ -6,7 +6,7 @@ import { API_BASE } from "./client.js";
  * @returns {Promise<Response>}
  */
 export function loginUser(identifiants) {
-  return fetch(`${API_BASE}/auth/login`, {
+  return fetch(`${API_BASE}/auth/login`, { //fetch
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
