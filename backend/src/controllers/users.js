@@ -1,20 +1,37 @@
+/**
+ * Comptes utilisateurs : inscription, connexion, profil, suppression.
+ * Selon AUTH_MODE, la persistance passe par Oracle (USERS) ou Mongo (authMongoService).
+ */
 import oracledb from "oracledb";
 import dbConfig from "../config/db.js";
+import { useMongoAuth } from "../config/auth.js";
 import { hasherMotDePasse, verifierMotDePasseStocke } from "../utils/password.js";
 import { creerJetonUtilisateur } from "../utils/jetonsJwt.js";
+import {
+  loginAvecIdentifiantsMongo,
+  createUserMongo,
+  updateUserMongo,
+  deleteUserMongo,
+} from "../services/authMongoService.js";
 
 /**
- * @returns {Promise<{ erreur: { status: number; payload: object } } | { user: object }>}
+ * Vérifie courriel + mot de passe et renvoie soit l’utilisateur, soit une erreur structurée.
  */
 async function loginAvecIdentifiants(email, password) {
+  const courriel = String(email).trim().toLowerCase();
+
+  if (useMongoAuth) {
+    return loginAvecIdentifiantsMongo(courriel, password);
+  }
+
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
     const result = await connection.execute(
       `SELECT ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD
        FROM USERS
-       WHERE EMAIL = :email`,
-      { email },
+       WHERE LOWER(EMAIL) = :email`,
+      { email: courriel },
       { outFormat: oracledb.OUT_FORMAT_OBJECT }
     );
 
@@ -57,7 +74,7 @@ async function loginAvecIdentifiants(email, password) {
         );
         await connection.commit();
       } catch (rehashErr) {
-        console.error("Échec migration hash mot de passe: ", rehashErr);
+        console.error("Impossible de mettre le mot de passe au format attendu :", rehashErr);
       }
     }
 
@@ -70,7 +87,7 @@ async function loginAvecIdentifiants(email, password) {
     };
     return { user };
   } catch (err) {
-    console.error("connexion: ", err);
+    console.error("Problème pendant la connexion (Oracle) :", err);
     return {
       erreur: {
         status: 500,
@@ -84,6 +101,7 @@ async function loginAvecIdentifiants(email, password) {
   }
 }
 
+/** GET /user?email=&password= — connexion “legacy” par query string (même effet qu’un login) */
 export async function getUser(req, res, next) {
   const email = req.query.email;
   const password = req.query.password;
@@ -108,6 +126,7 @@ export async function getUser(req, res, next) {
   });
 }
 
+/** POST /auth/login — connexion JSON utilisée par le frontend */
 export async function postAuthLogin(req, res, next) {
   const email = req.body?.email;
   const password = req.body?.password;
@@ -123,7 +142,7 @@ export async function postAuthLogin(req, res, next) {
     });
   }
 
-  const resultat = await loginAvecIdentifiants(email.trim(), password);
+  const resultat = await loginAvecIdentifiants(email, password);
   if (resultat.erreur) {
     if (resultat.erreur.nextErr) return next(resultat.erreur.nextErr);
     return res.status(resultat.erreur.status).json(resultat.erreur.payload);
@@ -137,6 +156,7 @@ export async function postAuthLogin(req, res, next) {
   });
 }
 
+/** GET /auth/me — infos minimales dérivées du JWT (middleware exigerJetonValide) */
 export function getAuthMe(req, res) {
   const u = req.utilisateurJwt;
   return res.json({
@@ -149,7 +169,21 @@ export function getAuthMe(req, res) {
   });
 }
 
+/** POST /users — inscription ; renvoie user + token si tout va bien */
 export async function createUser(req, res, next) {
+  if (useMongoAuth) {
+    const out = await createUserMongo(req.body || {});
+    if (out.erreur) {
+      if (out.erreur.nextErr) return next(out.erreur.nextErr);
+      return res.status(out.erreur.status).json(out.erreur.payload);
+    }
+    return res.status(out.status).json({
+      success: true,
+      user: out.user,
+      token: out.token,
+    });
+  }
+
   const { first_name, last_name, username, email, password } = req.body || {};
   const prenom = typeof first_name === "string" ? first_name.trim() : "";
   const nom = typeof last_name === "string" ? last_name.trim() : "";
@@ -173,8 +207,8 @@ export async function createUser(req, res, next) {
   try {
     const hachageMotDePasse = await hasherMotDePasse(password);
     connection = await oracledb.getConnection(dbConfig);
-    // Evite les collisions d'ID avec la strategie MAX(ID_USERS)+1
-    // en serialisant les insertions concurrentes sur USERS.
+    // On verrouille la table le temps de l’insert : avec MAX(ID)+1, deux requêtes en même temps
+    // pourraient sinon réserver le même numéro.
     await connection.execute(`LOCK TABLE USERS IN EXCLUSIVE MODE`);
     await connection.execute(
       `INSERT INTO USERS (ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, CREATION_DATE)
@@ -214,7 +248,7 @@ export async function createUser(req, res, next) {
       ...(token ? { token } : {}),
     });
   } catch (err) {
-    console.error("Erreur dans le POST: ", err);
+    console.error("Inscription (Oracle) :", err);
     if (err.errorNum === 1) {
       return res.status(409).json({
         success: false,
@@ -229,7 +263,17 @@ export async function createUser(req, res, next) {
   }
 }
 
+/** PUT /users/:id — JWT requis, id doit correspondre au jeton */
 export async function updateUser(req, res, next) {
+  if (useMongoAuth) {
+    const out = await updateUserMongo(req.params.id, req.body || {});
+    if (out.erreur) {
+      if (out.erreur.nextErr) return next(out.erreur.nextErr);
+      return res.status(out.erreur.status).json(out.erreur.payload);
+    }
+    return res.json({ success: true, rowsAffected: out.rowsAffected });
+  }
+
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -273,7 +317,7 @@ export async function updateUser(req, res, next) {
     await connection.commit();
     return res.json({ success: true, rowsAffected: result.rowsAffected });
   } catch (err) {
-    console.error("erreur dans le PUT: ", err);
+    console.error("Mise à jour du profil (Oracle) :", err);
     return next(err);
   } finally {
     if (connection) {
@@ -282,7 +326,17 @@ export async function updateUser(req, res, next) {
   }
 }
 
+/** DELETE /users/:id — même règle de sécurité que le PUT */
 export async function deleteUser(req, res, next) {
+  if (useMongoAuth) {
+    const out = await deleteUserMongo(req.params.id);
+    if (out.erreur) {
+      if (out.erreur.nextErr) return next(out.erreur.nextErr);
+      return res.status(out.erreur.status).json(out.erreur.payload);
+    }
+    return res.json({ success: true, rowsAffected: out.rowsAffected });
+  }
+
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -293,7 +347,7 @@ export async function deleteUser(req, res, next) {
     await connection.commit();
     return res.json({ success: true, rowsAffected: result.rowsAffected });
   } catch (err) {
-    console.error("Erreur d'effacement dans le DELETE ", err);
+    console.error("Suppression du compte (Oracle) :", err);
     return next(err);
   } finally {
     if (connection) {

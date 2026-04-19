@@ -1,3 +1,6 @@
+/**
+ * Commentaires MongoDB par destination ; :id document = ObjectId.
+ */
 import { Router } from "express";
 import {
   addComment,
@@ -7,16 +10,45 @@ import {
   removeComment,
 } from "../controllers/comments.js";
 import { asyncHandler } from "../middleware/error_middleware.js";
+import { handleValidationErrors } from "../middleware/handleValidation.js";
+import {
+  postCommentValidators,
+  commentsDestinationParamValidators,
+  mongoIdParamValidators,
+  commentUpdateValidators,
+} from "../validators/index.js";
 
 const router = Router();
 
-router.post("/comments", asyncHandler(addComment));
+router.post(
+  "/comments",
+  postCommentValidators,
+  handleValidationErrors,
+  asyncHandler(addComment)
+);
 router.get(
   "/comments/destination/:destId",
+  commentsDestinationParamValidators,
+  handleValidationErrors,
   asyncHandler(getCommentsByDestination)
 );
-router.get("/comments/:id", asyncHandler(getCommentById));
-router.put("/comments/:id", asyncHandler(updateComment));
-router.delete("/comments/:id", asyncHandler(removeComment));
+router.get(
+  "/comments/:id",
+  mongoIdParamValidators,
+  handleValidationErrors,
+  asyncHandler(getCommentById)
+);
+router.put(
+  "/comments/:id",
+  commentUpdateValidators,
+  handleValidationErrors,
+  asyncHandler(updateComment)
+);
+router.delete(
+  "/comments/:id",
+  mongoIdParamValidators,
+  handleValidationErrors,
+  asyncHandler(removeComment)
+);
 
 export default router;

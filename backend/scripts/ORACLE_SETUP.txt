@@ -1,0 +1,90 @@
+================================================================================
+  Quand Oracle dit non (ORA-01017) ou que test:oracle échoue
+================================================================================
+
+Pas besoin de maîtriser tout le jargon Oracle : pour l’appli, ce qui compte
+c’est surtout le nom de service que le listener annonce — c’est la partie
+après le « / » dans ta chaîne de connexion.
+
+  ORACLE_CONNECT_STRING = hôte:port/NOM_DE_SERVICE
+
+En pratique tu croiseras souvent :
+  - Oracle 23 Free     → FREEPDB1
+  - XE 21c             → XEPDB1
+  - Vieille instance   → ORCL, XE, ou ce que l’install a choisi
+
+Dans backend/.env, mets exactement le même service que quand tu te connectes
+avec SQL Developer et que ça marche.
+
+--------------------------------------------------------------------------------
+Trouver votre nom de service (Windows)
+--------------------------------------------------------------------------------
+
+Dans une invite "Invite de commandes" ou PowerShell (droits admin si besoin) :
+
+  lsnrctl services
+
+Repérez la ligne "Service" pour votre instance (souvent sur le port 1521).
+C'est ce nom (sans le domaine) qui va après le / dans ORACLE_CONNECT_STRING.
+
+Exemple de ligne utile :
+  Service "FREEPDB1" has 1 instance(s).
+
+Alors dans .env :
+  ORACLE_CONNECT_STRING=localhost:1521/FREEPDB1
+
+--------------------------------------------------------------------------------
+ÉTAPE A — Connexion administrateur (SYS) sur CE service
+--------------------------------------------------------------------------------
+
+1) SQL Developer → Nouvelle connexion
+   - Utilisateur : SYS
+   - Mot de passe : celui défini à l'installation d'Oracle
+   - Rôle : SYSDBA
+   - Hôte : localhost, Port : 1521
+   - Type : Nom de service (pas SID)
+   - Nom de service : celui trouvé avec lsnrctl (ou celui que votre prof indique)
+
+2) Testez la connexion.
+
+3) Exécutez verify_oracle.sql pour voir si PROJETVOYAGE existe déjà.
+
+--------------------------------------------------------------------------------
+ÉTAPE B — Créer / réinitialiser ProjetVoyage
+--------------------------------------------------------------------------------
+
+Toujours connecté en SYS AS SYSDBA sur le MÊME nom de service qu'au point A,
+exécutez tout le fichier :
+
+  backend/scripts/ensure_oracle_user.sql
+
+--------------------------------------------------------------------------------
+ÉTAPE C — Aligner .env et tester
+--------------------------------------------------------------------------------
+
+Dans backend/.env :
+
+  ORACLE_USER=ProjetVoyage
+  ORACLE_PASSWORD=cisco
+  ORACLE_CONNECT_STRING=localhost:1521/VOTRE_SERVICE
+
+Puis :
+
+  cd backend
+  npm run test:oracle
+
+================================================================================
+Sans mot de passe SYS
+================================================================================
+
+C'est le mot de passe admin choisi à l'installation. Sinon : prof / notes du
+cours / réinitialisation selon la doc Oracle de votre environnement.
+
+================================================================================
+Autre utilisateur que ProjetVoyage
+================================================================================
+
+  ORACLE_USER=...
+  ORACLE_PASSWORD=...
+
+================================================================================

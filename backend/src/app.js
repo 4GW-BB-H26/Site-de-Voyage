@@ -1,5 +1,5 @@
 /**
- * Application Express — enregistrement des routes et middlewares
+ * @fileoverview Application Express : CORS, parseur JSON, routes métier, /health, gestionnaires d’erreur.
  */
 
 import express from "express";
@@ -11,6 +11,8 @@ import accueilRoutes from "./routes/accueil_routes.js";
 import { notFoundHandler, errorHandler } from "./middleware/error_middleware.js";
 import favoriteRoutes from "./routes/favorites_routes.js";
 import commentRoutes from "./routes/comments_routes.js";
+import { authMode } from "./config/auth.js";
+import { getDb } from "./db/mongo.js";
 
 const app = express();
 
@@ -78,8 +80,13 @@ app.get("/", (req, res) => {
   });
 });
 
+// Petit coup d’œil rapide : l’API répond, où vit l’auth, et si Mongo est là
 app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
+  res.status(200).json({
+    status: "ok",
+    authMode,
+    mongoConnected: Boolean(getDb()),
+  });
 });
 
 app.use(notFoundHandler);
