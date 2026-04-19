@@ -18,7 +18,7 @@ export default function SectionFooter() {
         <div className="footer-colonne">
           <h4 className="footer-titre">Support</h4>
           <ul className="footer-liste">
-            <li>Centre d&apos;aide</li>
+            <li>Centre d'aide</li>
             <li>Contact</li>
             <li>FAQ</li>
           </ul>
@@ -27,7 +27,7 @@ export default function SectionFooter() {
         <div className="footer-colonne">
           <h4 className="footer-titre">Légal</h4>
           <ul className="footer-liste">
-            <li>Conditions d&apos;utilisation</li>
+            <li>Conditions d'utilisation</li>
             <li>Politique de confidentialité</li>
           </ul>
         </div>

@@ -19,7 +19,7 @@ export default function BarreNavigation() {
   }, []);
 
   const itemClass = (key) =>
-    `menu-item menu-item-inactif${hashKey === key ? " menu-item-actif" : ""}`;
+    `menu-item${hashKey === key ? " menu-item-actif" : ""}`;
 
   const handleLogout = () => {
     sessionStorage.removeItem("travelExpressUser");
@@ -35,6 +35,7 @@ export default function BarreNavigation() {
           <span className="logo-texte">TRAVEL EXPRESS</span>
         </span>
 
+<<<<<<< HEAD
         <nav className="menu-navigation" aria-label="Menu (non cliquable)">
           <span className={itemClass("accueil")}>Recommandées</span>
           <span className={hashKey === "accueil" ? "menu-item menu-item-actif menu-item-inactif" : "menu-item menu-item-inactif"}>
@@ -43,6 +44,14 @@ export default function BarreNavigation() {
           <a className="lien-menu" href="/#/favoris">Mes favoris</a>
           <a className="lien-menu" href="/#/reservations">Mes réservations</a>
           <span className={itemClass("login")}>Compte</span>
+=======
+        <nav className="menu-navigation" aria-label="Menu principal">
+          <a className={itemClass("accueil")} href="/#/accueil">Recommandées</a>
+          <a className={itemClass("accueil")} href="/#/accueil">Offres</a>
+          <a className={itemClass("favoris")} href="/#/favoris">Mes favoris</a>
+          <a className={itemClass("reservations")} href="/#/reservations">Mes réservations</a>
+          <a className={itemClass("login")} href="/#/login">Compte</a>
+>>>>>>> d07d66a1028fb7f2f98a162ac145c11f1e3e52bc
           <span className="menu-item menu-item-inactif">Support</span>
         </nav>
       </div>

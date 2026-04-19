@@ -827,3 +827,112 @@ border: 2px solid red;
   font-style: italic;
   padding: 10px 0;
 }
+
+/* Css pour favoris */
+ 
+.section-favoris {
+  width: 100%;
+  margin: 32px 0 48px;
+}
+ 
+.liste-favoris {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+ 
+/* Carte favoris */
+ 
+.carte-favori {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: white;
+  border-radius: 12px;
+  border: 2px solid rgb(72, 156, 216);
+  padding: 16px;
+}
+ 
+.carte-favori-info {
+  flex: 1;
+}
+ 
+.carte-favori-titre {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0 0 4px;
+  color: #1a1a1a;
+}
+ 
+.carte-favori-date {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+ 
+.btn-retirer-favori {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid #f5b8b8;
+  background: white;
+  color: #c0392b;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+ 
+.btn-retirer-favori:hover {
+  background-color: #fff0f0;
+}
+
+/* Css pour support */
+ 
+.section-support {
+  width: 100%;
+  margin: 32px 0 48px;
+}
+ 
+.liste-support {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+ 
+.carte-support {
+  background: white;
+  border-radius: 12px;
+  border: 2px solid rgb(72, 156, 216);
+  padding: 20px 24px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+ 
+.carte-support:hover {
+  border-color: #1e73be;
+  box-shadow: 0 4px 16px rgba(30, 115, 190, 0.15);
+}
+ 
+.carte-support-titre {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1e73be;
+  margin: 0 0 10px;
+}
+ 
+.carte-support-texte {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+ 
+.carte-support-telephone {
+  font-size: 15px;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-top: 10px;
+}
