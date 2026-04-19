@@ -6,7 +6,7 @@ let db;
 export async function connectToMongo(uri, dbName) {
   if (!uri || !dbName) {
     console.warn(
-      "MongoDB: MONGODB_URI ou MONGODB_DB_NAME manquant — routes NoSQL indisponibles."
+      "MongoDB: MONGODB_URI ou MONGODB_DB_NAME manquant, routes NoSQL indisponibles."
     );
     return;
   }
