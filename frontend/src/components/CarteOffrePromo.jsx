@@ -1,13 +1,10 @@
 // Carte d'une offre Hôtel + Vol (promotions)
-
 import { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import { BsHeartFill } from "react-icons/bs";
 import InfosPays from "./InfosPays";
-import { addFavorite, removeFavorite } from "../api/favorites.js";
 
 export default function CarteOffrePromo({
-  id,
   imageUrl,
   imageAlt,
   titre,
@@ -20,59 +17,24 @@ export default function CarteOffrePromo({
   ancienPrix,
 }) {
   const [estFavori, setEstFavori] = useState(false);
-  const [favoriId, setFavoriId] = useState(null); // stores MongoDB _id
   const [afficherDetails, setAfficherDetails] = useState(false);
 
-  const toggleFavori = async (e) => {
+  const toggleFavori = (e) => {
     e.stopPropagation();
-
-    const raw = sessionStorage.getItem("travelExpressUser");
-    let user = null;
-    if (raw) {
-      try { user = JSON.parse(raw); } catch { /* ignore */ }
-    }
-
-    if (!user?.id_users) {
-      alert("Vous devez être connecté pour ajouter un favori.");
-      return;
-    }
-
-    try {
-      if (!estFavori) {
-        // Add to favorites
-        const res = await addFavorite({
-          userId: String(user.id_users),
-          destinationId: String(id),
-          nomDestination: lieu,
-        });
-        const data = await res.json();
-        setFavoriId(data._id);
-        setEstFavori(true);
-      } else {
-        // Remove from favorites
-        if (favoriId) {
-          await removeFavorite(favoriId);
-        }
-        setFavoriId(null);
-        setEstFavori(false);
-      }
-    } catch (err) {
-      alert("Erreur lors de la mise à jour des favoris.");
-    }
+    setEstFavori(!estFavori);
   };
 
   const handleReserver = (e) => {
     e.stopPropagation();
     alert(`Réservation pour : ${titre} - ${lieu}`);
   };
-
   const toggleDetails = () => {
     setAfficherDetails(!afficherDetails);
   };
 
   return (
-    <article
-      className="carte-offre-promo"
+    <article 
+      className="carte-offre-promo" 
       onClick={toggleDetails}
       style={{ cursor: "pointer", transition: "all 0.3s ease" }}
     >
