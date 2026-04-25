@@ -2,6 +2,7 @@ import imgLogin from "../assets/img_login.jpg";
 import "../styles/styles.css";
 import { useState } from "react";
 import { loginUser } from "../api/auth.js";
+import { validerConnexion } from "../utils/validator.js";
 
 function Login() {
   const [info, setInfo] = useState({
@@ -22,15 +23,19 @@ function Login() {
     e.preventDefault();
     setError("");
     setSuccess("");
-    if (!info.email.trim() || !info.password) {
-      setError("Veuillez entrer votre courriel et votre mot de passe.");
+    const validation = validerConnexion({
+      email: info.email,
+      password: info.password,
+    });
+    if (!validation.ok) {
+      setError(validation.message || "Données invalides.");
       return;
     }
 
     setLoading(true);
     try {
       const res = await loginUser({
-        email: info.email,
+        email: validation.email,
         password: info.password,
       });
       const data = await res.json().catch(() => ({}));

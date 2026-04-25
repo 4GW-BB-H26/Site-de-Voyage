@@ -11,6 +11,7 @@ import {
 import { asyncHandler } from "../middleware/error_middleware.js";
 import { handleValidationErrors } from "../middleware/handleValidation.js";
 import {
+  authorizationBearerValidators,
   reservationUserIdParamValidators,
   reservationIdParamValidators,
   postReservationValidators,
@@ -21,9 +22,10 @@ const router = express.Router();
 // Liste des résas d’un utilisateur : le :userId doit matcher le JWT
 router.get(
   "/reservations/user/:userId",
-  exigerJetonValide,
+  authorizationBearerValidators,
   reservationUserIdParamValidators,
   handleValidationErrors,
+  exigerJetonValide,
   exigerRessourceUtilisateur("userId"),
   asyncHandler(reservationsController.listReservationsByUser)
 );
@@ -39,6 +41,7 @@ router.post(
   "/reservations",
   express.json(),
   postReservationValidators,
+  authorizationBearerValidators,
   handleValidationErrors,
   exigerJetonValide,
   exigerUtilisateurCorps("users_id_users"),

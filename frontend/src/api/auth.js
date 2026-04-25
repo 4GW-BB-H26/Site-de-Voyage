@@ -1,3 +1,4 @@
+import validator from "validator";
 import { API_BASE } from "./client.js";
 
 /**
@@ -10,7 +11,7 @@ export function loginUser(identifiants) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      email: identifiants.email.trim(),
+      email: validator.trim(String(identifiants.email ?? "")),
       password: identifiants.password,
     }),
   });
