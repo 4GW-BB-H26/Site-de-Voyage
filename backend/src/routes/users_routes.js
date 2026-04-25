@@ -11,6 +11,7 @@ import {
 import { asyncHandler } from "../middleware/error_middleware.js";
 import { handleValidationErrors } from "../middleware/handleValidation.js";
 import {
+  authorizationBearerValidators,
   getUserQueryValidators,
   postAuthLoginValidators,
   postUsersValidators,
@@ -38,6 +39,8 @@ router.post(
 // Profil depuis le jeton
 router.get(
   "/auth/me",
+  authorizationBearerValidators,
+  handleValidationErrors,
   exigerJetonValide,
   asyncHandler(usersController.getAuthMe)
 );
@@ -54,6 +57,7 @@ router.put(
   "/users/:id",
   express.json(),
   putUserValidators,
+  authorizationBearerValidators,
   handleValidationErrors,
   exigerJetonValide,
   exigerRessourceUtilisateur("id"),
@@ -63,6 +67,7 @@ router.put(
 router.delete(
   "/users/:id",
   deleteUserValidators,
+  authorizationBearerValidators,
   handleValidationErrors,
   exigerJetonValide,
   exigerRessourceUtilisateur("id"),
