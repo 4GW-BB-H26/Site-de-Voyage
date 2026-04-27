@@ -27,6 +27,7 @@ async function loginAvecIdentifiants(email, password) {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
+      // ✅ Requête paramétrée : placeholders nommé :email empêchent l'injection
     const result = await connection.execute(
       `SELECT ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD
        FROM USERS
@@ -210,6 +211,7 @@ export async function createUser(req, res, next) {
     // On verrouille la table le temps de l’insert : avec MAX(ID)+1, deux requêtes en même temps
     // pourraient sinon réserver le même numéro.
     await connection.execute(`LOCK TABLE USERS IN EXCLUSIVE MODE`);
+      // ✅ Requête paramétrée : placeholders empêchent l'injection
     await connection.execute(
       `INSERT INTO USERS (ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, CREATION_DATE)
        VALUES ((SELECT NVL(MAX(ID_USERS), 0) + 1 FROM USERS), :first_name, :last_name, :username, :email, :password, SYSDATE)`,
