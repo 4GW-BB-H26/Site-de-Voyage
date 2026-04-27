@@ -1,5 +1,5 @@
 /**
- * Application Express — enregistrement des routes et middlewares
+ * @fileoverview Application Express : CORS, parseur JSON, routes métier, /health, gestionnaires d’erreur.
  */
 
 import express from "express";
@@ -11,6 +11,8 @@ import accueilRoutes from "./routes/accueil_routes.js";
 import { notFoundHandler, errorHandler } from "./middleware/error_middleware.js";
 import favoriteRoutes from "./routes/favorites_routes.js";
 import commentRoutes from "./routes/comments_routes.js";
+import { authMode } from "./config/auth.js";
+import { getDb } from "./db/mongo.js";
 
 const app = express();
 
@@ -47,14 +49,16 @@ app.get("/", (req, res) => {
       "POST /destinations": "Creer une destination",
       "PUT /destinations/:id": "Modifier une destination",
       "DELETE /destinations/:id": "Supprimer une destination",
-      "GET /user": "Recuperer un utilisateur",
+      "GET /user": "Connexion (courriel, mdp en query) — reponse + jeton JWT",
+      "POST /auth/login": "Connexion JSON { email, password } — reponse + jeton JWT",
+      "GET /auth/me": "Profil minimal depuis le JWT (header Authorization: Bearer)",
       "POST /users": "Creer un utilisateur",
-      "PUT /users/:id": "Modifier un utilisateur",
-      "DELETE /users/:id": "Supprimer un utilisateur",
+      "PUT /users/:id": "Modifier un utilisateur (JWT requis, meme id)",
+      "DELETE /users/:id": "Supprimer un utilisateur (JWT requis, meme id)",
       "GET /accueil": "Donnees page d'accueil (offres promotionnelles)",
       "GET /reservations/user/:userId": "Lister les reservations d'un utilisateur",
       "GET /reservations/:id": "Recuperer une reservation",
-      "POST /reservations": "Creer une reservation",
+      "POST /reservations": "Creer une reservation (JWT, users_id_users = utilisateur du jeton)",
       "DELETE /reservations/:id": "Supprimer une reservation",
       "PUT /reservation/ :id/cancel": "Annuler une reservation",
       mongoFavoris: {
@@ -76,8 +80,13 @@ app.get("/", (req, res) => {
   });
 });
 
+// Petit coup d’œil rapide : l’API répond, où vit l’auth, et si Mongo est là
 app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
+  res.status(200).json({
+    status: "ok",
+    authMode,
+    mongoConnected: Boolean(getDb()),
+  });
 });
 
 app.use(notFoundHandler);

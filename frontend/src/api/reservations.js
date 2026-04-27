@@ -1,8 +1,16 @@
-import { API_BASE } from "./client.js";
+import { API_BASE, entetesAvecJeton } from "./client.js";
+import { estIdentifiantUtilisateurValide } from "../utils/validator.js";
 
 /**
  * @param {number} userId
  */
 export function fetchReservationsForUser(userId) {
-  return fetch(`${API_BASE}/reservations/user/${userId}`);
+  if (!estIdentifiantUtilisateurValide(userId)) {
+    return Promise.reject(new Error("Identifiant utilisateur invalide."));
+  }
+  return fetch(`${API_BASE}/reservations/user/${userId}`, {
+    headers: {
+      ...entetesAvecJeton(),
+    },
+  });
 }

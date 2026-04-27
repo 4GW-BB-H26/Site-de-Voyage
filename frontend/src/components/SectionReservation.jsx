@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import CarteReservation from "./CarteReservation";
 import { fetchReservationsForUser } from "../api/reservations.js";
+import { estIdentifiantUtilisateurValide } from "../utils/validator.js";
 
 const formatDate = (dateStr) => {
   if (dateStr == null || dateStr === "") return "—";
@@ -32,11 +33,12 @@ export default function SectionReservation() {
           user = JSON.parse(raw);
         } catch {
           sessionStorage.removeItem("travelExpressUser");
+          sessionStorage.removeItem("travelExpressToken");
         }
       }
       const userId = user?.id_users;
 
-      if (!userId) {
+      if (!estIdentifiantUtilisateurValide(userId)) {
         setReservations([]);
         setError("connect");
         setLoading(false);
@@ -49,9 +51,8 @@ export default function SectionReservation() {
 
         if (!res.ok) {
           const msg =
-            data && data.error
-              ? data.error
-              : "Impossible de charger vos reservations.";
+            (data && (data.error || data.message)) ||
+            "Impossible de charger vos reservations.";
           throw new Error(msg);
         }
 

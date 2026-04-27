@@ -1,11 +1,16 @@
 import { favoritesCollection } from "../models/favorite_model.js";
 import { ObjectId } from "mongodb";
+import { ErreurApplicative } from "../utils/errors.js";
 
-function serviceIndisponible(res) {
-  return res.status(503).json({
-    error:
-      "MongoDB non connecte. Verifiez MONGODB_URI, MONGODB_DB_NAME et Docker.",
-  });
+function serviceIndisponible(next) {
+  return next(
+    new ErreurApplicative("Service MongoDB non connecté.", {
+      status: 503,
+      code: "MONGO_INDISPONIBLE",
+      recouvrement:
+        "Vérifiez MONGODB_URI et MONGODB_DB_NAME dans .env, démarrez MongoDB (ex. Docker), puis redémarrez l’API.",
+    })
+  );
 }
 
 function parseObjectId(id, res) {
@@ -17,9 +22,9 @@ function parseObjectId(id, res) {
   }
 }
 
-export async function addFavorite(req, res) {
+export async function addFavorite(req, res, next) {
   const coll = favoritesCollection();
-  if (!coll) return serviceIndisponible(res);
+  if (!coll) return serviceIndisponible(next);
 
   const { userId, destinationId, nomDestination } = req.body || {};
   const uid = userId != null ? String(userId).trim() : "";
@@ -47,26 +52,26 @@ export async function addFavorite(req, res) {
     const result = await coll.insertOne(doc);
     return res.status(201).json({ _id: result.insertedId, ...doc });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return next(err);
   }
 }
 
-export async function getFavoritesByUser(req, res) {
+export async function getFavoritesByUser(req, res, next) {
   const coll = favoritesCollection();
-  if (!coll) return serviceIndisponible(res);
+  if (!coll) return serviceIndisponible(next);
 
   try {
     const userId = String(req.params.userId);
     const favorites = await coll.find({ userId }).toArray();
     return res.json(favorites);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return next(err);
   }
 }
 
-export async function getFavoriteById(req, res) {
+export async function getFavoriteById(req, res, next) {
   const coll = favoritesCollection();
-  if (!coll) return serviceIndisponible(res);
+  if (!coll) return serviceIndisponible(next);
 
   const oid = parseObjectId(req.params.id, res);
   if (!oid) return;
@@ -78,13 +83,13 @@ export async function getFavoriteById(req, res) {
     }
     return res.json(doc);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return next(err);
   }
 }
 
-export async function updateFavorite(req, res) {
+export async function updateFavorite(req, res, next) {
   const coll = favoritesCollection();
-  if (!coll) return serviceIndisponible(res);
+  if (!coll) return serviceIndisponible(next);
 
   const oid = parseObjectId(req.params.id, res);
   if (!oid) return;
@@ -112,13 +117,13 @@ export async function updateFavorite(req, res) {
     const doc = await coll.findOne({ _id: oid });
     return res.json(doc);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return next(err);
   }
 }
 
-export async function removeFavorite(req, res) {
+export async function removeFavorite(req, res, next) {
   const coll = favoritesCollection();
-  if (!coll) return serviceIndisponible(res);
+  if (!coll) return serviceIndisponible(next);
 
   const oid = parseObjectId(req.params.id, res);
   if (!oid) return;
@@ -130,6 +135,6 @@ export async function removeFavorite(req, res) {
     }
     return res.json({ message: "Favori supprime" });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return next(err);
   }
 }

@@ -2,6 +2,7 @@ import imgLogin from "../assets/img_login.jpg";
 import "../styles/styles.css";
 import { useState } from "react";
 import { loginUser } from "../api/auth.js";
+import { validerConnexion } from "../utils/validator.js";
 
 function Login() {
   const [info, setInfo] = useState({
@@ -22,29 +23,39 @@ function Login() {
     e.preventDefault();
     setError("");
     setSuccess("");
-    if (!info.email.trim() || !info.password) {
-      setError("Veuillez entrer votre courriel et votre mot de passe.");
+    const validation = validerConnexion({
+      email: info.email,
+      password: info.password,
+    });
+    if (!validation.ok) {
+      setError(validation.message || "Données invalides.");
       return;
     }
 
     setLoading(true);
     try {
       const res = await loginUser({
-        email: info.email,
+        email: validation.email,
         password: info.password,
       });
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok || !data.success || !data.user) {
-        setError(data.message || "Connexion impossible. Verifiez vos identifiants.");
+        setError(
+          data.error ||
+            data.message ||
+            "Connexion impossible. Verifiez vos identifiants."
+        );
         return;
       }
 
       sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
-      
+      if (data.token) {
+        sessionStorage.setItem("travelExpressToken", data.token);
+      }
       setSuccess(`Bienvenue, ${data.user.first_name || data.user.username || "voyageur"} !`);
       setTimeout(() => {
-        window.location.hash = "#/acceuil"
+        window.location.hash = "#/accueil";
       }, 1000);
       setInfo((prev) => ({ ...prev, password: "" }));
     } catch {

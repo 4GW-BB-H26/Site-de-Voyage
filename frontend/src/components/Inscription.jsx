@@ -1,7 +1,8 @@
 //Très inspiré de l'exercice 3 fourni par Mme Rim Mseddi
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import "../styles/styles.css";
 import { registerUser } from "../api/users.js";
+import { validerFormulaireInscription } from "../utils/validator.js";
 
 export default function Inscription() {
   const [formulaire, setFormulaire] = useState({
@@ -19,7 +20,6 @@ export default function Inscription() {
   const [validationText, setValidationText] = useState("");
   const [Submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const formRef = useRef(null);
 
   const gererChangement = (e) => {
     const { name, value, type, checked } = e.target;
@@ -33,22 +33,18 @@ export default function Inscription() {
     setSubmitted(true);
     setValidationText("");
 
-    const form = formRef.current;
-    const elements = form.elements;
+    const inscription = validerFormulaireInscription({
+      prenom: formulaire.prenom,
+      nom: formulaire.nom,
+      username: formulaire.username,
+      courriel: formulaire.courriel,
+      motDePasse: formulaire.motDePasse,
+      confirmation: formulaire.confirmation,
+    });
 
     let personal = true;
-    if (
-      !elements.nom.checkValidity() ||
-      !elements.prenom.checkValidity() ||
-      !elements.username.checkValidity() ||
-      !elements.courriel.checkValidity() ||
-      !elements.motDePasse.checkValidity() ||
-      !elements.confirmation.checkValidity()
-    ) {
-      setErrorPersonal("Veuillez remplir les champs de façon appropriée SVP");
-      personal = false;
-    } else if (formulaire.motDePasse !== formulaire.confirmation) {
-      setErrorPersonal("Les mots de passe ne correspondent pas.");
+    if (!inscription.ok) {
+      setErrorPersonal(inscription.message || "Veuillez corriger le formulaire.");
       personal = false;
     } else {
       setErrorPersonal("");
@@ -68,20 +64,22 @@ export default function Inscription() {
 
     setLoading(true);
     try {
-      const res = await registerUser({
-        first_name: formulaire.prenom,
-        last_name: formulaire.nom,
-        username: formulaire.username,
-        email: formulaire.courriel,
-        password: formulaire.motDePasse,
-      });
+      const res = await registerUser(inscription.payload);
 
       const data = await res.json().catch(() => ({}));
       if (!res.ok || data.success === false) {
-        setErrorPersonal(data.message || "Inscription impossible pour le moment.");
+        const messageErreur =
+          data.error || data.message || "Inscription impossible pour le moment.";
+        const recouvrement = typeof data.recouvrement === "string" ? data.recouvrement : "";
+        setErrorPersonal(recouvrement ? `${messageErreur} ${recouvrement}` : messageErreur);
         return;
       }
-      sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
+      if (data.user) {
+        sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
+      }
+      if (data.token) {
+        sessionStorage.setItem("travelExpressToken", data.token);
+      }
       setTimeout(() => {
       window.location.hash = "#/login"
     }, 1000);
@@ -103,10 +101,7 @@ export default function Inscription() {
       <div className="boite-inscription">
         <h1 className="titre-inscription">Créer un compte</h1>
         <p className="sous-titre-inscription">Inscrivez-vous à Travel Express</p>
-        <form 
-          className={`formulaire-inscription ${Submitted ? "form-soumis" : ""}`} 
-          ref={formRef}
-        >
+        <form className={`formulaire-inscription ${Submitted ? "form-soumis" : ""}`}>
           
           <div className="groupe-ligne">
             <div className="groupe-champ">
