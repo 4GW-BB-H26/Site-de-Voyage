@@ -83,27 +83,6 @@ export default function BarreRecherche() {
           Chercher
         </button>
       </form>
-
-      <div className="options-supplementaires radio-group">
-        <label className="radio-option">
-          <input
-            type="radio"
-            name="type"
-            checked={type === "voyage"}
-            onChange={() => setType("voyage")}
-          />
-          Ajouter un Voyage
-        </label>
-        <label className="radio-option">
-          <input
-            type="radio"
-            name="type"
-            checked={type === "voiture"}
-            onChange={() => setType("voiture")}
-          />
-          Ajouter une Voiture
-        </label>
-      </div>
     </section>
   );
 }

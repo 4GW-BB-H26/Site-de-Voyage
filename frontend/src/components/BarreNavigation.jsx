@@ -36,7 +36,6 @@ export default function BarreNavigation() {
         </span>
 
         <nav className="menu-navigation" aria-label="Menu principal">
-          <a className={itemClass("accueil")} href="/#/accueil">Recommandées</a>
           <a className={itemClass("accueil")} href="/#/accueil">Offres</a>
           <a className={itemClass("favoris")} href="/#/favoris">Mes favoris</a>
           <a className={itemClass("reservations")} href="/#/reservations">Mes réservations</a>
