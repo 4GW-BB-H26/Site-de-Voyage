@@ -1,0 +1,1 @@
+//script pour get les comments onthe frontend c du mongo

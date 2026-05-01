@@ -6,6 +6,7 @@ export default function CarteFavori({
   dateAjout,
   onRetirer,
 }) {
+  //format de la date
   const formatDate = (dateStr) => {
     if (!dateStr) return "—";
     const d = new Date(dateStr);

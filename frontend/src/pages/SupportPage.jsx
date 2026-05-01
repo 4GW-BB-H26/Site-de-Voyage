@@ -4,6 +4,7 @@ import SectionFooter from "../components/SectionFooter";
 
 import "../styles/styles.css";
 
+/* ajout des composants pour la page de support*/
 export default function SupportPage() {
   return (
     <div className="conteneur_app">

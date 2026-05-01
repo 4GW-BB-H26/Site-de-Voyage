@@ -5,10 +5,12 @@ import { loginUser } from "../api/auth.js";
 import { validerConnexion } from "../utils/validator.js";
 
 function Login() {
+  //variables du login
   const [info, setInfo] = useState({
     email: "",
     password: "",
   });
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,6 +21,7 @@ function Login() {
     setInfo((prev) => ({ ...prev, [name]: value }));
   };
 
+  //logique du bouton 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -32,6 +35,7 @@ function Login() {
       return;
     }
 
+    //verification du login a l'aide de l'API
     setLoading(true);
     try {
       const res = await loginUser({
@@ -48,7 +52,6 @@ function Login() {
         );
         return;
       }
-
       sessionStorage.setItem("travelExpressUser", JSON.stringify(data.user));
       if (data.token) {
         sessionStorage.setItem("travelExpressToken", data.token);

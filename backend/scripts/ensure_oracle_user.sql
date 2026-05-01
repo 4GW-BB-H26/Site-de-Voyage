@@ -1,7 +1,6 @@
 -- =============================================================================
 -- Crée le compte ProjetVoyage (mot de passe cisco) ou remet ce mot de passe si le compte existe déjà.
 -- Connecte-toi en SYS avec le rôle SYSDBA, sur le MÊME nom de service que dans ORACLE_CONNECT_STRING
--- (souvent FREEPDB1 — adapte si chez toi c’est autre chose).
 -- =============================================================================
 
 SET SERVEROUTPUT ON;

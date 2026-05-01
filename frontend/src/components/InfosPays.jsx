@@ -5,6 +5,7 @@ export default function InfosPays({ nomPays }) {
   const [erreur, setErreur] = useState(null);
   const [chargement, setChargement] = useState(true);
 
+  //prend les info de l'API exterieur
   useEffect(() => {
     const fetchInfosPays = async () => {
       try {
