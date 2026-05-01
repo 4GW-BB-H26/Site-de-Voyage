@@ -3,8 +3,11 @@ import { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import { BsHeartFill } from "react-icons/bs";
 import InfosPays from "./InfosPays";
+import { addFavoris, removeFavoris } from "../api/favoris.js";
+
 
 export default function CarteOffrePromo({
+  id,
   imageUrl,
   imageAlt,
   titre,
@@ -17,11 +20,47 @@ export default function CarteOffrePromo({
   ancienPrix,
 }) {
   const [estFavori, setEstFavori] = useState(false);
+  const [favoriId, setFavoriId] = useState(null);
   const [afficherDetails, setAfficherDetails] = useState(false);
 
-  const toggleFavori = (e) => {
+  const toggleFavori = async (e) => {
     e.stopPropagation();
-    setEstFavori(!estFavori);
+    // setEstFavori(!estFavori);
+    
+
+    const raw = sessionStorage.getItem("travelExpressUser");
+    let user = null;
+    if (raw) {
+      try { user = JSON.parse(raw); } catch { /* ignore */ }
+    }
+
+    if (!user?.id_users) {
+      alert("Vous devez être connecté pour ajouter un favori.");
+      return;
+    }
+
+    try {
+      if (!estFavori) {
+        // Add to favorites
+        const res = await addFavoris({
+          userId: String(user.id_users),
+          destinationId: String(id),
+          nomDestination: lieu,
+        });
+        const data = await res.json();
+        setFavoriId(data._id);
+        setEstFavori(true);
+      } else {
+        // Remove from favoris
+        if (favoriId) {
+          await removeFavorite(favoriId);
+        }
+        setFavoriId(null);
+        setEstFavori(false);
+      }
+    } catch (err) {
+      alert("Erreur lors de la mise à jour des favoris.");
+    }
   };
 
   const handleReserver = (e) => {
