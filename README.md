@@ -1,88 +1,194 @@
 # Travel Express
 
-Projet du cours d’applications transactionnelles. C’est un site de voyage avec une page web en **React** et une **API** en **Node** (Express). Les données principales sont dans **Oracle**. Les favoris et les commentaires sont dans **MongoDB**.
+Ce projet est un site de voyage.
 
-## Ce qu’il faut avoir sur la machine
+- La partie visuelle est dans `frontend` (React).
+- La partie serveur est dans `backend` (Node + Express).
+- Les données principales sont dans Oracle.
+- Les favoris et commentaires sont dans MongoDB.
 
-- **Node.js** (pour lancer `npm`)
-- **Oracle** (base du cours, avec un utilisateur et un mot de passe que vous mettez dans la config)
-- **MongoDB** installé et démarré (pour favoris et commentaires, et pour l’option de connexion sur Mongo si vous l’utilisez)
+Ce guide est fait pour une personne qui débute. Suivez les étapes dans l'ordre.
 
-## Dossiers du projet
+## 1) Ce qu'il faut installer avant de commencer
 
-- **`frontend`** — l’interface React (Vite). Pages, composants, appels à l’API dans `src/`.
-- **`backend`** — l’API Express. Routes, contrôleurs, validation, connexion Oracle et Mongo dans `src/`.
-- **`docs`** — textes du cours (analyse, personas, API, schéma).
+Sur votre ordinateur, installez:
 
-## Avant la première exécution
+1. **Node.js** (version LTS recommandée)
+2. **Oracle** (avec un utilisateur et mot de passe valides)
+3. **MongoDB** (installé et démarré)
 
-### Fichier de configuration du backend
+Ensuite, ouvrez un terminal dans le dossier du projet et vérifiez:
 
-1. Dans le dossier `backend`, dupliquez le fichier **`.env.example`** et renommez la copie en **`.env`**.
-2. Ouvrez **`.env`** avec un éditeur de texte et remplissez au moins :
-   - identifiants **Oracle** (`ORACLE_USER`, `ORACLE_PASSWORD`, `ORACLE_CONNECT_STRING`)
-   - **JWT** (`JWT_SECRET`, etc., comme dans l’exemple)
-   - **Mongo** (`MONGODB_URI`, `MONGODB_DB_NAME`)
-   - **`AUTH_MODE`** : mettez `oracle` si les comptes sont dans Oracle, ou `mongo` si vous testez sans Oracle (dans ce cas Mongo doit être démarré avant l’API).
-
-Toutes les variables possibles sont commentées dans **`backend/.env.example`**.
-
-### Fichier optionnel du frontend
-
-Si l’API n’est pas sur `http://localhost:3000`, créez **`frontend/.env`** avec une ligne du type :
-
-`VITE_API_URL=http://localhost:3000`
-
-(en changeant l’adresse si besoin). Sans ce fichier, le frontend utilise déjà `http://localhost:3000` par défaut.
-
-## Lancer le projet
-
-Ouvrez **deux** fenêtres de terminal (une pour l’API, une pour le site).
-
-**Terminal 1 — API**
-
+```bash
+node -v
+npm -v
 ```
+
+Si les 2 commandes affichent une version, c'est bon.
+
+## 2) Structure du projet
+
+- `frontend`: le site web (pages React)
+- `backend`: l'API (routes, logique, connexion BD)
+- `docs`: documents de cours
+
+## 3) Configuration backend (obligatoire)
+
+1. Allez dans le dossier `backend`.
+2. Copiez le fichier `.env.example`.
+3. Renommez la copie en `.env`.
+4. Ouvrez le fichier `.env` et remplissez les valeurs:
+   - `ORACLE_USER`
+   - `ORACLE_PASSWORD`
+   - `ORACLE_CONNECT_STRING`
+   - `JWT_SECRET`
+   - `MONGODB_URI`
+   - `MONGODB_DB_NAME`
+   - `AUTH_MODE` (`oracle` ou `mongo`)
+
+Notes:
+
+- Si `AUTH_MODE=oracle`, la connexion utilisateur passe par Oracle.
+- Si `AUTH_MODE=mongo`, MongoDB doit être actif avant de lancer l'API.
+
+## 4) Configuration frontend (optionnelle)
+
+Par défaut, le frontend appelle `http://localhost:3000`.
+
+Si votre backend tourne sur une autre adresse, créez `frontend/.env` avec:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+Remplacez l'adresse si besoin.
+
+## 5) Démarrage du projet complet
+
+Il faut ouvrir **2 terminaux**.
+
+### Terminal A (backend)
+
+```bash
 cd backend
 npm install
 npm run dev
 ```
 
-**Terminal 2 — site web**
+### Terminal B (frontend)
 
-```
+```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Quand c’est démarré, le terminal affiche l’adresse du site (souvent `http://localhost:5173` pour Vite). L’API écoute en général sur le port **3000** (voir `PORT` dans `backend/.env`).
+## 6) Vérifier que tout marche
 
-Pour vérifier que l’API répond, vous pouvez ouvrir dans le navigateur **`http://localhost:3000`** ou **`http://localhost:3000/health`** selon ce que le projet expose.
+### Vérification backend
 
-## MongoDB
+Dans votre navigateur:
 
-Mongo doit être **installé et lancé** avant le backend si vous utilisez favoris, commentaires ou `AUTH_MODE=mongo`. L’URI par défaut dans l’exemple est du type `mongodb://localhost:27017`. Adaptez-la dans **`.env`** si votre installation est différente.
+- `http://localhost:3000`
+- `http://localhost:3000/health`
 
-## Validation
+Si vous voyez une réponse JSON, l'API marche.
 
-- Sur le **frontend**, les formulaires importants passent par le paquet **validator** (fichier `frontend/src/utils/validator.js`).
-- Sur le **backend**, les requêtes sont vérées avec **express-validator** (fichier `backend/src/validators/index.js` et petits helpers dans `backend/src/utils/validator.js`).
+### Vérification frontend
 
-## Autres commandes utiles (facultatif)
+Le terminal frontend affiche une URL (souvent `http://localhost:5173`).
+Ouvrez cette URL dans le navigateur.
 
-Dans **`backend`** après `npm install` :
+Vous devez pouvoir:
 
-- `npm start` — lance l’API sans rechargement automatique du fichier.
+- ouvrir la page d'accueil
+- ouvrir l'inscription
+- ouvrir la connexion
+- aller sur réservations et favoris (si connecté)
 
-Dans **`frontend`** après `npm install` :
+## 7) Vérifier les fonctions demandées (check simple)
 
-- `npm run build` — prépare une version pour la mise en production.
-- `npm run lint` — vérifie le style du code avec ESLint.
+Voici une vérification simple, étape par étape:
 
-## Documentation
+1. **Créer un compte**
+   - Aller sur inscription
+   - Remplir le formulaire
+   - Vérifier qu'un message de succès apparaît
 
-Les fichiers du dossier **`docs/`** complètent ce README (analyse, personas, liste d’endpoints, schéma de base).
+2. **Se connecter**
+   - Aller sur login
+   - Entrer email + mot de passe
+   - Vérifier que la connexion fonctionne
+
+3. **Tester les réservations**
+   - Aller sur la page réservations
+   - Vérifier que les données se chargent
+
+4. **Tester les favoris**
+   - Aller sur la page favoris
+   - Vérifier que la liste s'affiche
+
+5. **Tester les infos pays (API externe)**
+   - Sur les cartes qui montrent un pays, vérifier que les infos pays se chargent
+
+6. **Tester la validation**
+   - Essayer un formulaire vide ou avec email invalide
+   - Vérifier qu'un message d'erreur clair apparaît
+
+7. **Tester les erreurs serveur**
+   - Arrêter le backend
+   - Recharger une page qui demande des données
+   - Vérifier qu'un message d'erreur apparaît côté site
+
+## 8) Vérifier le code rapidement
+
+### Backend
+
+Dans `backend`:
+
+```bash
+npm run test:oracle
+```
+
+Ce test vérifie la connexion Oracle.
+
+### Frontend
+
+Dans `frontend`:
+
+```bash
+npm run lint
+npm run build
+```
+
+- `lint` vérifie le style du code
+- `build` vérifie que le site peut être préparé pour la production
+
+## 9) Arrêter le projet
+
+Dans chaque terminal (`backend` et `frontend`), faites `Ctrl + C`.
+
+## 10) Problèmes fréquents
+
+- **Le backend ne démarre pas**
+  - Vérifiez `backend/.env`
+  - Vérifiez Oracle/MongoDB démarrés
+  - Vérifiez que le port 3000 n'est pas déjà pris
+
+- **Le frontend ne charge rien**
+  - Vérifiez que le backend tourne
+  - Vérifiez `VITE_API_URL` si vous avez changé le port
+
+- **Erreur de connexion utilisateur**
+  - Vérifiez `AUTH_MODE`
+  - Vérifiez vos identifiants de base de données
+
+## 11) Informations utiles
+
+- README backend détaillé: `backend/README.md`
+- Endpoints API: `docs/03-api-endpoints.md`
+- Schéma de base: `docs/04-database-schema.md`
 
 ## Équipe
 
-Projet réalisé dans le cadre du cours d’applications transactionnelles (équipe 1).
+Projet réalisé dans le cadre du cours d'applications transactionnelles (équipe 1).

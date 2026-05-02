@@ -1,5 +1,3 @@
-// test inspiré de lab3
-
 import { config } from "dotenv";
 import { connectToMongo, getDb } from "./db/mongo.js";
 import { ObjectId } from "mongodb";

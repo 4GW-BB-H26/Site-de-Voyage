@@ -172,6 +172,7 @@ export const reservationIdParamValidators = [
  */
 export const postReservationValidators = [
   body("id_reservation")
+    .optional({ values: "falsy" })
     .isInt({ min: 1 })
     .withMessage("id_reservation doit être un entier positif."),
   body("reference_number")
@@ -211,9 +212,8 @@ export const postReservationValidators = [
     .isFloat({ min: 0 })
     .withMessage("price doit être un nombre positif."),
   body("status")
+    .optional({ values: "falsy" })
     .trim()
-    .notEmpty()
-    .withMessage("status est requis.")
     .isLength({ max: 50 }),
   body("users_id_users")
     .isInt({ min: 1 })
@@ -222,6 +222,7 @@ export const postReservationValidators = [
     .isInt({ min: 1 })
     .withMessage("trip_id_trip doit être un entier positif."),
   body("id_trip")
+    .optional({ values: "falsy" })
     .isInt({ min: 1 })
     .withMessage("id_trip doit être un entier positif."),
 ];

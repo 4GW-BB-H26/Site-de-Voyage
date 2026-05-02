@@ -32,8 +32,10 @@ router.get(
 // Détail d’une réservation
 router.get(
   "/reservations/:id",
+  authorizationBearerValidators,
   reservationIdParamValidators,
   handleValidationErrors,
+  exigerJetonValide,
   asyncHandler(reservationsController.getReservation)
 );
 // Création : corps validé + JWT + cohérence users_id_users
@@ -50,15 +52,19 @@ router.post(
 // Annulation (statut)
 router.put(
   "/reservations/:id/cancel",
+  authorizationBearerValidators,
   reservationIdParamValidators,
   handleValidationErrors,
+  exigerJetonValide,
   asyncHandler(reservationsController.cancelReservation)
 );
 // Suppression ligne réservation
 router.delete(
   "/reservations/:id",
+  authorizationBearerValidators,
   reservationIdParamValidators,
   handleValidationErrors,
+  exigerJetonValide,
   asyncHandler(reservationsController.deleteReservation)
 );
 

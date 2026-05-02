@@ -1,4 +1,3 @@
-//Très inspiré de l'exercice 3 fourni par Mme Rim Mseddi
 import React, { useState } from "react";
 import "../styles/styles.css";
 import { registerUser } from "../api/users.js";
