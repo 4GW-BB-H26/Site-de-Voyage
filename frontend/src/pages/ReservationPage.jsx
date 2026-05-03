@@ -4,6 +4,7 @@ import SectionFooter from "../components/SectionFooter";
 
 import "../styles/styles.css";
 
+/* ajout des composants pour la page de reservation*/
 export default function ReservationPage() {
   return (
     <div className="conteneur_app min-vh-100">

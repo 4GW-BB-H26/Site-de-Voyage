@@ -1,11 +1,9 @@
 /**
  * Démarre l’API HTTP : variables d’environnement, Mongo, puis écoute sur PORT.
- * Si AUTH_MODE=mongo, Mongo doit être joignable sinon on arrête tout de suite.
  */
 import "./config/loadEnv.js";
 import app from "./app.js";
 import { port } from "./config/config.js";
-import { useMongoAuth } from "./config/auth.js";
 import { connectToMongo } from "./db/mongo.js";
 import { createServer } from "node:http";
 
@@ -14,15 +12,6 @@ const mongoOk = await connectToMongo(
   process.env.MONGODB_URI,
   process.env.MONGODB_DB_NAME
 );
-
-if (useMongoAuth && !mongoOk) {
-  console.error(
-    "\nImpossible de démarrer : tu as choisi AUTH_MODE=mongo mais MongoDB ne répond pas.\n" +
-      "  → Lance Mongo (Docker, service local, etc.) et vérifie MONGODB_URI.\n" +
-      "  → Ou remets AUTH_MODE=oracle dans backend/.env si ton Oracle est prêt.\n"
-  );
-  process.exit(1);
-}
 
 const server = createServer(app);
 

@@ -5,6 +5,7 @@ import SectionFooter from "../components/SectionFooter";
 
 import "../styles/styles.css";
 
+/* ajout des composants pour la page d'acceuil*/
 export default function PageAccueil() {
   return (
     <div className="conteneur_app min-vh-100">
