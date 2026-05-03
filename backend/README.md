@@ -5,8 +5,8 @@ Ce dossier contient l'API Express du projet.
 ## 1) Prérequis
 
 - Node.js installé
-- Oracle accessible (si `AUTH_MODE=oracle`)
-- MongoDB lancé (favoris, commentaires, ou `AUTH_MODE=mongo`)
+- Oracle accessible 
+- MongoDB lancé (favoris, commentaires)
 
 ## 2) Déploiement rapide
 
@@ -34,7 +34,7 @@ Les scripts font 2 choses:
 Variables importantes:
 
 - `PORT` (souvent 3000)
-- `AUTH_MODE` (`oracle` ou `mongo`)
+- `AUTH_MODE` (`oracle`)
 - `JWT_SECRET`
 - `ORACLE_USER`
 - `ORACLE_PASSWORD`
