@@ -1,17 +1,10 @@
-/**
- * Comptes utilisateurs : inscription, connexion, profil, suppression.
- * Selon AUTH_MODE, la persistance passe par Oracle (USERS) ou Mongo (authMongoService).
- */
+
+ //Comptes utilisateurs : inscription, connexion, profil, suppression.
+
 import oracledb from "oracledb";
 import dbConfig from "../config/db.js";
 import { hasherMotDePasse, verifierMotDePasseStocke } from "../utils/password.js";
 import { creerJetonUtilisateur } from "../utils/jetonsJwt.js";
-import {
-  loginAvecIdentifiantsMongo,
-  createUserMongo,
-  updateUserMongo,
-  deleteUserMongo,
-} from "../services/authMongoService.js";
 
 /**
  * Vérifie courriel + mot de passe et renvoie soit l’utilisateur, soit une erreur structurée.
