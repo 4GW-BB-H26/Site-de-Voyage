@@ -3,6 +3,7 @@ import "../styles/styles.css";
 import { registerUser } from "../api/users.js";
 import { validerFormulaireInscription } from "../utils/validator.js";
 
+//les variables du formulaires
 export default function Inscription() {
   const [formulaire, setFormulaire] = useState({
     nom: "",
@@ -28,10 +29,12 @@ export default function Inscription() {
     });
   };
 
+  //logique bouton de soumission
   const submitForm = async () => {
     setSubmitted(true);
     setValidationText("");
 
+    //variables pour la validations des donnees
     const inscription = validerFormulaireInscription({
       prenom: formulaire.prenom,
       nom: formulaire.nom,
@@ -41,6 +44,7 @@ export default function Inscription() {
       confirmation: formulaire.confirmation,
     });
 
+    //verification des donnees soumises
     let personal = true;
     if (!inscription.ok) {
       setErrorPersonal(inscription.message || "Veuillez corriger le formulaire.");
@@ -49,6 +53,7 @@ export default function Inscription() {
       setErrorPersonal("");
     }
 
+    //verifications de si les conditions d'utilisation
     let conditions = true;
     if (!formulaire.accepteConditions) {
       setErrorConditions("Veuillez accepter les conditions d'utilisation");
@@ -61,6 +66,7 @@ export default function Inscription() {
       return;
     }
 
+    //soumission des donnees a l'API
     setLoading(true);
     try {
       const res = await registerUser(inscription.payload);

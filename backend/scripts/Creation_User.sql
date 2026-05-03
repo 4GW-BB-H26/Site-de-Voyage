@@ -1,7 +1,8 @@
 --Script de creation du user
---run in sys
+--run en tant que sys
 
-drop user ProjetVoyage CASCADE;
+drop user ProjetVoyage CASCADE; --Il y'aura une erreur si le user n'existe pas, mais ca n'empeche le script de rouler
+
 CREATE USER ProjetVoyage IDENTIFIED BY cisco;
 
 grant connect, create view, create job, create table, create sequence, create

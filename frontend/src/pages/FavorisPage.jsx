@@ -4,6 +4,7 @@ import SectionFooter from "../components/SectionFooter";
 
 import "../styles/styles.css";
 
+/* ajout des composants pour la page de favoris*/
 export default function FavorisPage() {
   return (
     <div className="conteneur_app min-vh-100">

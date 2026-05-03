@@ -1,5 +1,5 @@
--- Petit check : tu es sur la bonne base, et est-ce que ProjetVoyage existe ?
--- (à lancer connecté en SYS AS SYSDBA, même service que dans ORACLE_CONNECT_STRING)
+-- verification de la creation de la connexion
+-- (à lancer connecté en tant que SYS)
 
 SET LINESIZE 200
 
@@ -11,4 +11,4 @@ SELECT username, account_status, created
 FROM   all_users
 WHERE  username = 'PROJETVOYAGE';
 
--- Si aucune ligne : lance ensure_oracle_user.sql pour créer le compte.
+-- Dans un cas ou il n'a aucun resultat, lancer le script ensure_oracle_user.sql

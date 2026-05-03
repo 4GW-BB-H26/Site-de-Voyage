@@ -4,6 +4,7 @@ import { FiSearch, FiCalendar, FiUser } from "react-icons/fi";
 import { validerRechercheVoyage } from "../utils/validator.js";
 
 export default function BarreRecherche() {
+  //les valeurs du formulaire
   const [type, setType] = useState("voyage");
   const [destination, setDestination] = useState("");
   const [depart, setDepart] = useState("");
@@ -11,6 +12,7 @@ export default function BarreRecherche() {
   const [voyageurs, setVoyageurs] = useState("1");
   const [erreurRecherche, setErreurRecherche] = useState("");
 
+  //soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
     setErreurRecherche("");
