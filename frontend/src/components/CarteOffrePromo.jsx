@@ -20,7 +20,7 @@ export default function CarteOffrePromo({
   const [estFavori, setEstFavori] = useState(false);
   //verification de si le user est connecter
   const [isLogged, setLogged] = useState(
-  sessionStorage.getItem("travelExpressUser") !== null
+  sessionStorage.getItem("travelExpressToken") !== null
 );
   let link = isLogged? "/acceuil":"/login"
   const [afficherDetails, setAfficherDetails] = useState(false);
