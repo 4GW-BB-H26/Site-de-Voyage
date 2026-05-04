@@ -6,6 +6,8 @@ import { API_BASE } from "./client.js";
  * @param {{ email: string; password: string }} identifiants
  * @returns {Promise<Response>}
  */
+
+//requête POST securisé vers API securisé pour login en JSON
 export function loginUser(identifiants) {
   return fetch(`${API_BASE}/auth/login`, {
     method: "POST",
