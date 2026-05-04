@@ -1,7 +1,6 @@
 /**
- * @fileoverview Charge le fichier backend/.env avec un chemin absolu.
- * À importer en premier dans server.js pour que ORACLE_*, AUTH_MODE, etc. existent
- * avant le reste de l’application.
+ * Charge le fichier .env du backend.
+ * À importer au début de server.js.
  */
 import dotenv from "dotenv";
 import path from "node:path";

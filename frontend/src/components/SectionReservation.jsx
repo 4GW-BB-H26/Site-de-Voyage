@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import CarteReservation from "./CarteReservation";
 import { fetchReservationsForUser } from "../api/reservations.js";
+import { estIdentifiantUtilisateurValide } from "../utils/validator.js";
 
 const formatDate = (dateStr) => {
   if (dateStr == null || dateStr === "") return "—";
@@ -37,7 +38,7 @@ export default function SectionReservation() {
       }
       const userId = user?.id_users;
 
-      if (!userId) {
+      if (!estIdentifiantUtilisateurValide(userId)) {
         setReservations([]);
         setError("connect");
         setLoading(false);

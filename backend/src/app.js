@@ -1,5 +1,5 @@
 /**
- * @fileoverview Application Express : CORS, parseur JSON, routes métier, /health, gestionnaires d’erreur.
+ * Point d'entrée de l'application Express.
  */
 
 import express from "express";
@@ -60,7 +60,7 @@ app.get("/", (req, res) => {
       "GET /reservations/:id": "Recuperer une reservation",
       "POST /reservations": "Creer une reservation (JWT, users_id_users = utilisateur du jeton)",
       "DELETE /reservations/:id": "Supprimer une reservation",
-      "PUT /reservation/ :id/cancel": "Annuler une reservation",
+      "PUT /reservations/:id/cancel": "Annuler une reservation",
       mongoFavoris: {
         "POST /favorites": "Creer",
         "GET /favorites/user/:userId": "Lister par utilisateur",
@@ -80,7 +80,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// Petit coup d’œil rapide : l’API répond, où vit l’auth, et si Mongo est là
+// Route simple pour vérifier que l'API tourne bien.
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "ok",

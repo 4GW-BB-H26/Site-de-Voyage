@@ -1,5 +1,5 @@
 /**
- * @fileoverview Suite à express-validator : centralise les réponses 400.
+ * Gère les erreurs de validation.
  */
 import { validationResult } from "express-validator";
 

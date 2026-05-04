@@ -1,5 +1,5 @@
 // Carte d'une offre Hôtel + Vol (promotions)
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import { BsHeartFill } from "react-icons/bs";
 import InfosPays from "./InfosPays";
@@ -19,6 +19,7 @@ export default function CarteOffrePromo({
   prix,
   ancienPrix,
 }) {
+  //verfication de s'il est un favorit
   const [estFavori, setEstFavori] = useState(false);
   const [favoriId, setFavoriId] = useState(null);
   const [afficherDetails, setAfficherDetails] = useState(false);
@@ -63,10 +64,17 @@ export default function CarteOffrePromo({
     }
   };
 
+  //logic du bouton reserver
   const handleReserver = (e) => {
-    e.stopPropagation();
+    if(isLogged){
+      e.stopPropagation();
     alert(`Réservation pour : ${titre} - ${lieu}`);
+    }else if(!isLogged){
+      window.location.hash = link;
+    }
   };
+
+  //logique du bouton voir info du pays
   const toggleDetails = () => {
     setAfficherDetails(!afficherDetails);
   };
