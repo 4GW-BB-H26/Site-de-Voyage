@@ -1,10 +1,19 @@
 // Carte d'une offre Hôtel + Vol (promotions)
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import { BsHeartFill } from "react-icons/bs";
 import InfosPays from "./InfosPays";
 import { addFavoris, removeFavoris } from "../api/favoris.js";
 
+function lireUtilisateurSession() {
+  const raw = sessionStorage.getItem("travelExpressUser");
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
 
 export default function CarteOffrePromo({
   id,
@@ -26,14 +35,7 @@ export default function CarteOffrePromo({
 
   const toggleFavori = async (e) => {
     e.stopPropagation();
-    // setEstFavori(!estFavori);
-    
-
-    const raw = sessionStorage.getItem("travelExpressUser");
-    let user = null;
-    if (raw) {
-      try { user = JSON.parse(raw); } catch { /* ignore */ }
-    }
+    const user = lireUtilisateurSession();
 
     if (!user?.id_users) {
       alert("Vous devez être connecté pour ajouter un favori.");
@@ -42,35 +44,43 @@ export default function CarteOffrePromo({
 
     try {
       if (!estFavori) {
-        // Add to favorites
         const res = await addFavoris({
           userId: String(user.id_users),
           destinationId: String(id),
           nomDestination: lieu,
         });
-        const data = await res.json();
-        setFavoriId(data._id);
-        setEstFavori(true);
-      } else {
-        // Remove from favoris
-        if (favoriId) {
-          await removeFavorite(favoriId);
+        const data = await res.json().catch(() => null);
+        if (!res.ok) {
+          const msg = data && typeof data.error === "string" ? data.error : "Impossible d’ajouter le favori.";
+          alert(msg);
+          return;
+        }
+        const fid = data?._id != null ? String(data._id) : null;
+        if (fid) {
+          setFavoriId(fid);
+          setEstFavori(true);
+        }
+      } else if (favoriId) {
+        const del = await removeFavoris(favoriId);
+        if (!del.ok) {
+          alert("Impossible de retirer le favori.");
+          return;
         }
         setFavoriId(null);
         setEstFavori(false);
       }
-    } catch (err) {
+    } catch {
       alert("Erreur lors de la mise à jour des favoris.");
     }
   };
 
-  //logic du bouton reserver
   const handleReserver = (e) => {
-    if(isLogged){
-      e.stopPropagation();
-    alert(`Réservation pour : ${titre} - ${lieu}`);
-    }else if(!isLogged){
-      window.location.hash = link;
+    e.stopPropagation();
+    const user = lireUtilisateurSession();
+    if (user?.id_users) {
+      alert(`Réservation pour : ${titre} - ${lieu}`);
+    } else {
+      window.location.hash = "#/login";
     }
   };
 

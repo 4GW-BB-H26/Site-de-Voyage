@@ -55,7 +55,7 @@ app.get("/", (req, res) => {
       "POST /users": "Creer un utilisateur",
       "PUT /users/:id": "Modifier un utilisateur (JWT requis, meme id)",
       "DELETE /users/:id": "Supprimer un utilisateur (JWT requis, meme id)",
-      "GET /accueil": "Donnees page d'accueil (offres promotionnelles)",
+      "GET /accueil": "Donnees page d'accueil (offres promotionnelles, liste pays pour filtres)",
       "GET /reservations/user/:userId": "Lister les reservations d'un utilisateur",
       "GET /reservations/:id": "Recuperer une reservation",
       "POST /reservations": "Creer une reservation (JWT, users_id_users = utilisateur du jeton)",

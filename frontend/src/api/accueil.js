@@ -1,7 +1,7 @@
 import { API_BASE } from "./client.js";
 
 /**
- * @returns {Promise<{ titreSectionOffres: string; offres: object[] }>}
+ * @returns {Promise<{ titreSectionOffres: string; paysFiltres?: string[]; offres: object[] }>}
  */
 export async function fetchAccueil() {
   const res = await fetch(`${API_BASE}/accueil`);

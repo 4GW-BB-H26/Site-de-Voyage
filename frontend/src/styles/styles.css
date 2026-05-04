@@ -164,6 +164,16 @@
   font-size: 14px;
 }
 
+.champ-select-pays {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
 .icone-champ {
   position: absolute;
   left: 12px;

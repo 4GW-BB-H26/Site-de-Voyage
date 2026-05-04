@@ -8,7 +8,7 @@ export function fetchFavorisByUser(userId) {
 }
 
 export function addFavoris(body) {
-  return fetch(`${API_BASE}/favoris`, {
+  return fetch(`${API_BASE}/favorites`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),

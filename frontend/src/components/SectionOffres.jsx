@@ -1,43 +1,16 @@
-import { useEffect, useState } from "react";
 import CarteOffrePromo from "./CarteOffrePromo";
-import { fetchAccueil } from "../api/accueil.js";
+import { filtrerOffres } from "../utils/filtrerOffres.js";
 
-export default function SectionOffres() {
-  const [titreSection, setTitreSection] = useState("Offres promotionnelles");
-  const [offres, setOffres] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    let cancelled = false;
-
-    (async () => {
-      setLoading(true);
-      setError("");
-      try {
-        const data = await fetchAccueil();
-        if (cancelled) return;
-        const list = Array.isArray(data?.offres) ? data.offres : [];
-        setOffres(list);
-        if (data?.titreSectionOffres) {
-          setTitreSection(data.titreSectionOffres);
-        }
-      } catch (e) {
-        if (!cancelled) {
-          setError(e.message || "Erreur reseau.");
-          setOffres([]);
-        }
-      } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+/**
+ * @param {object} props
+ * @param {string} props.titreSection
+ * @param {object[]} props.offres
+ * @param {boolean} props.loading
+ * @param {string} props.error
+ * @param {{ destination?: string; pays?: string; depart?: string; retour?: string; voyageurs?: number } | null} props.criteresRecherche
+ */
+export default function SectionOffres({ titreSection, offres, loading, error, criteresRecherche }) {
+  const listeFiltree = filtrerOffres(offres, criteresRecherche);
 
   if (loading) {
     return (
@@ -63,8 +36,18 @@ export default function SectionOffres() {
     <section className="section-offres">
       <h2 className="titre-section">{titreSection}</h2>
 
+      {criteresRecherche ? (
+        <p className="text-muted small mb-3" role="status">
+          {listeFiltree.length === 0
+            ? "Aucune offre ne correspond à votre recherche ou au pays choisi. Essayez d’élargir les critères."
+            : `${listeFiltree.length} offre${listeFiltree.length > 1 ? "s" : ""} correspond${listeFiltree.length > 1 ? "ent" : ""} à votre recherche${
+                criteresRecherche.pays && criteresRecherche.pays !== "all" ? ` (${criteresRecherche.pays})` : ""
+              }.`}
+        </p>
+      ) : null}
+
       <div className="grille-offres-promo">
-        {offres.map((offre) => (
+        {listeFiltree.map((offre) => (
           <CarteOffrePromo key={offre.id} {...offre} />
         ))}
       </div>
