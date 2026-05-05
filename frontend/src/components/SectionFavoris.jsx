@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CarteFavori from "./CarteFavoris.jsx";
-import { fetchFavorisByUser} from "../api/favoris.js";
+import { fetchFavorisByUser, removeFavoris } from "../api/favoris.js";
 
 export default function SectionFavoris() {
   const [favoris, setFavoris] = useState([]);
@@ -64,6 +64,20 @@ export default function SectionFavoris() {
       cancelled = true;
     };
   }, []);
+
+  const handleRetirer = async (mongoId) => {
+    try {
+      const res = await removeFavoris(String(mongoId));
+      const data = await res.json().catch(() => null);
+      if (!res.ok) {
+        alert(data && typeof data.error === "string" ? data.error : "Impossible de retirer le favori.");
+        return;
+      }
+      setFavoris((prev) => prev.filter((f) => String(f._id) !== String(mongoId)));
+    } catch {
+      alert("Erreur réseau.");
+    }
+  };
 
   if (loading) {
     return (

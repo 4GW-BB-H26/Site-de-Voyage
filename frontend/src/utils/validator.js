@@ -115,7 +115,8 @@ export function estIdentifiantUtilisateurValide(userId) {
 }
 
 /**
- * Vérifie le formulaire de recherche sur la page d'accueil avant l'alerte de démo.
+ * Vérifie le formulaire de recherche sur la page d'accueil (dates type input date, voyageurs entier).
+ * En cas de succès, renvoie aussi les champs normalisés pour le filtrage des offres.
  */
 export function validerRechercheVoyage(champs) {
   const destination = trimChamp(champs.destination);
@@ -129,15 +130,23 @@ export function validerRechercheVoyage(champs) {
   if (validator.isEmpty(depart) || validator.isEmpty(retour)) {
     return { ok: false, message: "Choisissez les dates de départ et de retour." };
   }
-  if (!validator.isDate(depart) || !validator.isDate(retour)) {
+  const dDep = trimChamp(depart);
+  const dRet = trimChamp(retour);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dDep) || !/^\d{4}-\d{2}-\d{2}$/.test(dRet)) {
     return { ok: false, message: "Les dates ne sont pas valides." };
   }
-  if (validator.isEmpty(voyageurs) || !validator.isNumeric(voyageurs)) {
-    return { ok: false, message: "Le nombre de voyageurs doit être un nombre entier." };
+  const t0 = Date.parse(`${dDep}T00:00:00`);
+  const t1 = Date.parse(`${dRet}T00:00:00`);
+  if (Number.isNaN(t0) || Number.isNaN(t1)) {
+    return { ok: false, message: "Les dates ne sont pas valides." };
   }
-  const n = Number.parseInt(voyageurs, 10);
-  if (n < 1 || n > 99) {
-    return { ok: false, message: "Le nombre de voyageurs doit être entre 1 et 99." };
+  if (t1 < t0) {
+    return { ok: false, message: "La date de retour doit être le même jour ou après la date de départ." };
   }
-  return { ok: true };
+  if (validator.isEmpty(voyageurs) || !validator.isInt(String(voyageurs), { min: 1, max: 99 })) {
+    return { ok: false, message: "Le nombre de voyageurs doit être un entier entre 1 et 99." };
+  }
+  const n = Number.parseInt(String(voyageurs), 10);
+  const pays = trimChamp(champs.pays) || "all";
+  return { ok: true, destination, depart: dDep, retour: dRet, voyageurs: n, pays };
 }
