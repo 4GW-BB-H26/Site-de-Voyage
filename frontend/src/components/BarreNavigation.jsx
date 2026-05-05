@@ -52,7 +52,7 @@ export default function BarreNavigation() {
           <a className={itemClass("favoris")} href="/#/favoris">Mes favoris</a>
           <a className={itemClass("reservations")} href="/#/reservations">Mes réservations</a>
           <a className={itemClass("login")} href="/#/login">Compte</a>
-          <span className="menu-item menu-item-inactif">Support et commentaires</span>
+          <a className={itemClass("support")} href="/#/support">Support et commentaires</a>
         </nav>
       </div>
 

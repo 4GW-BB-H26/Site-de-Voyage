@@ -1,162 +1,70 @@
 import { commentsCollection } from "../models/comment_model.js";
 import { ObjectId } from "mongodb";
-import { ErreurApplicative } from "../utils/errors.js";
 
-function serviceIndisponible(next) {
-  return next(
-    new ErreurApplicative("Service MongoDB non connecté.", {
-      status: 503,
-      code: "MONGO_INDISPONIBLE",
-      recouvrement:
-        "Vérifiez MONGODB_URI et MONGODB_DB_NAME dans .env, démarrez MongoDB (ex. Docker), puis redémarrez l’API.",
-    })
-  );
-}
-
-function parseObjectId(id, res) {
+// post commentaire
+export async function addComment(req, res) {
   try {
-    return new ObjectId(id);
-  } catch {
-    res.status(400).json({ error: "Identifiant MongoDB invalide." });
-    return null;
-  }
-}
-
-export async function addComment(req, res, next) {
-  const coll = commentsCollection();
-  if (!coll) return serviceIndisponible(next);
-
-  const { destinationId, auteur, texte, note } = req.body || {};
-  const dest = destinationId != null ? String(destinationId).trim() : "";
-  const auth = auteur != null ? String(auteur).trim() : "";
-  const txt = texte != null ? String(texte).trim() : "";
-
-  if (!dest || !auth || !txt) {
-    return res.status(400).json({
-      error: "Champs requis : destinationId, auteur, texte.",
-    });
-  }
-
-  let noteNum = note;
-  if (noteNum != null) {
-    noteNum = Number(noteNum);
-    if (Number.isNaN(noteNum) || noteNum < 1 || noteNum > 5) {
-      return res.status(400).json({ error: "note entre 1 et 5." });
-    }
-  }
-
-  try {
-    const comment = {
-      destinationId: dest,
-      auteur: auth,
-      texte: txt,
-      ...(noteNum != null ? { note: noteNum } : {}),
-      date: new Date(),
+    const { destinationId, auteur, texte } = req.body; 
+    const collection = commentsCollection();
+    
+    if (!collection) throw new Error("Base de données non connectée");
+    const nouveauCommentaire = {
+      destinationId: destinationId || "support",
+      userName: auteur || "Anonyme",
+      comment: texte,
+      date: new Date()
     };
-    const result = await coll.insertOne(comment);
-    return res.status(201).json({ _id: result.insertedId, ...comment });
-  } catch (err) {
-    return next(err);
+
+    const result = await collection.insertOne(nouveauCommentaire);
+    res.status(201).json({ success: true, data: { ...nouveauCommentaire, _id: result.insertedId } });
+  } catch (error) {
+    res.status(500).json({ error: "Erreur lors de l'ajout du commentaire" });
   }
 }
 
-export async function getCommentsByDestination(req, res, next) {
-  const coll = commentsCollection();
-  if (!coll) return serviceIndisponible(next);
-
+// Get commentaire avec destination
+export async function getCommentsByDestination(req, res) {
   try {
-    const destId = String(req.params.destId);
-    const comments = await coll.find({ destinationId: destId }).toArray();
-    return res.json(comments);
-  } catch (err) {
-    return next(err);
+    const { destId } = req.params;
+    const collection = commentsCollection();
+    
+    // Cherche eet tri tout les commentaires du meme ID
+    const commentaires = await collection.find({ destinationId: destId }).sort({ date: -1 }).toArray();
+    res.json({ success: true, data: commentaires });
+  } catch (error) {
+    res.status(500).json({ error: "Erreur lors de la récupération des commentaires" });
   }
 }
 
-export async function getCommentById(req, res, next) {
-  const coll = commentsCollection();
-  if (!coll) return serviceIndisponible(next);
-
-  const oid = parseObjectId(req.params.id, res);
-  if (!oid) return;
-
+// Get commentaire avec ID
+export async function getCommentById(req, res) {
   try {
-    const doc = await coll.findOne({ _id: oid });
-    if (!doc) {
-      return res.status(404).json({ error: "Commentaire introuvable." });
-    }
-    return res.json(doc);
-  } catch (err) {
-    return next(err);
+    const collection = commentsCollection();
+    const commentaire = await collection.findOne({ _id: new ObjectId(req.params.id) });
+    res.json({ success: true, data: commentaire });
+  } catch (error) {
+    res.status(500).json({ error: "Erreur" });
   }
 }
 
-export async function updateComment(req, res, next) {
-  const coll = commentsCollection();
-  if (!coll) return serviceIndisponible(next);
-
-  const oid = parseObjectId(req.params.id, res);
-  if (!oid) return;
-
-  const { auteur, texte, note } = req.body || {};
-  const set = {};
-
-  if (auteur != null) {
-    const a = String(auteur).trim();
-    if (!a) {
-      return res.status(400).json({ error: "auteur non vide requis." });
-    }
-    set.auteur = a;
-  }
-  if (texte != null) {
-    const t = String(texte).trim();
-    if (!t) {
-      return res.status(400).json({ error: "texte non vide requis." });
-    }
-    set.texte = t;
-  }
-  if (note !== undefined) {
-    const n = Number(note);
-    if (Number.isNaN(n) || n < 1 || n > 5) {
-      return res.status(400).json({ error: "note entre 1 et 5." });
-    }
-    set.note = n;
-  }
-
-  if (Object.keys(set).length === 0) {
-    return res.status(400).json({
-      error: "Fournir auteur, texte ou note.",
-    });
-  }
-
-  set.date = new Date();
-
+//  Upd commentaire
+export async function updateComment(req, res) {
   try {
-    const result = await coll.updateOne({ _id: oid }, { $set: set });
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ error: "Commentaire introuvable." });
-    }
-    const doc = await coll.findOne({ _id: oid });
-    return res.json(doc);
-  } catch (err) {
-    return next(err);
+    const collection = commentsCollection();
+    await collection.updateOne({ _id: new ObjectId(req.params.id) }, { $set: req.body });
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: "Erreur" });
   }
 }
 
-export async function removeComment(req, res, next) {
-  const coll = commentsCollection();
-  if (!coll) return serviceIndisponible(next);
-
-  const oid = parseObjectId(req.params.id, res);
-  if (!oid) return;
-
+// Delete commentaire
+export async function removeComment(req, res) {
   try {
-    const result = await coll.deleteOne({ _id: oid });
-    if (result.deletedCount === 0) {
-      return res.status(404).json({ error: "Commentaire introuvable." });
-    }
-    return res.json({ message: "Commentaire supprime" });
-  } catch (err) {
-    return next(err);
+    const collection = commentsCollection();
+    await collection.deleteOne({ _id: new ObjectId(req.params.id) });
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: "Erreur" });
   }
 }
