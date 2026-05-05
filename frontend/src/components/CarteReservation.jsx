@@ -33,8 +33,6 @@ export default function CarteReservation({
             </div>
 
             <div className="carte-reservation-actions">
-                <button className="btn-action-reservation"> <FiEye/> Voir les détails</button>
-                <button className="btn-action-reservation"> <FiDownload/> Télécharger</button>
                 <button className="btn-action-reservation btn-action-annuler"> <FiX/> Annuler </button>
             </div>
         </article>

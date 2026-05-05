@@ -13,4 +13,16 @@ export function fetchReservationsForUser(userId) {
       ...entetesAvecJeton(),
     },
   });
+
+//   export function updateReservationForUser(userId, reservationId)
+//   {
+//     const nouveauStatut = "Annulée"
+//     if(!estIdentifiantUtilisateurValide(userId)) {
+//     return Promise.reject(new Error("Identifiant utilisateur invalide."));
+//   }
+//   return fetch(`${API_BASE}/reservations/user/${userId, reservationId}`, {
+//     method: "PUT",
+//     body: JSON.stringify()
+//   }
+//   }
 }
