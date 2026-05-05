@@ -73,7 +73,6 @@ INSERT INTO USERS
 VALUES(1,'Utilisateur','Originel','Tester','test@email.com','$2b$10$ik6XKD2DMynj1gjcQKIOUe8Nl/DwHlMRDA5O3yOiX/f1xq7E6ycNi', Date '2026-05-02');
 
 
-
 -- La table RESERVATION:
 INSERT INTO RESERVATION
 VALUES(1,1,DATE '2026-04-07',DATE '2026-05-02',DATE '2026-05-07',52,799,'Terminee',1,1,1);

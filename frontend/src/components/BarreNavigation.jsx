@@ -11,7 +11,7 @@ export default function BarreNavigation() {
   const [hashKey, setHashKey] = useState(currentHashKey);
   //verification de la connection de l'utilisateur
   const [isLogged, setIsLogged] = useState(
-  sessionStorage.getItem("travelExpressUser") != null
+  sessionStorage.getItem("travelExpressToken") != null
 );
   let boutonName = isLogged? "Deconnexion":"Se connecter"; //string sur le bouton depandant de la connection de l'utilisateur
   let link = isLogged? "/acceuil":"/login" //redirection dependant de la connexion du user

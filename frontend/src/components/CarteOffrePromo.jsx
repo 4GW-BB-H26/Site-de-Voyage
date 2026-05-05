@@ -1,10 +1,22 @@
 // Carte d'une offre Hôtel + Vol (promotions)
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import { BsHeartFill } from "react-icons/bs";
 import InfosPays from "./InfosPays";
+import { addFavoris, removeFavoris } from "../api/favoris.js";
+
+function lireUtilisateurSession() {
+  const raw = sessionStorage.getItem("travelExpressUser");
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
 
 export default function CarteOffrePromo({
+  id,
   imageUrl,
   imageAlt,
   titre,
@@ -18,31 +30,57 @@ export default function CarteOffrePromo({
 }) {
   //verfication de s'il est un favorit
   const [estFavori, setEstFavori] = useState(false);
-  //verification de si le user est connecter
-  const [isLogged, setLogged] = useState(
-  sessionStorage.getItem("travelExpressUser") !== null
-);
-  let link = isLogged? "/acceuil":"/login"
+  const [favoriId, setFavoriId] = useState(null);
   const [afficherDetails, setAfficherDetails] = useState(false);
 
-  //logic du bouton favori
-  const toggleFavori = (e) => {
-    if(isLogged){
-      e.stopPropagation();
-    setEstFavori(!estFavori);
+  const toggleFavori = async (e) => {
+    e.stopPropagation();
+    const user = lireUtilisateurSession();
+
+    if (!user?.id_users) {
+      alert("Vous devez être connecté pour ajouter un favori.");
+      return;
     }
-    else{
-      window.location.hash = link;
+
+    try {
+      if (!estFavori) {
+        const res = await addFavoris({
+          userId: String(user.id_users),
+          destinationId: String(id),
+          nomDestination: lieu,
+        });
+        const data = await res.json().catch(() => null);
+        if (!res.ok) {
+          const msg = data && typeof data.error === "string" ? data.error : "Impossible d’ajouter le favori.";
+          alert(msg);
+          return;
+        }
+        const fid = data?._id != null ? String(data._id) : null;
+        if (fid) {
+          setFavoriId(fid);
+          setEstFavori(true);
+        }
+      } else if (favoriId) {
+        const del = await removeFavoris(favoriId);
+        if (!del.ok) {
+          alert("Impossible de retirer le favori.");
+          return;
+        }
+        setFavoriId(null);
+        setEstFavori(false);
+      }
+    } catch {
+      alert("Erreur lors de la mise à jour des favoris.");
     }
   };
 
-  //logic du bouton reserver
   const handleReserver = (e) => {
-    if(isLogged){
-      e.stopPropagation();
-    alert(`Réservation pour : ${titre} - ${lieu}`);
-    }else if(!isLogged){
-      window.location.hash = link;
+    e.stopPropagation();
+    const user = lireUtilisateurSession();
+    if (user?.id_users) {
+      alert(`Réservation pour : ${titre} - ${lieu}`);
+    } else {
+      window.location.hash = "#/login";
     }
   };
 

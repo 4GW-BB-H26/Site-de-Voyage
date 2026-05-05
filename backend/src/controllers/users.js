@@ -1,18 +1,10 @@
-/**
- * Comptes utilisateurs : inscription, connexion, profil, suppression.
- * Selon AUTH_MODE, la persistance passe par Oracle (USERS) ou Mongo (authMongoService).
- */
+
+ //Comptes utilisateurs : inscription, connexion, profil, suppression.
+
 import oracledb from "oracledb";
 import dbConfig from "../config/db.js";
-import { useMongoAuth } from "../config/auth.js";
 import { hasherMotDePasse, verifierMotDePasseStocke } from "../utils/password.js";
 import { creerJetonUtilisateur } from "../utils/jetonsJwt.js";
-import {
-  loginAvecIdentifiantsMongo,
-  createUserMongo,
-  updateUserMongo,
-  deleteUserMongo,
-} from "../services/authMongoService.js";
 
 /**
  * Vérifie courriel + mot de passe et renvoie soit l’utilisateur, soit une erreur structurée.
@@ -20,14 +12,10 @@ import {
 async function loginAvecIdentifiants(email, password) {
   const courriel = String(email).trim().toLowerCase();
 
-  if (useMongoAuth) {
-    return loginAvecIdentifiantsMongo(courriel, password);
-  }
-
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
-    // Requête paramétrée pour éviter l'injection SQL.
+    
     const result = await connection.execute(
       `SELECT ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD
        FROM USERS
@@ -172,18 +160,6 @@ export function getAuthMe(req, res) {
 
 /** POST /users — inscription ; renvoie user + token si tout va bien */
 export async function createUser(req, res, next) {
-  if (useMongoAuth) {
-    const out = await createUserMongo(req.body || {});
-    if (out.erreur) {
-      if (out.erreur.nextErr) return next(out.erreur.nextErr);
-      return res.status(out.erreur.status).json(out.erreur.payload);
-    }
-    return res.status(out.status).json({
-      success: true,
-      user: out.user,
-      token: out.token,
-    });
-  }
 
   const { first_name, last_name, username, email, password } = req.body || {};
   const prenom = typeof first_name === "string" ? first_name.trim() : "";
@@ -211,7 +187,7 @@ export async function createUser(req, res, next) {
     // On verrouille la table le temps de l’insert : avec MAX(ID)+1, deux requêtes en même temps
     // pourraient sinon réserver le même numéro.
     await connection.execute(`LOCK TABLE USERS IN EXCLUSIVE MODE`);
-    // Requête paramétrée pour éviter l'injection SQL.
+      // ✅ Requête paramétrée : placeholders empêchent l'injection
     await connection.execute(
       `INSERT INTO USERS (ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, CREATION_DATE)
        VALUES ((SELECT NVL(MAX(ID_USERS), 0) + 1 FROM USERS), :first_name, :last_name, :username, :email, :password, SYSDATE)`,
@@ -267,14 +243,7 @@ export async function createUser(req, res, next) {
 
 /** PUT /users/:id — JWT requis, id doit correspondre au jeton */
 export async function updateUser(req, res, next) {
-  if (useMongoAuth) {
-    const out = await updateUserMongo(req.params.id, req.body || {});
-    if (out.erreur) {
-      if (out.erreur.nextErr) return next(out.erreur.nextErr);
-      return res.status(out.erreur.status).json(out.erreur.payload);
-    }
-    return res.json({ success: true, rowsAffected: out.rowsAffected });
-  }
+
 
   let connection;
   try {
@@ -330,14 +299,6 @@ export async function updateUser(req, res, next) {
 
 /** DELETE /users/:id — même règle de sécurité que le PUT */
 export async function deleteUser(req, res, next) {
-  if (useMongoAuth) {
-    const out = await deleteUserMongo(req.params.id);
-    if (out.erreur) {
-      if (out.erreur.nextErr) return next(out.erreur.nextErr);
-      return res.status(out.erreur.status).json(out.erreur.payload);
-    }
-    return res.json({ success: true, rowsAffected: out.rowsAffected });
-  }
 
   let connection;
   try {

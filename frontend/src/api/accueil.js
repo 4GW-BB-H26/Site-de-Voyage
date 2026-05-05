@@ -1,7 +1,7 @@
 import { API_BASE } from "./client.js";
 
 /**
- * @returns {Promise<{ titreSectionOffres: string; offres: object[] }>}
+ * @returns {Promise<{ titreSectionOffres: string; paysFiltres?: string[]; offres: object[] }>}
  */
 
 //appel AJAX vers API et recupere donnée page Accueil
