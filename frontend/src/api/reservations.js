@@ -16,18 +16,17 @@ export function fetchReservationsForUser(userId) {
       ...entetesAvecJeton(),
     },
   });
-  //pour update une reservation (l'annuler)
-  
+}
+
 //pour update une reservation (l'annuler)
-  export function updateReservationForUser(reservationId) {
-    if (!estIdentifiantUtilisateurValide(reservationId)) {
-      return Promise.reject(new Error("Identifiant reservation invalide."));
-    }
-    return fetch(`${API_BASE}/reservations/${reservationId}/cancel`, {
-      method: "PUT",
-      headers: {
-        ...entetesAvecJeton(),
-      },
-    });
+export function updateReservationForUser(reservationId) {
+  if (!estIdentifiantUtilisateurValide(reservationId)) {
+    return Promise.reject(new Error("Identifiant reservation invalide."));
   }
+  return fetch(`${API_BASE}/reservations/${reservationId}/cancel`, {
+    method: "PUT",
+    headers: {
+      ...entetesAvecJeton(),
+    },
+  });
 }

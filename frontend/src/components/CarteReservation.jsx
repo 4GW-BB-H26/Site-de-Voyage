@@ -1,4 +1,6 @@
 import { FiEye, FiDownload, FiX } from "react-icons/fi";
+import SectionReservation from "./SectionReservation";
+import { updateReservationForUser } from "../api/reservations";
 
 const classeStatut = (statut) => {
     if (statut === "Validée") return "badge-validee";
@@ -7,7 +9,18 @@ const classeStatut = (statut) => {
     return "";
 };
 
+//fonction d'annulation d'une reservation en appuyant sur le bouton annuler
+const handleCancel = (id, statut)=>{
+    if(statut === "Annulée"){
+        window.alert("La réservation à déjà été annulée")
+    }else{
+        updateReservationForUser(id);
+        window.location.reload(true);
+    }
+}
+
 export default function CarteReservation({
+    id,
     imageUrl,
     imageAlt,
     ville,
@@ -15,7 +28,9 @@ export default function CarteReservation({
     voyageurs,
     statut,
     prix,
-})  {
+})
+
+{
     return (
         <article className="carte-reservation">
             <img className="carte-reservation-image" src={imageUrl} alt={imageAlt}/>
@@ -33,7 +48,7 @@ export default function CarteReservation({
             </div>
 
             <div className="carte-reservation-actions">
-                <button className="btn-action-reservation btn-action-annuler"> <FiX/> Annuler </button>
+                <button className="btn-action-reservation btn-action-annuler" onClick={() =>{handleCancel(id, statut)}}> <FiX/> Annuler </button>
             </div>
         </article>
     ) ;

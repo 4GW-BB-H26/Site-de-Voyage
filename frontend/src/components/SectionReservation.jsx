@@ -130,6 +130,7 @@ export default function SectionReservation() {
       <div className="liste-reservations">
         {reservations.map((rt) => (
           <CarteReservation
+            id={rt.id}
             key={rt.id}
             imageUrl={rt.imgUrl}
             imageAlt={`${rt.destination}, ${rt.country}`}
