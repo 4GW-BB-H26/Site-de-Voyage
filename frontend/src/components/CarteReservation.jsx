@@ -1,5 +1,4 @@
 import { FiEye, FiDownload, FiX } from "react-icons/fi";
-import SectionReservation from "./SectionReservation";
 import { updateReservationForUser } from "../api/reservations";
 
 const classeStatut = (statut) => {

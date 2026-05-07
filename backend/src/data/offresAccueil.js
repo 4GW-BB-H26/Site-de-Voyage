@@ -7,21 +7,26 @@ export const TITRE_SECTION_OFFRES = "Offres : Sauvez jusqu'à 25%";
 export const OFFRES_PROMO = [
   {
     id: 1,
-    imageUrl: "https://images.pexels.com/photos/2373201/pexels-photo-2373201.jpeg",
-    imageAlt: "Cancun, Mexique",
-    titre: "Hôtel BDEB + Vol",
-    lieu: "Cancun - Mexique",
-    pays: "Mexico",
-    note: "4.7 étoiles - 9.7/10 Très Bien (120)",
-    vol: "Montreal(YUL) - Cancun(MEX)",
-    dates: "Feb 1 - Feb 7",
-    prix: "CAD $999",
-    ancienPrix: "$1499",
+    imageUrl:
+      "https://voyages.destinationcanada.com/_next/image?url=https%3A%2F%2Fadmin.destinationcanada.com%2Fsites%2Fdefault%2Ffiles%2F2023-06%2FQC-Montreal-Skyline_hero.jpg&w=1024&q=75",
+    imageAlt:
+      "https://sites.rutgers.edu/french-magazine/comment-visiter-presque-gratuitement-montreal/",
+    titre: "Hôtel BDEB",
+    lieu: "Montreal - Canada",
+    pays: "Canada",
+    note: "3.8 étoiles - 7.6/10 Très Bien (120)",
+    vol: "Montreal(CAN) - Montreal(CAN))",
+    dates: "May 2 - May 6",
+    prix: "CAD $799",
+    ancienPrix: "$1299",
+    id_trip: 1,
   },
   {
     id: 2,
-    imageUrl: "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg",
-    imageAlt: "Cayo Santa-Maria, Cuba",
+    imageUrl:
+      "https://poble-espanyol.com/wp-content/uploads/2024/05/Que-ver-en-Barcelona-en-un-dia-1.jpg",
+    imageAlt:
+      "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg",
     titre: "Hôtel St-Paul + Vol",
     lieu: "Cayo Santa-Maria - Cuba",
     pays: "Cuba",
@@ -33,7 +38,8 @@ export const OFFRES_PROMO = [
   },
   {
     id: 3,
-    imageUrl: "https://images.pexels.com/photos/1433052/pexels-photo-1433052.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/1433052/pexels-photo-1433052.jpeg",
     imageAlt: "Barcelone, Espagne",
     titre: "Hôtel I.B. + Vol",
     lieu: "Barcelone - Espagne",
@@ -46,7 +52,8 @@ export const OFFRES_PROMO = [
   },
   {
     id: 4,
-    imageUrl: "https://images.pexels.com/photos/373290/pexels-photo-373290.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/373290/pexels-photo-373290.jpeg",
     imageAlt: "Tokyo, Japon",
     titre: "Hôtel H-016 + Vol",
     lieu: "Tokyo - Japon",
@@ -59,7 +66,8 @@ export const OFFRES_PROMO = [
   },
   {
     id: 5,
-    imageUrl: "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg",
     imageAlt: "New York, États-Unis",
     titre: "Hôtel Metro + Vol",
     lieu: "New York - États-Unis",
@@ -72,7 +80,8 @@ export const OFFRES_PROMO = [
   },
   {
     id: 6,
-    imageUrl: "https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg",
     imageAlt: "Paris, France",
     titre: "Hôtel Barbare + Vol",
     lieu: "Paris - France",
@@ -82,31 +91,5 @@ export const OFFRES_PROMO = [
     dates: "May 1 - May 10",
     prix: "CAD $2100",
     ancienPrix: "$2700",
-  },
-  {
-    id: 7,
-    imageUrl: "https://images.pexels.com/photos/1797161/pexels-photo-1797161.jpeg",
-    imageAlt: "Rome, Italie",
-    titre: "Hôtel Couche-Tard + Vol",
-    lieu: "Rome - Italie",
-    pays: "Italy",
-    note: "4.6 étoiles - 9.1/10 Très Bien (98)",
-    vol: "Montreal(YUL) - Rome(ITA)",
-    dates: "Jun 10 - Jun 20",
-    prix: "CAD $2400",
-    ancienPrix: "$3100",
-  },
-  {
-    id: 8,
-    imageUrl: "https://images.pexels.com/photos/1462030/pexels-photo-1462030.jpeg",
-    imageAlt: "Bangkok, Thaïlande",
-    titre: "Hôtel Pomme + Vol",
-    lieu: "Bangkok - Thaïlande",
-    pays: "Thailand",
-    note: "4.4 étoiles - 8.8/10 Très Bien (145)",
-    vol: "Montreal(YUL) - Bangkok(THA)",
-    dates: "Jul 1 - Jul 14",
-    prix: "CAD $1850",
-    ancienPrix: "$2400",
   },
 ];

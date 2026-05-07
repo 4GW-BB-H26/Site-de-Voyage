@@ -27,6 +27,7 @@ export default function CarteOffrePromo({
   pays,
   prix,
   ancienPrix,
+  id_trip
 }) {
   //verfication de s'il est un favorit
   const [estFavori, setEstFavori] = useState(false);
