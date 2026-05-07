@@ -5,7 +5,7 @@ import { estIdentifiantUtilisateurValide } from "../utils/validator.js";
  * @param {number} userId
  * @param {number} reservationId
  * @param {number} tripId
- * @param {reference_number: int; reservation_date: Date(); date_start: Date(); date_end: Date(); nb_travelers: int; price: float; status: string;} body
+ * @param {reference_number: int; date_start: Date(); date_end: Date(); nb_travelers: int; price: float; status: string;} body
  */
 
 //fetch les reservations
@@ -35,10 +35,9 @@ export function updateReservationForUser(reservationId) {
 }
 
 //pour ajouter des reservation
-export function addReservationForUser(userId, body, tripId) {
+export async function addReservationForUser(userId, body, tripId) {
   const chargeUtile = {
     reference_number: Number(body.reference_number ?? ""),
-    reservation_date: body.reservation_date,
     date_start: body.date_start,
     date_end: body.date_end,
     nb_travelers: Number(body.nb_travelers ?? ""),
@@ -46,10 +45,19 @@ export function addReservationForUser(userId, body, tripId) {
     status: body.status,
     users_id_users: userId,
     trip_id_trip: tripId,
+    id_trip: tripId,
   };
-  return fetch(`${API_BASE}/reservations`, {
+  const response = await fetch(`${API_BASE}/reservations`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...entetesAvecJeton(),
+    },
+
     body: JSON.stringify(chargeUtile),
   });
+
+  const result = response.json();
+  console.log(result);
+  return result;
 }

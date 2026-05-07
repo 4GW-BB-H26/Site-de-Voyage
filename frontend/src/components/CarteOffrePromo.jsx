@@ -4,6 +4,7 @@ import { FiHeart } from "react-icons/fi";
 import { BsHeartFill } from "react-icons/bs";
 import InfosPays from "./InfosPays";
 import { addFavoris, removeFavoris } from "../api/favoris.js";
+import { addReservationForUser } from "../api/reservations.js";
 
 function lireUtilisateurSession() {
   const raw = sessionStorage.getItem("travelExpressUser");
@@ -38,11 +39,6 @@ export default function CarteOffrePromo({
     e.stopPropagation();
     const user = lireUtilisateurSession();
 
-    if (!user?.id_users) {
-      alert("Vous devez être connecté pour ajouter un favori.");
-      return;
-    }
-
     try {
       if (!estFavori) {
         const res = await addFavoris({
@@ -75,11 +71,45 @@ export default function CarteOffrePromo({
     }
   };
 
-  const handleReserver = (e) => {
+  const handleReserver = async (e) => {
     e.stopPropagation();
     const user = lireUtilisateurSession();
     if (user?.id_users) {
+      try{
+        const [startRaw, endRaw] = dates.split(" - "); //pour separer les dates
+
+        console.log(startRaw+ " et "+endRaw);
+
+        const body = {
+          reference_number: Date.now(),
+          date_start: startRaw,
+          date_end: endRaw,
+          nb_travelers: 1, //hard coded car on ne peut pas inserer un nombre de voyageurs
+          price: prix,
+          status: "En attente",
+        };
+
+        const res = await addReservationForUser(
+          user.id_users,
+          body,
+          id_trip
+        );
+
+        console.log(res);
+
+        // if(!res.ok){
+        //   alert(data.error || "Impossible de prendre une reservation");
+        //   return;
+        // }
+        // alert("Réservation prise !");
+      
+      }catch(err){
+        console.error(err);
+        alert(err);
+        return;
+      }
       alert(`Réservation pour : ${titre} - ${lieu}`);
+
     } else {
       window.location.hash = "#/login";
     }
@@ -120,7 +150,7 @@ export default function CarteOffrePromo({
         {afficherDetails && pays && <InfosPays nomPays={pays} />}
 
         <div className="carte-promo-prix">
-          <span className="prix-actuel">{prix}</span>
+          <span className="prix-actuel">CAD ${prix}</span>
           {ancienPrix && <span className="prix-ancien">{ancienPrix}</span>}
         </div>
         <button type="button" className="btn-reserver" onClick={handleReserver}>
