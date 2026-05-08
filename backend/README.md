@@ -1,68 +1,16 @@
-# Backend Travel Express
+Ce fichier sert comme documentation de comment "launch" nottre site web 
 
-Ce dossier contient l'API Express du projet.
+1.0: Configurer les bases de données:
+Cette partie sert à montrer comment configurer les bases de données 
 
-## 1) Prérequis
+1.1: Oracle:
+Pour créer la connection à la base de données Oracle vous aurez besoin de vous connecter en tant que sys (SYSDBA) sur le port 1521.
+Element de connexion:
+- Username: sys
+- Password: oracle
+- Role: SYSDBA
+- Hostname: localhost
+- Port 1521
+- Service Name: freepdb1
 
-- Node.js installé
-- Oracle accessible 
-- MongoDB lancé (favoris, commentaires)
-
-## 2) Déploiement rapide
-
-### Windows PowerShell
-
-```powershell
-cd backend
-powershell -ExecutionPolicy Bypass -File .\scripts\deploy-backend.ps1
-```
-
-### Linux / macOS
-
-```bash
-cd backend
-chmod +x ./scripts/deploy-backend.sh
-./scripts/deploy-backend.sh
-```
-
-Les scripts font 2 choses:
-- créent `.env` à partir de `.env.example` si le fichier manque
-- installent les dépendances npm
-
-## 3) Configuration `.env`
-
-Variables importantes:
-
-- `PORT` (souvent 3000)
-- `AUTH_MODE` (`oracle`)
-- `JWT_SECRET`
-- `ORACLE_USER`
-- `ORACLE_PASSWORD`
-- `ORACLE_CONNECT_STRING`
-- `MONGODB_URI`
-- `MONGODB_DB_NAME`
-
-## 4) Démarrer l'API
-
-```bash
-npm run dev
-```
-
-API locale par défaut:
-- `http://localhost:3000`
-- santé: `http://localhost:3000/health`
-
-## 5) Vérifier Oracle (optionnel)
-
-Script de test Oracle:
-
-```bash
-npm run test:oracle
-```
-
-## 6) Notes utiles
-
-- L'API gère les erreurs de façon centralisée.
-- Les mots de passe sont encodés avec `bcryptjs`.
-- Les routes Mongo utilisent les collections `favoris` et `commentaires`.
-- Des index Mongo sont créés au démarrage pour de meilleures perfs.
+a continuer
