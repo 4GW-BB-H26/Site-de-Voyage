@@ -1,14 +1,12 @@
-
- //Comptes utilisateurs : inscription, connexion, profil, suppression.
+//Gère les actions pour users.js
 
 import oracledb from "oracledb";
 import dbConfig from "../config/db.js";
 import { hasherMotDePasse, verifierMotDePasseStocke } from "../utils/password.js";
 import { creerJetonUtilisateur } from "../utils/jetonsJwt.js";
 
-/**
- * Vérifie courriel + mot de passe et renvoie soit l’utilisateur, soit une erreur structurée.
- */
+//Vérifie courriel + MDP
+
 async function loginAvecIdentifiants(email, password) {
   const courriel = String(email).trim().toLowerCase();
 
@@ -90,7 +88,7 @@ async function loginAvecIdentifiants(email, password) {
   }
 }
 
-/** GET /user?email=&password= — connexion “legacy” par query string (même effet qu’un login) */
+//Methode de conncection + token
 export async function getUser(req, res, next) {
   const email = req.query.email;
   const password = req.query.password;
@@ -115,7 +113,7 @@ export async function getUser(req, res, next) {
   });
 }
 
-/** POST /auth/login — connexion JSON utilisée par le frontend */
+//Connecte user et donne token de sécurité
 export async function postAuthLogin(req, res, next) {
   const email = req.body?.email;
   const password = req.body?.password;
@@ -145,7 +143,7 @@ export async function postAuthLogin(req, res, next) {
   });
 }
 
-/** GET /auth/me — infos minimales dérivées du JWT (middleware exigerJetonValide) */
+//Avec token, get les infos du user
 export function getAuthMe(req, res) {
   const u = req.utilisateurJwt;
   return res.json({
@@ -158,7 +156,7 @@ export function getAuthMe(req, res) {
   });
 }
 
-/** POST /users — inscription ; renvoie user + token si tout va bien */
+//Crée un compte utilisateur, crypte le password et conncecte
 export async function createUser(req, res, next) {
 
   const { first_name, last_name, username, email, password } = req.body || {};
@@ -184,10 +182,9 @@ export async function createUser(req, res, next) {
   try {
     const hachageMotDePasse = await hasherMotDePasse(password);
     connection = await oracledb.getConnection(dbConfig);
-    // On verrouille la table le temps de l’insert : avec MAX(ID)+1, deux requêtes en même temps
-    // pourraient sinon réserver le même numéro.
+
     await connection.execute(`LOCK TABLE USERS IN EXCLUSIVE MODE`);
-      // ✅ Requête paramétrée : placeholders empêchent l'injection
+      // ✅ Requête paramétrée : placeholders empêchent l'injection 
     await connection.execute(
       `INSERT INTO USERS (ID_USERS, FIRST_NAME, LAST_NAME, USERNAME, EMAIL, PASSWORD, CREATION_DATE)
        VALUES ((SELECT NVL(MAX(ID_USERS), 0) + 1 FROM USERS), :first_name, :last_name, :username, :email, :password, SYSDATE)`,
@@ -241,7 +238,7 @@ export async function createUser(req, res, next) {
   }
 }
 
-/** PUT /users/:id — JWT requis, id doit correspondre au jeton */
+//UPD users
 export async function updateUser(req, res, next) {
 
 
@@ -297,7 +294,7 @@ export async function updateUser(req, res, next) {
   }
 }
 
-/** DELETE /users/:id — même règle de sécurité que le PUT */
+//Delete le user
 export async function deleteUser(req, res, next) {
 
   let connection;
