@@ -1,8 +1,11 @@
+//Gère les actions pour reservations
+
 import oracledb from "oracledb";
 import dbConfig from "../config/db.js";
 
 const STATUS_PAR_DEFAUT = "À venir";
 
+// Convertit Date en AAAA-MM-JJ
 function formatDateValue(d) {
   if (!d) return "";
   if (d instanceof Date) return d.toISOString().slice(0, 10);
@@ -10,17 +13,20 @@ function formatDateValue(d) {
   return s.length >= 10 ? s.slice(0, 10) : s;
 }
 
+//Vérifie si valeur est Z+
 function parsePositiveInt(value) {
   const parsed = Number.parseInt(value, 10);
   return Number.isInteger(parsed) && parsed > 0 ? parsed : null;
 }
 
+//transforme en Date
 function parseDateOrNull(value) {
   if (value == null || String(value).trim() === "") return null;
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
+//Traduit le texte du statut de reservation
 function mapReservationStatus(s) {
   if (!s) return STATUS_PAR_DEFAUT;
   const raw = String(s).trim();
@@ -34,6 +40,7 @@ function mapReservationStatus(s) {
   return raw;
 }
 
+// recupere la liste des reservations d'un user
 export async function listReservationsByUser(req, res, next) {
   const userId = parsePositiveInt(req.params.userId);
   if (!userId) {
@@ -79,6 +86,7 @@ export async function listReservationsByUser(req, res, next) {
   }
 }
 
+//Get reservation par ID
 export async function getReservation(req, res, next) {
   const id = parsePositiveInt(req.params.id);
   if (!id) {
@@ -135,6 +143,7 @@ export async function getReservation(req, res, next) {
   }
 }
 
+//Post Reservation + sauvegarde dans BD
 export async function createReservation(req, res, next) {
   const {
     id_reservation,
@@ -240,6 +249,7 @@ export async function createReservation(req, res, next) {
   }
 }
 
+//Modifie Statut de Reservation en annulé
 export async function cancelReservation(req, res, next) {
   const id = parsePositiveInt(req.params.id);
   if (!id) {
@@ -300,6 +310,7 @@ export async function cancelReservation(req, res, next) {
   }
 }
 
+//Delete Reservation BD
 export async function deleteReservation(req, res, next) {
   const id = parsePositiveInt(req.params.id);
   if (!id) {

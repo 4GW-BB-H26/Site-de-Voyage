@@ -1,7 +1,10 @@
+//Gère les actions pour destinations
+
 import oracledb from "oracledb";
 import dbConfig from "../config/db.js";
 import { OUT_STRING } from "../config/oracle.js";
 
+// Get destinations avec ID 
 export async function getDestination(req, res) {
   let connection;
   try {
@@ -22,6 +25,7 @@ export async function getDestination(req, res) {
   }
 }
 
+// POST destinations
 export async function createDestination(req, res) {
   let connection;
   try {
@@ -48,6 +52,7 @@ export async function createDestination(req, res) {
   }
 }
 
+// UPDAT Destination
 export async function updateDestination(req, res) {
   let connection;
   try {
@@ -75,6 +80,7 @@ export async function updateDestination(req, res) {
   }
 }
 
+//Delete Destination
 export async function deleteDestination(req, res) {
   let connection;
   try {

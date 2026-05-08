@@ -1,3 +1,5 @@
+//Gère les actions pour comments
+
 import { commentsCollection } from "../models/comment_model.js";
 import { ObjectId } from "mongodb";
 
