@@ -1,8 +1,11 @@
+//Gère les actions pour packages
+
 import oracledb from "oracledb";
 import dbConfig from "../config/db.js";
 import { OUT_STRING } from "../config/oracle.js";
 import logger from "../utils/appLogger.js";
 
+//Get Package
 export async function getPackageById(req, res) {
   const id = parseInt(req.params.id, 10);
   if (!id || isNaN(id)) {
@@ -101,6 +104,7 @@ export async function getPackageById(req, res) {
   }
 }
 
+//Post Package
 export async function createPackage(req, res) {
   const packageData = req.body;
   if (!packageData) {
@@ -210,6 +214,7 @@ export async function createPackage(req, res) {
   }
 }
 
+//UPD Package
 export async function updatePackage(req, res) {
   const id = parseInt(req.params.id, 10);
   const packageData = req.body;
@@ -332,6 +337,7 @@ export async function updatePackage(req, res) {
   }
 }
 
+//DEL Package
 export async function deletePackage(req, res) {
   const id = parseInt(req.params.id, 10);
   if (!id || isNaN(id)) {
