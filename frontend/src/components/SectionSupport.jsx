@@ -54,33 +54,33 @@ export default function SectionSupport() {
         <div className="carte-support">
           <h3 className="carte-support-titre">Réservation d'un paquet</h3>
           <p className="carte-support-texte">
-            <strong>Q :</strong> Comment je crée un compte ?
+            <strong>Q :</strong> Comment est ce que je réserve un paquet ?
             <br />
-            <strong>A :</strong> Il faut appuyer sur le bouton s'inscrire.
+            <strong>A :</strong> Il faut appuyer sur le boutton "Réserver", et le paquet va apparaitre dans la page "Mes Réservations".
           </p>
         </div>
         <div className="carte-support">
           <h3 className="carte-support-titre">Gestion des favoris</h3>
           <p className="carte-support-texte">
-            <strong>Q :</strong> Comment je crée un compte ?
+            <strong>Q :</strong> Comment est ce que je peux gérer mes favoris?
             <br />
-            <strong>A :</strong> Il faut appuyer sur le bouton s'inscrire.
+            <strong>A :</strong> Dans le menu principale,vous pouvez appuyer sur le coeur pour rajouter le paquet au favoris. Ensuite dans la page favoris vous pouvez enlever le paquet en appuyant sur le boutton "enlever".
           </p>
         </div>
         <div className="carte-support">
           <h3 className="carte-support-titre">Annulation d'un paquet</h3>
           <p className="carte-support-texte">
-            <strong>Q :</strong> Comment je crée un compte ?
+            <strong>Q :</strong> Comment je peux annuler un paquet?
             <br />
-            <strong>A :</strong> Il faut appuyer sur le bouton s'inscrire.
+            <strong>A :</strong> Il faut aller dans tes réservations et appuyer le boutton "canceller".
           </p>
         </div>
         <div className="carte-support">
           <h3 className="carte-support-titre">Ligne d'assistance téléphonique</h3>
           <p className="carte-support-texte">
-            <strong>Q :</strong> Comment je crée un compte ?
+            <strong>Q :</strong> Si votre question n'est pas répondu avec les réponse en haut
             <br />
-            <strong>A :</strong> Il faut appuyer sur le bouton s'inscrire.
+            <strong>A :</strong> Vous pouvez nous appeler pour nous poser des questions plus spécifiques.
           </p>
           <p className="carte-support-telephone">Numéro: 1-514-888-2222</p>
         </div>
