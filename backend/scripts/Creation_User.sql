@@ -1,4 +1,5 @@
 --Script de creation du user
+--il FAUT se deconnecter 
 --run en tant que sys
 
 drop user ProjetVoyage CASCADE; --Il y'aura une erreur si le user n'existe pas, mais ca n'empeche le script de rouler
