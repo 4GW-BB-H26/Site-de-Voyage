@@ -1,8 +1,11 @@
+//Gère les actions pour reservations
+
 import oracledb from "oracledb";
 import dbConfig from "../config/db.js";
 
 const STATUS_PAR_DEFAUT = "À venir";
 
+// Convertit Date en AAAA-MM-JJ
 function formatDateValue(d) {
   if (!d) return "";
   if (d instanceof Date) return d.toISOString().slice(0, 10);
@@ -10,28 +13,34 @@ function formatDateValue(d) {
   return s.length >= 10 ? s.slice(0, 10) : s;
 }
 
+//Vérifie si valeur est Z+
 function parsePositiveInt(value) {
   const parsed = Number.parseInt(value, 10);
   return Number.isInteger(parsed) && parsed > 0 ? parsed : null;
 }
 
+//transforme en Date
 function parseDateOrNull(value) {
   if (value == null || String(value).trim() === "") return null;
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
+//Traduit le texte du statut de reservation
 function mapReservationStatus(s) {
   if (!s) return STATUS_PAR_DEFAUT;
   const raw = String(s).trim();
-  if (raw === "Validée" || raw === STATUS_PAR_DEFAUT || raw === "Annulée") return raw;
+  if (raw === "Validée" || raw === STATUS_PAR_DEFAUT || raw === "Annulée")
+    return raw;
   const u = raw.toUpperCase();
   if (u.includes("CANCEL")) return "Annulée";
-  if (u.includes("VALID") || u.includes("CONFIRM") || u === "COMPLETED") return "Validée";
+  if (u.includes("VALID") || u.includes("CONFIRM") || u === "COMPLETED")
+    return "Validée";
   if (u.includes("PEND") || u.includes("UPCOM")) return STATUS_PAR_DEFAUT;
   return raw;
 }
 
+// recupere la liste des reservations d'un user
 export async function listReservationsByUser(req, res, next) {
   const userId = parsePositiveInt(req.params.userId);
   if (!userId) {
@@ -51,7 +60,7 @@ export async function listReservationsByUser(req, res, next) {
        WHERE r.USERS_ID_USERS = :userId
        ORDER BY r.DATE_START DESC`,
       { userId },
-      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+      { outFormat: oracledb.OUT_FORMAT_OBJECT },
     );
 
     const rows = (result.rows || []).map((row) => ({
@@ -77,10 +86,13 @@ export async function listReservationsByUser(req, res, next) {
   }
 }
 
+//Get reservation par ID
 export async function getReservation(req, res, next) {
   const id = parsePositiveInt(req.params.id);
   if (!id) {
-    return res.status(400).json({ error: "Identifiant de réservation invalide." });
+    return res
+      .status(400)
+      .json({ error: "Identifiant de réservation invalide." });
   }
 
   let connection;
@@ -95,7 +107,7 @@ export async function getReservation(req, res, next) {
        INNER JOIN DESTINATION d ON p.DESTINATION_ID_DESTINATION = d.ID_DESTINATION
        WHERE r.ID_RESERVATION = :id`,
       { id },
-      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+      { outFormat: oracledb.OUT_FORMAT_OBJECT },
     );
 
     if (!result.rows || result.rows.length === 0) {
@@ -131,6 +143,7 @@ export async function getReservation(req, res, next) {
   }
 }
 
+//Post Reservation + sauvegarde dans BD
 export async function createReservation(req, res, next) {
   const {
     id_reservation,
@@ -161,20 +174,27 @@ export async function createReservation(req, res, next) {
     return res.status(400).json({ error: "Dates invalides." });
   }
   if (startDate > endDate) {
-    return res.status(400).json({ error: "La date de fin doit être après la date de début." });
+    return res
+      .status(400)
+      .json({ error: "La date de fin doit être après la date de début." });
   }
 
   const travelers = parsePositiveInt(nb_travelers);
   if (!travelers) {
-    return res.status(400).json({ error: "nb_travelers doit être un entier positif." });
+    return res
+      .status(400)
+      .json({ error: "nb_travelers doit être un entier positif." });
   }
 
   const finalPrice = Number(price);
   if (!Number.isFinite(finalPrice) || finalPrice < 0) {
-    return res.status(400).json({ error: "price doit être un nombre positif." });
+    return res
+      .status(400)
+      .json({ error: "price doit être un nombre positif." });
   }
 
-  const finalStatus = String(status ?? STATUS_PAR_DEFAUT).trim() || STATUS_PAR_DEFAUT;
+  const finalStatus =
+    String(status ?? STATUS_PAR_DEFAUT).trim() || STATUS_PAR_DEFAUT;
   const finalRef = String(reference_number ?? "").trim() || `RES-${Date.now()}`;
 
   let connection;
@@ -185,7 +205,7 @@ export async function createReservation(req, res, next) {
       const idResult = await connection.execute(
         `SELECT NVL(MAX(ID_RESERVATION), 0) + 1 AS NEXT_ID FROM RESERVATION`,
         {},
-        { outFormat: oracledb.OUT_FORMAT_OBJECT }
+        { outFormat: oracledb.OUT_FORMAT_OBJECT },
       );
       reservationId = Number(idResult.rows?.[0]?.NEXT_ID);
     }
@@ -197,7 +217,7 @@ export async function createReservation(req, res, next) {
         PRICE, STATUS, USERS_ID_USERS,
         TRIP_ID_TRIP, ID_TRIP
       ) VALUES (
-        :id_reservation, :reference_number, :reservation_date,
+        :id_reservation, :reference_number, SYSDATE,
         :date_start, :date_end, :nb_travelers,
         :price, :status, :users_id_users,
         :trip_id_trip, :id_trip
@@ -205,7 +225,6 @@ export async function createReservation(req, res, next) {
       {
         id_reservation: reservationId,
         reference_number: finalRef,
-        reservation_date: reservationDate,
         date_start: startDate,
         date_end: endDate,
         nb_travelers: travelers,
@@ -214,7 +233,7 @@ export async function createReservation(req, res, next) {
         users_id_users: userId,
         trip_id_trip: tripId,
         id_trip: idTrip,
-      }
+      },
     );
     await connection.commit();
     return res.status(201).json({
@@ -230,10 +249,13 @@ export async function createReservation(req, res, next) {
   }
 }
 
+//Modifie Statut de Reservation en annulé
 export async function cancelReservation(req, res, next) {
   const id = parsePositiveInt(req.params.id);
   if (!id) {
-    return res.status(400).json({ error: "Identifiant de réservation invalide." });
+    return res
+      .status(400)
+      .json({ error: "Identifiant de réservation invalide." });
   }
 
   let connection;
@@ -243,7 +265,7 @@ export async function cancelReservation(req, res, next) {
     const check = await connection.execute(
       `SELECT DATE_START, STATUS, USERS_ID_USERS FROM RESERVATION WHERE ID_RESERVATION = :id`,
       { id },
-      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+      { outFormat: oracledb.OUT_FORMAT_OBJECT },
     );
 
     if (!check.rows || check.rows.length === 0) {
@@ -254,7 +276,8 @@ export async function cancelReservation(req, res, next) {
     const jwtUserId = req.utilisateurJwt?.id_users;
     if (jwtUserId != null && Number(row.USERS_ID_USERS) !== Number(jwtUserId)) {
       return res.status(403).json({
-        error: "Vous ne pouvez pas annuler la réservation d'un autre utilisateur.",
+        error:
+          "Vous ne pouvez pas annuler la réservation d'un autre utilisateur.",
       });
     }
 
@@ -265,12 +288,14 @@ export async function cancelReservation(req, res, next) {
     }
 
     if (new Date(row.DATE_START) <= new Date()) {
-      return res.status(400).json({ error: "Impossible d'annuler un voyage déjà commencé." });
+      return res
+        .status(400)
+        .json({ error: "Impossible d'annuler un voyage déjà commencé." });
     }
 
     await connection.execute(
       `UPDATE RESERVATION SET STATUS = 'Annulée' WHERE ID_RESERVATION = :id`,
-      { id }
+      { id },
     );
     await connection.commit();
     return res.json({
@@ -285,10 +310,13 @@ export async function cancelReservation(req, res, next) {
   }
 }
 
+//Delete Reservation BD
 export async function deleteReservation(req, res, next) {
   const id = parsePositiveInt(req.params.id);
   if (!id) {
-    return res.status(400).json({ error: "Identifiant de réservation invalide." });
+    return res
+      .status(400)
+      .json({ error: "Identifiant de réservation invalide." });
   }
 
   let connection;
@@ -297,22 +325,26 @@ export async function deleteReservation(req, res, next) {
     const owner = await connection.execute(
       `SELECT USERS_ID_USERS FROM RESERVATION WHERE ID_RESERVATION = :id`,
       { id },
-      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+      { outFormat: oracledb.OUT_FORMAT_OBJECT },
     );
     if (!owner.rows || owner.rows.length === 0) {
       return res.status(404).json({ error: "Réservation introuvable." });
     }
 
     const jwtUserId = req.utilisateurJwt?.id_users;
-    if (jwtUserId != null && Number(owner.rows[0].USERS_ID_USERS) !== Number(jwtUserId)) {
+    if (
+      jwtUserId != null &&
+      Number(owner.rows[0].USERS_ID_USERS) !== Number(jwtUserId)
+    ) {
       return res.status(403).json({
-        error: "Vous ne pouvez pas supprimer la réservation d'un autre utilisateur.",
+        error:
+          "Vous ne pouvez pas supprimer la réservation d'un autre utilisateur.",
       });
     }
 
     const result = await connection.execute(
       `DELETE FROM RESERVATION WHERE ID_RESERVATION = :id`,
-      { id }
+      { id },
     );
     await connection.commit();
 

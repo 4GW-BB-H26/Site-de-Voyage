@@ -1,125 +1,124 @@
-
-CREATE TABLE destination (
-    id_destination NUMBER NOT NULL,
-    city           VARCHAR2(50) NOT NULL,
-    country        VARCHAR2(50) NOT NULL,
-    image_link     VARCHAR2(500) NOT NULL
+create table destination (
+   id_destination number not null,
+   city           varchar2(50) not null,
+   country        varchar2(50) not null,
+   image_link     varchar2(500) not null
 );
 
-ALTER TABLE destination ADD CONSTRAINT destination_pk PRIMARY KEY ( id_destination );
+alter table destination add constraint destination_pk primary key ( id_destination );
 
-CREATE TABLE favorites (
-    id_favorite        NUMBER NOT NULL,
-    date_added         DATE NOT NULL,
-    package_id_package NUMBER NOT NULL,
-    users_id_users     NUMBER
+create table favorites (
+   id_favorite        number not null,
+   date_added         date not null,
+   package_id_package number not null,
+   users_id_users     number
 );
 
-ALTER TABLE favorites ADD CONSTRAINT favorites_pk PRIMARY KEY ( id_favorite );
+alter table favorites add constraint favorites_pk primary key ( id_favorite );
 
-CREATE TABLE package (
-    id_package                 NUMBER NOT NULL,
-    hotel_name                 VARCHAR2(100) NOT NULL,
-    excursion                  VARCHAR2(100),
-    transport_type             VARCHAR2(50) NOT NULL,
-    guide_name                 VARCHAR2(50) NOT NULL,
-    length                     NUMBER NOT NULL,
-    global_rating              NUMBER NOT NULL,
-    nb_ratings                 NUMBER NOT NULL,
-    description                VARCHAR2(250),
-    price                      NUMBER NOT NULL,
-    destination_id_destination NUMBER NOT NULL,
-    id_destination             NUMBER NOT NULL
+create table package (
+   id_package                 number not null,
+   hotel_name                 varchar2(100) not null,
+   excursion                  varchar2(100),
+   transport_type             varchar2(50) not null,
+   guide_name                 varchar2(50) not null,
+   length                     number not null,
+   global_rating              number not null,
+   nb_ratings                 number not null,
+   description                varchar2(250),
+   price                      number not null,
+   destination_id_destination number not null,
+   id_destination             number not null
 );
 
-CREATE UNIQUE INDEX package__idx ON
-    package (
-        destination_id_destination
-    ASC );
+create unique index package__idx on
+   package (
+      destination_id_destination
+   asc );
 
-ALTER TABLE package ADD CONSTRAINT package_pk PRIMARY KEY ( id_package );
+alter table package add constraint package_pk primary key ( id_package );
 
-CREATE TABLE reservation (
-    id_reservation   NUMBER NOT NULL,
-    reference_number NUMBER NOT NULL,
-    reservation_date DATE NOT NULL,
-    date_start       DATE NOT NULL,
-    date_end         DATE NOT NULL,
-    nb_travelers     NUMBER NOT NULL,
-    price            NUMBER NOT NULL,
-    status           VARCHAR2(50) NOT NULL,
-    users_id_users   NUMBER NOT NULL,
-    trip_id_trip     NUMBER NOT NULL,
-    id_trip          NUMBER NOT NULL
+create table reservation (
+   id_reservation   number not null,
+   reference_number number not null,
+   reservation_date date not null,
+   date_start       date not null,
+   date_end         date not null,
+   nb_travelers     number not null,
+   price            number not null,
+   status           varchar2(50) not null,
+   users_id_users   number not null,
+   trip_id_trip     number not null,
+   id_trip          number not null
 );
 
-CREATE UNIQUE INDEX reservation__idx ON
-    reservation (
-        trip_id_trip
-    ASC );
+create index reservation__idx on
+   reservation (
+      trip_id_trip
+   asc );
 
-ALTER TABLE reservation ADD CONSTRAINT reservation_pk PRIMARY KEY ( id_reservation );
+alter table reservation add constraint reservation_pk primary key ( id_reservation );
 
-CREATE TABLE reviews (
-    id_review          NUMBER NOT NULL,
-    rating             NUMBER NOT NULL,
-    "COMMENT"          VARCHAR2(500) NOT NULL,
-    publishing_date    DATE NOT NULL,
-    users_id_users     NUMBER NOT NULL,
-    package_id_package NUMBER NOT NULL
+create table reviews (
+   id_review          number not null,
+   rating             number not null,
+   "COMMENT"          varchar2(500) not null,
+   publishing_date    date not null,
+   users_id_users     number not null,
+   package_id_package number not null
 );
 
-ALTER TABLE reviews ADD CONSTRAINT reviews_pk PRIMARY KEY ( id_review );
+alter table reviews add constraint reviews_pk primary key ( id_review );
 
-CREATE TABLE trip (
-    id_trip            NUMBER NOT NULL,
-    depart_date        TIMESTAMP NOT NULL,
-    return_date        TIMESTAMP NOT NULL,
-    package_id_package NUMBER NOT NULL
+create table trip (
+   id_trip            number not null,
+   depart_date        timestamp not null,
+   return_date        timestamp not null,
+   package_id_package number not null
 );
 
-ALTER TABLE trip ADD CONSTRAINT trip_pk PRIMARY KEY ( id_trip );
+alter table trip add constraint trip_pk primary key ( id_trip );
 
-CREATE TABLE users (
-    id_users      NUMBER NOT NULL,
-    first_name    VARCHAR2(50) NOT NULL,
-    last_name     VARCHAR2(50) NOT NULL,
-    username      VARCHAR2(50) NOT NULL,
-    email         VARCHAR2(50) NOT NULL,
-    password      VARCHAR2(100) NOT NULL,
-    creation_date DATE NOT NULL
+create table users (
+   id_users      number not null,
+   first_name    varchar2(50) not null,
+   last_name     varchar2(50) not null,
+   username      varchar2(50) not null,
+   email         varchar2(50) not null,
+   password      varchar2(100) not null,
+   creation_date date not null
 );
 
-ALTER TABLE users ADD CONSTRAINT users_pk PRIMARY KEY ( id_users );
+alter table users add constraint users_pk primary key ( id_users );
 
-ALTER TABLE favorites
-    ADD CONSTRAINT favorites_package_fk FOREIGN KEY ( package_id_package )
-        REFERENCES package ( id_package );
+alter table favorites
+   add constraint favorites_package_fk foreign key ( package_id_package )
+      references package ( id_package );
 
-ALTER TABLE favorites
-    ADD CONSTRAINT favorites_users_fk FOREIGN KEY ( users_id_users )
-        REFERENCES users ( id_users );
+alter table favorites
+   add constraint favorites_users_fk foreign key ( users_id_users )
+      references users ( id_users );
 
-ALTER TABLE package
-    ADD CONSTRAINT package_destination_fk FOREIGN KEY ( destination_id_destination )
-        REFERENCES destination ( id_destination );
+alter table package
+   add constraint package_destination_fk foreign key ( destination_id_destination )
+      references destination ( id_destination );
 
-ALTER TABLE reservation
-    ADD CONSTRAINT reservation_trip_fk FOREIGN KEY ( trip_id_trip )
-        REFERENCES trip ( id_trip );
+alter table reservation
+   add constraint reservation_trip_fk foreign key ( trip_id_trip )
+      references trip ( id_trip );
 
-ALTER TABLE reservation
-    ADD CONSTRAINT reservation_users_fk FOREIGN KEY ( users_id_users )
-        REFERENCES users ( id_users );
+alter table reservation
+   add constraint reservation_users_fk foreign key ( users_id_users )
+      references users ( id_users );
 
-ALTER TABLE reviews
-    ADD CONSTRAINT reviews_package_fk FOREIGN KEY ( package_id_package )
-        REFERENCES package ( id_package );
+alter table reviews
+   add constraint reviews_package_fk foreign key ( package_id_package )
+      references package ( id_package );
 
-ALTER TABLE reviews
-    ADD CONSTRAINT reviews_users_fk FOREIGN KEY ( users_id_users )
-        REFERENCES users ( id_users );
+alter table reviews
+   add constraint reviews_users_fk foreign key ( users_id_users )
+      references users ( id_users );
 
-ALTER TABLE trip
-    ADD CONSTRAINT trip_package_fk FOREIGN KEY ( package_id_package )
-        REFERENCES package ( id_package );
+alter table trip
+   add constraint trip_package_fk foreign key ( package_id_package )
+      references package ( id_package );

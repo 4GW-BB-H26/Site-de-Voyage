@@ -19,7 +19,7 @@ import {
 
 const router = express.Router();
 
-// Liste des résas d’un utilisateur : le :userId doit matcher le JWT
+// Liste des réservations d’un utilisateur : le :userId doit matcher le JWT
 router.get(
   "/reservations/user/:userId",
   authorizationBearerValidators,
@@ -27,7 +27,7 @@ router.get(
   handleValidationErrors,
   exigerJetonValide,
   exigerRessourceUtilisateur("userId"),
-  asyncHandler(reservationsController.listReservationsByUser)
+  asyncHandler(reservationsController.listReservationsByUser),
 );
 // Détail d’une réservation
 router.get(
@@ -36,7 +36,7 @@ router.get(
   reservationIdParamValidators,
   handleValidationErrors,
   exigerJetonValide,
-  asyncHandler(reservationsController.getReservation)
+  asyncHandler(reservationsController.getReservation),
 );
 // Création : corps validé + JWT + cohérence users_id_users
 router.post(
@@ -47,7 +47,7 @@ router.post(
   handleValidationErrors,
   exigerJetonValide,
   exigerUtilisateurCorps("users_id_users"),
-  asyncHandler(reservationsController.createReservation)
+  asyncHandler(reservationsController.createReservation),
 );
 // Annulation (statut)
 router.put(
@@ -56,7 +56,7 @@ router.put(
   reservationIdParamValidators,
   handleValidationErrors,
   exigerJetonValide,
-  asyncHandler(reservationsController.cancelReservation)
+  asyncHandler(reservationsController.cancelReservation),
 );
 // Suppression ligne réservation
 router.delete(
@@ -65,7 +65,7 @@ router.delete(
   reservationIdParamValidators,
   handleValidationErrors,
   exigerJetonValide,
-  asyncHandler(reservationsController.deleteReservation)
+  asyncHandler(reservationsController.deleteReservation),
 );
 
 export default router;

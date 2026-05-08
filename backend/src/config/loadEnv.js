@@ -1,7 +1,5 @@
-/**
- * Charge le fichier .env du backend.
- * À importer au début de server.js.
- */
+//Charge le fichier .env du backend.
+
 import dotenv from "dotenv";
 import path from "node:path";
 import { fileURLToPath } from "node:url";

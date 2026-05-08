@@ -10,13 +10,7 @@
  * Les règles un peu lourdes sur les dates de réservation, le mot de passe fort
  * et le motif Bearer pour le JWT vivent dans le fichier utils validator.
  */
-import {
-  body,
-  param,
-  query,
-  header,
-  oneOf,
-} from "express-validator";
+import { body, param, query, header, oneOf } from "express-validator";
 import {
   estDateChampReservation,
   estMotDePasseFort,
@@ -33,7 +27,7 @@ export const authorizationBearerValidators = [
     .exists({ checkFalsy: true })
     .withMessage("Jeton d'authentification requis.")
     .matches(REGEX_AUTHORIZATION_BEARER)
-    .withMessage('Format attendu : « Bearer <jeton> ».'),
+    .withMessage("Format attendu : « Bearer <jeton> »."),
 ];
 
 // --- Connexion, inscription, profil (routes /user, /auth, /users) ---
@@ -46,9 +40,7 @@ export const getUserQueryValidators = [
     .withMessage("Courriel requis.")
     .isEmail()
     .withMessage("Courriel invalide."),
-  query("password")
-    .notEmpty()
-    .withMessage("Mot de passe requis."),
+  query("password").notEmpty().withMessage("Mot de passe requis."),
 ];
 
 /** Connexion JSON, courriel passé au trim, mot de passe obligatoire. */
@@ -85,7 +77,9 @@ export const postUsersValidators = [
     .notEmpty()
     .withMessage("Le nom d'utilisateur est requis.")
     .isLength({ min: 2, max: 100 })
-    .withMessage("Le nom d'utilisateur doit contenir entre 2 et 100 caractères."),
+    .withMessage(
+      "Le nom d'utilisateur doit contenir entre 2 et 100 caractères.",
+    ),
   body("email")
     .trim()
     .notEmpty()
@@ -100,7 +94,7 @@ export const postUsersValidators = [
     .withMessage("Le mot de passe est requis.")
     .custom(estMotDePasseFort)
     .withMessage(
-      "Mot de passe trop faible : au moins 8 caractères avec majuscule, minuscule et chiffre."
+      "Mot de passe trop faible : au moins 8 caractères avec majuscule, minuscule et chiffre.",
     ),
 ];
 
@@ -139,7 +133,7 @@ export const putUserValidators = [
     .isString()
     .custom(estMotDePasseFort)
     .withMessage(
-      "Mot de passe trop faible : au moins 8 caractères avec majuscule, minuscule et chiffre."
+      "Mot de passe trop faible : au moins 8 caractères avec majuscule, minuscule et chiffre.",
     ),
 ];
 
@@ -181,21 +175,13 @@ export const postReservationValidators = [
     .notEmpty()
     .withMessage("reference_number est requis.")
     .isLength({ max: 100 }),
-  body("reservation_date")
-    .trim()
-    .notEmpty()
-    .withMessage("reservation_date est requis.")
-    .custom(estDateChampReservation)
-    .withMessage(
-      "reservation_date doit être une date valide (AAAA-MM-JJ, ou date reconnue par isDate, ou ISO 8601)."
-    ),
   body("date_start")
     .trim()
     .notEmpty()
     .withMessage("date_start est requis.")
     .custom(estDateChampReservation)
     .withMessage(
-      "date_start doit être une date valide (AAAA-MM-JJ, ou date reconnue par isDate, ou ISO 8601)."
+      "date_start doit être une date valide (AAAA-MM-JJ, ou date reconnue par isDate, ou ISO 8601).",
     ),
   body("date_end")
     .trim()
@@ -203,7 +189,7 @@ export const postReservationValidators = [
     .withMessage("date_end est requis.")
     .custom(estDateChampReservation)
     .withMessage(
-      "date_end doit être une date valide (AAAA-MM-JJ, ou date reconnue par isDate, ou ISO 8601)."
+      "date_end doit être une date valide (AAAA-MM-JJ, ou date reconnue par isDate, ou ISO 8601).",
     ),
   body("nb_travelers")
     .isInt({ min: 1 })
@@ -211,10 +197,7 @@ export const postReservationValidators = [
   body("price")
     .isFloat({ min: 0 })
     .withMessage("price doit être un nombre positif."),
-  body("status")
-    .optional({ values: "falsy" })
-    .trim()
-    .isLength({ max: 50 }),
+  body("status").optional({ values: "falsy" }).trim().isLength({ max: 50 }),
   body("users_id_users")
     .isInt({ min: 1 })
     .withMessage("users_id_users doit être un entier positif."),
@@ -252,25 +235,20 @@ export const postFavoriteValidators = [
 
 /** Paramètre de route id, doit être un ObjectId MongoDB valide. */
 export const mongoIdParamValidators = [
-  param("id")
-    .isMongoId()
-    .withMessage("Identifiant MongoDB invalide."),
+  param("id").isMongoId().withMessage("Identifiant MongoDB invalide."),
 ];
 
 /** Mise à jour d'un favori, au moins nomDestination ou destinationId doit être non vide. */
 export const favoriteUpdateValidators = [
-  param("id")
-    .isMongoId()
-    .withMessage("Identifiant MongoDB invalide."),
+  param("id").isMongoId().withMessage("Identifiant MongoDB invalide."),
   oneOf(
     [
       body("nomDestination").trim().notEmpty(),
       body("destinationId").trim().notEmpty(),
     ],
     {
-      message:
-        "Fournir au moins nomDestination ou destinationId (non vide).",
-    }
+      message: "Fournir au moins nomDestination ou destinationId (non vide).",
+    },
   ),
 ];
 
@@ -311,17 +289,12 @@ export const postCommentValidators = [
 
 /** Liste des commentaires pour une destination, identifiant libre ou clé métier en chaîne. */
 export const commentsDestinationParamValidators = [
-  param("destId")
-    .trim()
-    .notEmpty()
-    .withMessage("destId est requis."),
+  param("destId").trim().notEmpty().withMessage("destId est requis."),
 ];
 
 /** Mise à jour partielle, au moins un parmi auteur, texte ou note. */
 export const commentUpdateValidators = [
-  param("id")
-    .isMongoId()
-    .withMessage("Identifiant MongoDB invalide."),
+  param("id").isMongoId().withMessage("Identifiant MongoDB invalide."),
   oneOf(
     [
       body("auteur").trim().notEmpty(),
@@ -330,7 +303,7 @@ export const commentUpdateValidators = [
     ],
     {
       message: "Fournir auteur, texte ou note à modifier.",
-    }
+    },
   ),
 ];
 
@@ -338,9 +311,7 @@ export const commentUpdateValidators = [
 
 /** Lecture ou suppression d'un package, identifiant entier dans l'URL. */
 export const packageIdParamValidators = [
-  param("id")
-    .isInt({ min: 1 })
-    .withMessage("Identifiant de package invalide."),
+  param("id").isInt({ min: 1 }).withMessage("Identifiant de package invalide."),
 ];
 
 /**
@@ -348,66 +319,26 @@ export const packageIdParamValidators = [
  * Les longueurs max et les types numériques limitent les envois trop gros ou incohérents.
  */
 export const postPackageValidators = [
-  body("hotel_name")
-    .optional()
-    .isString()
-    .isLength({ max: 500 }),
-  body("excursion")
-    .optional()
-    .isString()
-    .isLength({ max: 2000 }),
-  body("transport_type")
-    .optional()
-    .isString()
-    .isLength({ max: 100 }),
-  body("guide_name")
-    .optional()
-    .isString()
-    .isLength({ max: 200 }),
-  body("length")
-    .optional()
-    .isInt({ min: 0 }),
-  body("global_rating")
-    .optional()
-    .isFloat({ min: 0, max: 5 }),
-  body("nb_ratings")
-    .optional()
-    .isInt({ min: 0 }),
-  body("description")
-    .optional()
-    .isString()
-    .isLength({ max: 4000 }),
-  body("price")
-    .optional()
-    .isFloat({ min: 0 }),
+  body("hotel_name").optional().isString().isLength({ max: 500 }),
+  body("excursion").optional().isString().isLength({ max: 2000 }),
+  body("transport_type").optional().isString().isLength({ max: 100 }),
+  body("guide_name").optional().isString().isLength({ max: 200 }),
+  body("length").optional().isInt({ min: 0 }),
+  body("global_rating").optional().isFloat({ min: 0, max: 5 }),
+  body("nb_ratings").optional().isInt({ min: 0 }),
+  body("description").optional().isString().isLength({ max: 4000 }),
+  body("price").optional().isFloat({ min: 0 }),
   body("destination_id_destination")
     .optional({ values: "null" })
     .isInt({ min: 1 }),
-  body("id_destination")
-    .optional({ values: "null" })
-    .isInt({ min: 1 }),
-  body("hotelName")
-    .optional()
-    .isString()
-    .isLength({ max: 500 }),
-  body("transportType")
-    .optional()
-    .isString(),
-  body("guideName")
-    .optional()
-    .isString(),
-  body("globalRating")
-    .optional()
-    .isFloat({ min: 0, max: 5 }),
-  body("nbRatings")
-    .optional()
-    .isInt({ min: 0 }),
-  body("destinationId")
-    .optional({ values: "null" })
-    .isInt({ min: 1 }),
-  body("idDestination")
-    .optional({ values: "null" })
-    .isInt({ min: 1 }),
+  body("id_destination").optional({ values: "null" }).isInt({ min: 1 }),
+  body("hotelName").optional().isString().isLength({ max: 500 }),
+  body("transportType").optional().isString(),
+  body("guideName").optional().isString(),
+  body("globalRating").optional().isFloat({ min: 0, max: 5 }),
+  body("nbRatings").optional().isInt({ min: 0 }),
+  body("destinationId").optional({ values: "null" }).isInt({ min: 1 }),
+  body("idDestination").optional({ values: "null" }).isInt({ min: 1 }),
 ];
 
 /** Mise à jour package, id dans l'URL et mêmes règles que la création pour le corps. */
