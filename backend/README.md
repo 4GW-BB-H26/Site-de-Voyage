@@ -13,4 +13,16 @@ Element de connexion:
 - Port 1521
 - Service Name: freepdb1
 
-a continuer
+1.x: Mongo Setup:
+Le setup du mongo nécessite d'avoir déjà Docker installé sur votre machine.
+
+- Création container :
+    docker run -d --name mongo-db -p 27017:27017 mongo:7
+
+- Si existe dejà :
+docker start mongo-db
+
+- En cas d'erreur, vérifier l'installation des dépendances en executant :
+npm install mongodb
+npm install mongoose
+npm install dotenv
