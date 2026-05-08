@@ -96,12 +96,6 @@ export default function CarteOffrePromo({
         );
 
         console.log(res);
-
-        // if(!res.ok){
-        //   alert(data.error || "Impossible de prendre une reservation");
-        //   return;
-        // }
-        // alert("Réservation prise !");
       
       }catch(err){
         console.error(err);

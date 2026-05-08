@@ -6,7 +6,7 @@ export default function SectionFooter() {
         <div className="footer-colonne footer-marque">
           <div className="logo-application footer-logo">
             
-            {/*l'icone ✈️  est un emoji de l'avion prise de https://emojipedia.org/airplane */}
+            {/*l'icone ✈️  est un emoji de l'avion pris sur https://emojipedia.org/airplane */}
             <span className="logo-icone">✈️</span>
             <span className="logo-texte">TRAVEL EXPRESS</span>
           </div>
