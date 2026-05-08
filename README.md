@@ -43,7 +43,13 @@ Le setup du mongo nécessite d'avoir déjà Docker installé sur votre machine.
 - Si existe dejà :
   docker start mongo-db
 
-- En cas d'erreur, vérifier l'installation des dépendances en executant :
+- En cas d'erreur, vérifier l'installation des dépendances en executant (dans le backend) :
   npm install mongodb
   npm install mongoose
   npm install dotenv
+
+- Pour tester la manipulation de donnée mongo, executer la commande suivante (toujours dans backend):
+
+  node tester_mongo.js
+
+  Ce script génerera 2 favoris du users zidane_01 avec des ID provenants de Mongo tout en affichant un commentaire de l'uzbekistan. Confirmant que la MongoDB est connectée et fonctionelle.

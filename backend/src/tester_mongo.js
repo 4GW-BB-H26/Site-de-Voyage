@@ -34,10 +34,6 @@ async function runTravelTests() {
     let destComments = await comments.find({ destinationId: "uzbekistan_88" }).toArray();
     console.log(destComments);
 
-    console.log("\n=== NETTOYAGE ===");
-    await favorites.deleteOne({ _id: allFavs[0]._id });
-    await comments.deleteMany({ destinationId: "uzbekistan_88" });
-
     const finalFavs = await favorites.find().toArray();
     console.log("Favoris restants :", finalFavs);
 }
