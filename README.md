@@ -88,4 +88,4 @@ npm run dev (ou npm start)
 
 Commandes:
 cd frontend
-npm run dev (ou npm start)
+npm run dev
