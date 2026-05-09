@@ -124,7 +124,7 @@ export default function SectionReservation() {
     <section className="section-reservation">
       <h2 className="titre-section">Mes réservations</h2>
       <p className="sous-titre-reservations">
-        Consultez l&apos;ensemble de vos réservations passées et à venir.
+        Consultez l'ensemble de vos réservations passées et à venir.
       </p>
 
       <div className="liste-reservations">

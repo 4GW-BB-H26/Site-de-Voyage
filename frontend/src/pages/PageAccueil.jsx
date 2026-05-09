@@ -44,7 +44,7 @@ export default function PageAccueil() {
       cancelled = true;
     };
   }, []);
-
+// ajout des composants de la page d'acceuil
   return (
     <div className="conteneur_app min-vh-100">
       <BarreNavigation />

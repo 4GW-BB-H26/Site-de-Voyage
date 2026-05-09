@@ -1,5 +1,6 @@
 // Pied de page de l'application
 export default function SectionFooter() {
+
   return (
     <footer className="section-footer">
       <div className="footer-contenu">

@@ -13,7 +13,7 @@ export default function SectionFavoris() {
     const run = async () => {
       setLoading(true);
       setError("");
-
+      //get le user
       const raw = sessionStorage.getItem("travelExpressUser");
       let user = null;
       if (raw) {
@@ -31,8 +31,9 @@ export default function SectionFavoris() {
         setLoading(false);
         return;
       }
-
+      
       try {
+        //fetch les favoris par user
         const res = await fetchFavorisByUser(userId);
         const data = await res.json().catch(() => null);
 
@@ -65,6 +66,7 @@ export default function SectionFavoris() {
     };
   }, []);
 
+  //pour retirer un favoris pour le user
   const handleRetirer = async (mongoId) => {
     try {
       const res = await removeFavoris(String(mongoId));
@@ -110,7 +112,7 @@ export default function SectionFavoris() {
       </section>
     );
   }
-
+  
   if (!favoris.length) {
     return (
       <section className="section-favoris">
@@ -121,7 +123,7 @@ export default function SectionFavoris() {
       </section>
     );
   }
-
+  //les cartes favoris
   return (
     <section className="section-favoris">
       <h2 className="titre-section">Mes favoris</h2>

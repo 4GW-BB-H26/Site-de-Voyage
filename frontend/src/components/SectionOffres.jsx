@@ -9,6 +9,7 @@ import { filtrerOffres } from "../utils/filtrerOffres.js";
  * @param {string} props.error
  * @param {{ destination?: string; pays?: string; depart?: string; retour?: string; voyageurs?: number } | null} props.criteresRecherche
  */
+// page pour les offres
 export default function SectionOffres({ titreSection, offres, loading, error, criteresRecherche }) {
   const listeFiltree = filtrerOffres(offres, criteresRecherche);
 
@@ -31,7 +32,7 @@ export default function SectionOffres({ titreSection, offres, loading, error, cr
       </section>
     );
   }
-
+ // section principale des offres avec la section
   return (
     <section className="section-offres">
       <h2 className="titre-section">{titreSection}</h2>

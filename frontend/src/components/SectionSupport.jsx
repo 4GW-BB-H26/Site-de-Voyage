@@ -1,3 +1,4 @@
+//section de la page support
 import { useState, useEffect } from "react";
 import { fetchSupportComments, addSupportComment } from "../api/comments";
 

@@ -17,7 +17,7 @@ export default function CarteFavori({
       year: "numeric",
     });
   };
-
+  //format de la carte
   return (
     <article className="carte-favori">
       <div className="carte-favori-info">
@@ -26,7 +26,7 @@ export default function CarteFavori({
           Ajouté le {formatDate(dateAjout)}
         </p>
       </div>
-
+      
       <button
         className="btn-retirer-favori"
         onClick={() => onRetirer(id)}
