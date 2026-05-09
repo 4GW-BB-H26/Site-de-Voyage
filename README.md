@@ -68,6 +68,7 @@ La facon dont le backend est deployer depend de l'environnement que vous utilise
   ./scripts/deploy-backend.sh
 
 - Windows (Les commandes a executer sur Powershell):
+  cd backend
   powershell -ExecutionPolicy Bypass -File .\scripts\deploy-backend.ps1
 
 ---
