@@ -95,7 +95,7 @@ export const OFFRES_PROMO = [
     pays: "Italy",
     note: "4.5 étoiles - 9/10 Très Bien (33)",
     vol: "Montreal(CAN) - Rome(ITA)",
-    dates: "2026-10-07 - 2026-10-06",
+    dates: "2026-10-07 - 2026-10-15",
     prix: 399,
     ancienPrix: "$799",
     id_trip: 6,
