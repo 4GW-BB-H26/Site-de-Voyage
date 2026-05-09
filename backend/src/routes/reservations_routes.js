@@ -1,6 +1,5 @@
-/**
- * Réservations Oracle : lecture souvent protégée par JWT, création alignée sur le corps.
- */
+//Les route api pour les reservations
+
 import express from "express";
 import * as reservationsController from "../controllers/reservations.js";
 import {

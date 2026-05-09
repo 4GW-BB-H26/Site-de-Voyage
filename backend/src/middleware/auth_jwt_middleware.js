@@ -2,6 +2,8 @@ import jwt from "jsonwebtoken";
 import { jwtSecret } from "../config/jwt.js";
 import { ErreurApplicative } from "../utils/errors.js";
 
+//validation des requetes user avec JWT
+
 export function exigerJetonValide(req, res, next) {
   const header = req.headers.authorization;
   const match = header && header.match(/^Bearer\s+(.+)$/i);
@@ -14,8 +16,8 @@ export function exigerJetonValide(req, res, next) {
           code: "JETON_MANQUANT",
           recouvrement:
             "Ajoutez l'en-tête « Authorization: Bearer <jeton> » (jeton reçu à la connexion).",
-        }
-      )
+        },
+      ),
     );
   }
   try {
@@ -24,11 +26,15 @@ export function exigerJetonValide(req, res, next) {
     const id_users = Number(idBrut);
     if (!Number.isFinite(id_users)) {
       return next(
-        new ErreurApplicative("Jeton invalide : identifiant utilisateur absent ou incorrect.", {
-          status: 401,
-          code: "JETON_PAYLOAD",
-          recouvrement: "Déconnectez-vous et reconnectez-vous pour obtenir un nouveau jeton.",
-        })
+        new ErreurApplicative(
+          "Jeton invalide : identifiant utilisateur absent ou incorrect.",
+          {
+            status: 401,
+            code: "JETON_PAYLOAD",
+            recouvrement:
+              "Déconnectez-vous et reconnectez-vous pour obtenir un nouveau jeton.",
+          },
+        ),
       );
     }
     req.utilisateurJwt = {
@@ -42,10 +48,6 @@ export function exigerJetonValide(req, res, next) {
   }
 }
 
-/**
- * Vérifie que :id (ou autre param) correspond à l'utilisateur du JWT.
- * @param {string} nomParam
- */
 export function exigerRessourceUtilisateur(nomParam = "id") {
   return (req, res, next) => {
     const id = parseInt(req.params[nomParam], 10);
@@ -57,17 +59,13 @@ export function exigerRessourceUtilisateur(nomParam = "id") {
           code: "ACCES_REFUSE",
           recouvrement:
             "Vous ne pouvez accéder qu'aux données associées à votre propre compte.",
-        })
+        }),
       );
     }
     next();
   };
 }
 
-/**
- * Après express.json(): le champ du corps doit être l'identifiant JWT (ex. users_id_users).
- * @param {string} champCorps
- */
 export function exigerUtilisateurCorps(champCorps = "users_id_users") {
   return (req, res, next) => {
     const bodyId = Number(req.body?.[champCorps]);
@@ -81,8 +79,8 @@ export function exigerUtilisateurCorps(champCorps = "users_id_users") {
             code: "CORPS_UTILISATEUR_INCOHERENT",
             recouvrement:
               "Le champ users_id_users (ou équivalent) doit être identique à votre identifiant dans le jeton.",
-          }
-        )
+          },
+        ),
       );
     }
     next();

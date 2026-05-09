@@ -1,6 +1,4 @@
-/**
- * Point d'entrée de l'application Express.
- */
+//La config du backend express
 
 import express from "express";
 import packagesRoutes from "./routes/packages_routes.js";

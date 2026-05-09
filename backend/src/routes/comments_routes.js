@@ -1,6 +1,5 @@
-/**
- * Commentaires MongoDB par destination ; :id document = ObjectId.
- */
+//les routes API pour la collection comments
+
 import { Router } from "express";
 import {
   addComment,
@@ -24,31 +23,31 @@ router.post(
   "/comments",
   postCommentValidators,
   handleValidationErrors,
-  asyncHandler(addComment)
+  asyncHandler(addComment),
 );
 router.get(
   "/comments/destination/:destId",
   commentsDestinationParamValidators,
   handleValidationErrors,
-  asyncHandler(getCommentsByDestination)
+  asyncHandler(getCommentsByDestination),
 );
 router.get(
   "/comments/:id",
   mongoIdParamValidators,
   handleValidationErrors,
-  asyncHandler(getCommentById)
+  asyncHandler(getCommentById),
 );
 router.put(
   "/comments/:id",
   commentUpdateValidators,
   handleValidationErrors,
-  asyncHandler(updateComment)
+  asyncHandler(updateComment),
 );
 router.delete(
   "/comments/:id",
   mongoIdParamValidators,
   handleValidationErrors,
-  asyncHandler(removeComment)
+  asyncHandler(removeComment),
 );
 
 export default router;

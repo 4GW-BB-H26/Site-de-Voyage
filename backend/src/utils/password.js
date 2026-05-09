@@ -1,5 +1,7 @@
 import bcrypt from "bcryptjs";
 
+//Les methodes bcrypt pour log in et hash un mdp
+
 const TOURS_HACHAGE = 10;
 const PREFIXE_BCRYPT = /^\$2[aby]\$/;
 
@@ -10,11 +12,10 @@ export async function hasherMotDePasse(motDePasseClair) {
   return bcrypt.hash(motDePasseClair, TOURS_HACHAGE);
 }
 
-/**
- * Compare le mot de passe saisi à la valeur en base (hash bcrypt ou ancien texte brut).
- * @returns {{ valide: boolean; necessiteRehachage: boolean }} necessiteRehachage si le compte est encore en clair et la connexion est valide.
- */
-export async function verifierMotDePasseStocke(motDePasseClair, valeurStockeeBrute) {
+export async function verifierMotDePasseStocke(
+  motDePasseClair,
+  valeurStockeeBrute,
+) {
   if (
     typeof motDePasseClair !== "string" ||
     valeurStockeeBrute == null ||

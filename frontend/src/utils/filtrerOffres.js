@@ -1,6 +1,5 @@
-/**
- * Recherche textuelle et filtre par pays sur les offres d'accueil (champs API).
- */
+//filtre appliquer lorsqu'un utilisateur fait un recherche
+
 export function normaliserRecherche(s) {
   if (s == null) return "";
   return String(s)
@@ -26,7 +25,7 @@ export function filtrerOffres(offres, criteres) {
     if (pays && pays !== "all" && o.pays !== pays) return false;
     if (mots.length === 0) return true;
     const haystack = normaliserRecherche(
-      [o.lieu, o.titre, o.pays, o.vol, o.imageAlt].filter(Boolean).join(" ")
+      [o.lieu, o.titre, o.pays, o.vol, o.imageAlt].filter(Boolean).join(" "),
     );
     return mots.every((w) => haystack.includes(w));
   });

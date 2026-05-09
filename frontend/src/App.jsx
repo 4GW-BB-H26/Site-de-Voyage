@@ -6,7 +6,7 @@ import ReservationPage from "./pages/ReservationPage";
 import FavorisPage from "./pages/FavorisPage";
 import SupportPage from "./pages/SupportPage";
 
-/** Fragments reconnus (saisie manuelle dans la barre d’adresse du navigateur). */
+//les differents pages possible
 const PAGES = new Set(["accueil", "login", "inscription", "reservations", "favoris", "support"]);
 
 function readHashPage() {

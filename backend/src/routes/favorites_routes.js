@@ -1,6 +1,5 @@
-/**
- * Favoris MongoDB : CRUD sur la collection ; :id = ObjectId Mongo.
- */
+//Les routes API pour les favoris
+
 import { Router } from "express";
 import {
   addFavorite,
@@ -24,31 +23,31 @@ router.post(
   "/favorites", // création (ou renvoie l’existant si doublon user+dest)
   postFavoriteValidators,
   handleValidationErrors,
-  asyncHandler(addFavorite)
+  asyncHandler(addFavorite),
 );
 router.get(
   "/favorites/user/:userId",
   favoritesUserIdParamValidators,
   handleValidationErrors,
-  asyncHandler(getFavoritesByUser)
+  asyncHandler(getFavoritesByUser),
 );
 router.get(
   "/favorites/:id",
   mongoIdParamValidators,
   handleValidationErrors,
-  asyncHandler(getFavoriteById)
+  asyncHandler(getFavoriteById),
 );
 router.put(
   "/favorites/:id",
   favoriteUpdateValidators,
   handleValidationErrors,
-  asyncHandler(updateFavorite)
+  asyncHandler(updateFavorite),
 );
 router.delete(
   "/favorites/:id",
   mongoIdParamValidators,
   handleValidationErrors,
-  asyncHandler(removeFavorite)
+  asyncHandler(removeFavorite),
 );
 
 export default router;

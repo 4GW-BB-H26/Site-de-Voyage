@@ -1,7 +1,5 @@
-/**
- * Routes utilisateur / auth : validateurs express-validator puis contrôleurs.
- * Ordre typique : validation → handleValidationErrors → JWT si besoin → handler.
- */
+// Les routes API pour les users
+
 import express from "express";
 import * as usersController from "../controllers/users.js";
 import {
@@ -26,7 +24,7 @@ router.get(
   "/user",
   getUserQueryValidators,
   handleValidationErrors,
-  asyncHandler(usersController.getUser)
+  asyncHandler(usersController.getUser),
 );
 // Connexion JSON (principal pour React)
 router.post(
@@ -34,7 +32,7 @@ router.post(
   express.json(),
   postAuthLoginValidators,
   handleValidationErrors,
-  asyncHandler(usersController.postAuthLogin)
+  asyncHandler(usersController.postAuthLogin),
 );
 // Profil depuis le jeton
 router.get(
@@ -42,7 +40,7 @@ router.get(
   authorizationBearerValidators,
   handleValidationErrors,
   exigerJetonValide,
-  asyncHandler(usersController.getAuthMe)
+  asyncHandler(usersController.getAuthMe),
 );
 // Inscription
 router.post(
@@ -50,7 +48,7 @@ router.post(
   express.json(),
   postUsersValidators,
   handleValidationErrors,
-  asyncHandler(usersController.createUser)
+  asyncHandler(usersController.createUser),
 );
 // Mise à jour compte (JWT + même id que dans l’URL)
 router.put(
@@ -61,7 +59,7 @@ router.put(
   handleValidationErrors,
   exigerJetonValide,
   exigerRessourceUtilisateur("id"),
-  asyncHandler(usersController.updateUser)
+  asyncHandler(usersController.updateUser),
 );
 // Suppression compte
 router.delete(
@@ -71,7 +69,7 @@ router.delete(
   handleValidationErrors,
   exigerJetonValide,
   exigerRessourceUtilisateur("id"),
-  asyncHandler(usersController.deleteUser)
+  asyncHandler(usersController.deleteUser),
 );
 
 export default router;

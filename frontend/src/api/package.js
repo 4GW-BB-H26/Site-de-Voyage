@@ -1,6 +1,5 @@
-//Script pour data d'api sur frontend, sous format oracle
+//Script pour fetch les detail d'une offre
 import { API_BASE } from "./client.js";
-
 
 export async function fetchDetailsOffre(id) {
   const res = await fetch(`${API_BASE}/packages/${id}`);
