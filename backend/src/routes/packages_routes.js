@@ -1,6 +1,5 @@
-/**
- * Packages voyage (Oracle via package_tapi) : param :id = identifiant numérique.
- */
+//Les routes API pour les packages
+
 import express from "express";
 import * as packagesController from "../controllers/packages.js";
 import { asyncHandler } from "../middleware/error_middleware.js";
@@ -17,27 +16,27 @@ router.get(
   "/packages/:id",
   packageIdParamValidators,
   handleValidationErrors,
-  asyncHandler(packagesController.getPackageById)
+  asyncHandler(packagesController.getPackageById),
 );
 router.post(
   "/packages",
   express.json(),
   postPackageValidators,
   handleValidationErrors,
-  asyncHandler(packagesController.createPackage)
+  asyncHandler(packagesController.createPackage),
 );
 router.put(
   "/packages/:id",
   express.json(),
   putPackageValidators,
   handleValidationErrors,
-  asyncHandler(packagesController.updatePackage)
+  asyncHandler(packagesController.updatePackage),
 );
 router.delete(
   "/packages/:id",
   packageIdParamValidators,
   handleValidationErrors,
-  asyncHandler(packagesController.deletePackage)
+  asyncHandler(packagesController.deletePackage),
 );
 
 export default router;

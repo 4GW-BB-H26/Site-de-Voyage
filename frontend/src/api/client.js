@@ -1,3 +1,5 @@
+//ajout du header authorization si ya un token
+
 export const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
 
 const CLE_JETON = "travelExpressToken";

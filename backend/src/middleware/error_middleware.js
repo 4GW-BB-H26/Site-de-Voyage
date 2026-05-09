@@ -1,5 +1,7 @@
 import { ErreurApplicative } from "../utils/errors.js";
 
+//gestion des erreurs
+
 const prod = process.env.NODE_ENV === "production";
 
 /** Enveloppe un contrôleur async : rejets et `next(err)` sont gérés centralement. */
@@ -34,7 +36,8 @@ function analyserErreurMongo(err) {
       status: 409,
       message: "Conflit : cette donnée existe déjà (doublon).",
       code: "MONGO_DOUBLON",
-      recouvrement: "Modifiez les champs uniques ou supprimez l’entrée existante.",
+      recouvrement:
+        "Modifiez les champs uniques ou supprimez l’entrée existante.",
     };
   }
   return null;
@@ -93,7 +96,8 @@ function analyserErreurJwt(err) {
       status: 401,
       message: "Jeton d’authentification invalide.",
       code: "JETON_INVALIDE",
-      recouvrement: "Déconnectez-vous et reconnectez-vous pour obtenir un nouveau jeton.",
+      recouvrement:
+        "Déconnectez-vous et reconnectez-vous pour obtenir un nouveau jeton.",
     };
   }
   if (err.name === "TokenExpiredError") {

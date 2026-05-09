@@ -1,6 +1,5 @@
-/**
- * Destinations (Oracle destination_tapi) : :id tel que renvoyé par la BD.
- */
+//les routes API pour les destinations
+
 import express from "express";
 import * as destinationsController from "../controllers/destinations.js";
 import { asyncHandler } from "../middleware/error_middleware.js";
@@ -17,27 +16,27 @@ router.get(
   "/destinations/:id",
   destinationIdParamValidators,
   handleValidationErrors,
-  asyncHandler(destinationsController.getDestination)
+  asyncHandler(destinationsController.getDestination),
 );
 router.post(
   "/destinations",
   express.json(),
   postDestinationValidators,
   handleValidationErrors,
-  asyncHandler(destinationsController.createDestination)
+  asyncHandler(destinationsController.createDestination),
 );
 router.put(
   "/destinations/:id",
   express.json(),
   putDestinationValidators,
   handleValidationErrors,
-  asyncHandler(destinationsController.updateDestination)
+  asyncHandler(destinationsController.updateDestination),
 );
 router.delete(
   "/destinations/:id",
   destinationIdParamValidators,
   handleValidationErrors,
-  asyncHandler(destinationsController.deleteDestination)
+  asyncHandler(destinationsController.deleteDestination),
 );
 
 export default router;

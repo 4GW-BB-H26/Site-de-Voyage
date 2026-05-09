@@ -1,12 +1,7 @@
-/**
- * Gère les erreurs de validation.
- */
 import { validationResult } from "express-validator";
 
-/**
- * Quand express-validator trouve des erreurs, on renvoie tout de suite un 400
- * avec le détail, plutôt que d’aller plus loin dans le contrôleur.
- */
+//validation des donnees transmises
+
 export function handleValidationErrors(req, res, next) {
   const result = validationResult(req);
   if (result.isEmpty()) {

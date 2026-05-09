@@ -1,7 +1,6 @@
-/**
- * Validation et assainissement côté navigateur avec le paquet npm validator.
- */
 import validator from "validator";
+
+//methodes pour le validator (en gros valider les donnees)
 
 const OPTIONS_MDP_FORT = {
   minLength: 8,
@@ -11,16 +10,11 @@ const OPTIONS_MDP_FORT = {
   minSymbols: 0,
 };
 
-/** Retire les espaces en bout de chaîne avec la fonction trim du paquet validator. */
 export function trimChamp(v) {
   if (v == null) return "";
   return validator.trim(String(v));
 }
 
-/**
- * Vérifie le courriel et le mot de passe avant la requête de connexion.
- * Renvoie ok, un message d'erreur si besoin, et le courriel déjà trimé pour l'envoi.
- */
 export function validerConnexion(champs) {
   const email = trimChamp(champs.email);
   if (validator.isEmpty(email)) {
@@ -36,10 +30,6 @@ export function validerConnexion(champs) {
   return { ok: true, email };
 }
 
-/**
- * Vérifie tout le formulaire d'inscription avant l'appel à l'API.
- * Renvoie ok, un message d'erreur, ou le corps JSON prêt pour registerUser.
- */
 export function validerFormulaireInscription(f) {
   const prenom = trimChamp(f.prenom);
   const nom = trimChamp(f.nom);
@@ -54,10 +44,16 @@ export function validerFormulaireInscription(f) {
     validator.isEmpty(username) ||
     validator.isEmpty(courriel)
   ) {
-    return { ok: false, message: "Veuillez remplir tous les champs obligatoires." };
+    return {
+      ok: false,
+      message: "Veuillez remplir tous les champs obligatoires.",
+    };
   }
   if (!validator.isLength(prenom, { min: 1, max: 200 })) {
-    return { ok: false, message: "Le prénom est trop long (200 caractères max)." };
+    return {
+      ok: false,
+      message: "Le prénom est trop long (200 caractères max).",
+    };
   }
   if (!validator.isLength(nom, { min: 1, max: 200 })) {
     return { ok: false, message: "Le nom est trop long (200 caractères max)." };
@@ -97,27 +93,17 @@ export function validerFormulaireInscription(f) {
   };
 }
 
-/**
- * Échappe le HTML pour afficher du texte dont on ne connaît pas la provenance.
- */
 export function echapperAffichage(texte) {
   if (texte == null) return "";
   return validator.escape(String(texte));
 }
 
-/**
- * Vérifie que l'identifiant ressemble à un entier strictement positif avant un fetch.
- */
 export function estIdentifiantUtilisateurValide(userId) {
   if (userId == null) return false;
   const s = String(userId).trim();
   return validator.isInt(s, { min: 1 });
 }
 
-/**
- * Vérifie le formulaire de recherche sur la page d'accueil (dates type input date, voyageurs entier).
- * En cas de succès, renvoie aussi les champs normalisés pour le filtrage des offres.
- */
 export function validerRechercheVoyage(champs) {
   const destination = trimChamp(champs.destination);
   const depart = trimChamp(champs.depart);
@@ -128,7 +114,10 @@ export function validerRechercheVoyage(champs) {
     return { ok: false, message: "Indiquez une destination." };
   }
   if (validator.isEmpty(depart) || validator.isEmpty(retour)) {
-    return { ok: false, message: "Choisissez les dates de départ et de retour." };
+    return {
+      ok: false,
+      message: "Choisissez les dates de départ et de retour.",
+    };
   }
   const dDep = trimChamp(depart);
   const dRet = trimChamp(retour);
@@ -141,12 +130,29 @@ export function validerRechercheVoyage(champs) {
     return { ok: false, message: "Les dates ne sont pas valides." };
   }
   if (t1 < t0) {
-    return { ok: false, message: "La date de retour doit être le même jour ou après la date de départ." };
+    return {
+      ok: false,
+      message:
+        "La date de retour doit être le même jour ou après la date de départ.",
+    };
   }
-  if (validator.isEmpty(voyageurs) || !validator.isInt(String(voyageurs), { min: 1, max: 99 })) {
-    return { ok: false, message: "Le nombre de voyageurs doit être un entier entre 1 et 99." };
+  if (
+    validator.isEmpty(voyageurs) ||
+    !validator.isInt(String(voyageurs), { min: 1, max: 99 })
+  ) {
+    return {
+      ok: false,
+      message: "Le nombre de voyageurs doit être un entier entre 1 et 99.",
+    };
   }
   const n = Number.parseInt(String(voyageurs), 10);
   const pays = trimChamp(champs.pays) || "all";
-  return { ok: true, destination, depart: dDep, retour: dRet, voyageurs: n, pays };
+  return {
+    ok: true,
+    destination,
+    depart: dDep,
+    retour: dRet,
+    voyageurs: n,
+    pays,
+  };
 }

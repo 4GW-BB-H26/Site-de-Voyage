@@ -1,12 +1,12 @@
-//lien de React vers Backend pour users
+
 import validator from "validator";
 import { API_BASE } from "./client.js";
 
-
-//Envoi demande propre de création de compte au backend
 /**
  * @param {{ first_name: string; last_name: string; username: string; email: string; password: string }} body
  */
+
+//creer un compte (user)
 export function registerUser(body) {
   const chargeUtile = {
     first_name: validator.trim(String(body.first_name ?? "")),
